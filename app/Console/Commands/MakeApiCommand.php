@@ -64,14 +64,14 @@ class MakeApiCommand extends Command
     protected function createRequests()
     {
         $name = $this->argument('name');
-        $this->call('make:request', ['name' => "{$name}StoreRequest"]);
-        $this->call('make:request', ['name' => "{$name}UpdateRequest"]);
+        $this->call('make:request', ['name' => "Store{$name}Request"]);
+        $this->call('make:request', ['name' => "Update{$name}Request"]);
 
-        $storeRequestPath = app_path("Http/Requests/{$name}StoreRequest.php");
+        $storeRequestPath = app_path("Http/Requests/Store{$name}Request.php");
         $storeRequestContent = "<?php\n\n";
         $storeRequestContent .= "namespace App\Http\Requests;\n\n";
         $storeRequestContent .= "use Illuminate\Foundation\Http\FormRequest;\n\n";
-        $storeRequestContent .= "class {$name}StoreRequest extends FormRequest\n";
+        $storeRequestContent .= "class Store{$name}Request extends FormRequest\n";
         $storeRequestContent .= "{\n";
         $storeRequestContent .= "    /**\n";
         $storeRequestContent .= "     * Get the validation rules that apply to the request.\n";
@@ -88,11 +88,11 @@ class MakeApiCommand extends Command
 
         file_put_contents($storeRequestPath, $storeRequestContent);
 
-        $updateRequestPath = app_path("Http/Requests/{$name}UpdateRequest.php");
+        $updateRequestPath = app_path("Http/Requests/Update{$name}Request.php");
         $updateRequestContent = "<?php\n\n";
         $updateRequestContent .= "namespace App\Http\Requests;\n\n";
         $updateRequestContent .= "use Illuminate\Foundation\Http\FormRequest;\n\n";
-        $updateRequestContent .= "class {$name}UpdateRequest extends FormRequest\n";
+        $updateRequestContent .= "class Update{$name}Request extends FormRequest\n";
         $updateRequestContent .= "{\n";
         $updateRequestContent .= "    /**\n";
         $updateRequestContent .= "     * Get the validation rules that apply to the request.\n";
