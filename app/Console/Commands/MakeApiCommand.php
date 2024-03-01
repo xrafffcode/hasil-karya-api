@@ -110,7 +110,6 @@ class MakeApiCommand extends Command
         file_put_contents($updateRequestPath, $updateRequestContent);
     }
 
-
     protected function createController()
     {
         $name = $this->argument('name');
@@ -121,8 +120,8 @@ class MakeApiCommand extends Command
         $controllerContent = "<?php\n\n";
         $controllerContent .= "namespace App\Http\Controllers\Api;\n\n";
         $controllerContent .= "use App\Http\Controllers\Controller;\n";
-        $controllerContent .= "use App\Http\Requests\\{$name}StoreRequest;\n";
-        $controllerContent .= "use App\Http\Requests\\{$name}UpdateRequest;\n";
+        $controllerContent .= "use App\Http\Requests\\Store{$name}Request;\n";
+        $controllerContent .= "use App\Http\Requests\\Update{$name}Request;\n";
         $controllerContent .= "use App\Http\Resources\\{$name}Resource;\n";
         $controllerContent .= "use App\Interfaces\\{$name}RepositoryInterface;\n";
         $controllerContent .= "use Illuminate\Http\Request;\n";
@@ -138,7 +137,7 @@ class MakeApiCommand extends Command
         $controllerContent .= "    {\n";
         $controllerContent .= "        //add your code here\n";
         $controllerContent .= "    }\n\n";
-        $controllerContent .= "    public function store({$name}StoreRequest \$request)\n";
+        $controllerContent .= "    public function store(Store{$name}Request \$request)\n";
         $controllerContent .= "    {\n";
         $controllerContent .= "        //add your code here\n";
         $controllerContent .= "    }\n\n";
@@ -146,7 +145,7 @@ class MakeApiCommand extends Command
         $controllerContent .= "    {\n";
         $controllerContent .= "        //add your code here\n";
         $controllerContent .= "    }\n\n";
-        $controllerContent .= "    public function update({$name}UpdateRequest \$request, \$id)\n";
+        $controllerContent .= "    public function update(Update{$name}Request \$request, \$id)\n";
         $controllerContent .= "    {\n";
         $controllerContent .= "        //add your code here\n";
         $controllerContent .= "    }\n\n";
@@ -190,7 +189,7 @@ class MakeApiCommand extends Command
     protected function modifyMigration()
     {
         $name = Str::lower($this->argument('name'));
-        $migration = database_path("migrations/" . date('Y_m_d_His') . "_create_" . Str::plural($name) . "_table.php");
+        $migration = database_path('migrations/'.date('Y_m_d_His').'_create_'.Str::plural($name).'_table.php');
 
         $migrationContent = "<?php\n\n";
         $migrationContent .= "use Illuminate\Database\Migrations\Migration;\n";
@@ -222,9 +221,6 @@ class MakeApiCommand extends Command
         file_put_contents($migration, $migrationContent);
     }
 
-
-
-
     protected function modifyRepository()
     {
         $name = $this->argument('name');
@@ -252,9 +248,30 @@ PHP;
 
     protected function createTest()
     {
-        $name = $this->argument('name');
+        $name = $this->argument('name').'API';
         $test = base_path("tests/Feature/{$name}Test.php");
-        $testContent = "<?php\n\nnamespace Tests\Feature;\n\nuse Illuminate\Foundation\Testing\RefreshDatabase;\nuse Tests\TestCase;\n\nclass {$name}Test extends TestCase\n{\n    use RefreshDatabase;\n\n    //\n}\n";
+        $testContent =
+            <<<'EOT'
+            <?php
+
+            namespace Tests\Feature;
+
+            use Illuminate\Support\Facades\Storage;
+            use Tests\TestCase;
+
+            class @name extends TestCase
+            {   
+                public function setUp(): void
+                {
+                    parent::setUp();
+                    
+                    Storage::fake('public');
+                }
+
+                //
+            }
+            EOT;
+        $testContent = str_replace('@name', $name.'Test', $testContent);
 
         file_put_contents($test, $testContent);
     }

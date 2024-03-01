@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Interfaces;
+
+interface StationRepositoryInterface
+{
+    public function getAllStations();
+
+    public function create(array $data);
+
+    public function getStationById(string $id);
+
+    public function update(array $data, string $id);
+
+    public function delete(string $id);
+
+    public function generateCode(int $tryCount): string;
+
+    public function isUniqueCode(string $code, $exceptId = null): bool;
+}

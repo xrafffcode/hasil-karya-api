@@ -21,20 +21,20 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response([
-                'success'   => false,
-                'message' => ['These credentials do not match our records.']
+                'success' => false,
+                'message' => ['These credentials do not match our records.'],
             ], 404);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $response = [
-            'success'   => true,
-            'user'      => $user,
-            'token'     => $token,
-            'message'   => 'Login Success'
+            'success' => true,
+            'user' => $user,
+            'token' => $token,
+            'message' => 'Login Success',
         ];
 
         return response($response, 201);
@@ -46,8 +46,8 @@ class AuthController extends Controller
         $user->currentAccessToken()->delete();
 
         $response = [
-            'success'   => true,
-            'message'   => 'Logout Success'
+            'success' => true,
+            'message' => 'Logout Success',
         ];
 
         return response($response, 200);
@@ -59,7 +59,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
-            'confirm-password' => 'required|same:password'
+            'confirm-password' => 'required|same:password',
         ]);
 
         $data = $request->except('confirm-password', 'password');
@@ -71,10 +71,10 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         $response = [
-            'success'   => true,
-            'user'      => $user,
-            'token'     => $token,
-            'message'   => 'Register Success'
+            'success' => true,
+            'user' => $user,
+            'token' => $token,
+            'message' => 'Register Success',
         ];
 
         return response($response, 201);
