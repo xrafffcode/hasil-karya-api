@@ -17,4 +17,13 @@ class Truck extends Model
         'capacity',
         'is_active',
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function materialMovements()
+    {
+        return $this->hasMany(MaterialMovement::class);
+    }
 }

@@ -21,4 +21,9 @@ class Station extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function materialMovements()
+    {
+        return $this->hasMany(MaterialMovement::class);
+    }
 }

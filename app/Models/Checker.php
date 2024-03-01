@@ -17,4 +17,13 @@ class Checker extends Model
         'email',
         'is_active',
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function materialMovements()
+    {
+        return $this->hasMany(MaterialMovement::class);
+    }
 }
