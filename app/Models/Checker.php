@@ -12,9 +12,9 @@ class Checker extends Model
     use HasFactory, SoftDeletes, UUID;
 
     protected $fillable = [
+        'user_id',
         'code',
         'name',
-        'email',
         'is_active',
     ];
 
@@ -25,5 +25,10 @@ class Checker extends Model
     public function materialMovements()
     {
         return $this->hasMany(MaterialMovement::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

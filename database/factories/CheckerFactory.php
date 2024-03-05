@@ -16,8 +16,17 @@ class CheckerFactory extends Factory
         return [
             'code' => strval($this->faker->unique()->randomNumber(8)),
             'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
             'is_active' => $this->faker->boolean,
         ];
+    }
+
+    public function withCredentials(): CheckerFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'email' => $this->faker->unique()->safeEmail,
+                'password' => 'password',
+            ];
+        });
     }
 }

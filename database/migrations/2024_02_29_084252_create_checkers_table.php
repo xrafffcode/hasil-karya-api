@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('checkers', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('code');
             $table->string('name');
-            $table->string('email');
             $table->boolean('is_active');
 
             $table->softDeletes();

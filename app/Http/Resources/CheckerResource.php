@@ -18,7 +18,7 @@ class CheckerResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'name' => $this->name,
-            'email' => $this->email,
+            'email' => $this->user->email,
             'is_active' => $this->is_active,
         ];
     }

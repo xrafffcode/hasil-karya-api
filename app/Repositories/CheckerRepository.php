@@ -2,8 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Enum\UserRoleEnum;
 use App\Interfaces\CheckerRepositoryInterface;
 use App\Models\Checker;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class CheckerRepository implements CheckerRepositoryInterface
 {
@@ -16,14 +19,30 @@ class CheckerRepository implements CheckerRepositoryInterface
 
     public function create(array $data)
     {
-        $checker = new Checker();
-        $checker->code = $data['code'];
-        $checker->name = $data['name'];
-        $checker->email = $data['email'];
-        $checker->is_active = $data['is_active'];
-        $checker->save();
+        try {
+            DB::beginTransaction();
 
-        return $checker;
+            $user = new User();
+            $user->email = $data['email'];
+            $user->password = bcrypt($data['password']);
+            $user->save();
+            $user->assignRole(UserRoleEnum::CHECKER);
+
+            $checker = new Checker();
+            $checker->user_id = $user->id;
+            $checker->code = $data['code'];
+            $checker->name = $data['name'];
+            $checker->is_active = $data['is_active'];
+            $checker->save();
+
+            DB::commit();
+
+            return $checker;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return $e;
+        }
     }
 
     public function getCheckerById($id)
@@ -35,14 +54,29 @@ class CheckerRepository implements CheckerRepositoryInterface
 
     public function update(array $data, $id)
     {
-        $checker = Checker::find($id);
-        $checker->code = $data['code'];
-        $checker->name = $data['name'];
-        $checker->email = $data['email'];
-        $checker->is_active = $data['is_active'];
-        $checker->save();
+        try {
+            DB::beginTransaction();
 
-        return $checker;
+            $checker = Checker::find($id);
+            $checker->code = $data['code'];
+            $checker->name = $data['name'];
+            $checker->is_active = $data['is_active'];
+            $checker->save();
+
+            if (isset($data['password'])) {
+                $user = User::find($checker->user_id);
+                $user->password = bcrypt($data['password']);
+                $user->save();
+            }
+
+            DB::commit();
+
+            return $checker;
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return $e;
+        }
     }
 
     public function delete($id)
