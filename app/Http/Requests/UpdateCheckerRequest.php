@@ -16,7 +16,8 @@ class UpdateCheckerRequest extends FormRequest
         return [
             'code' => 'required|string|max:255|unique:checkers,code,'.$this->route('checker'),
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:checkers,email,'.$this->route('checker'),
+            'email' => 'required|email|max:255|unique:users,email,'.$this->route('checker'),
+            'password' => 'nullable|string|max:255',
             'is_active' => 'required|boolean',
         ];
     }

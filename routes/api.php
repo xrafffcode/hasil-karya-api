@@ -24,17 +24,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('drivers', [DriverController::class, 'index']);
-Route::get('trucks', [TruckController::class, 'index']);
-Route::get('stations', [StationController::class, 'index']);
-Route::get('checkers', [CheckerController::class, 'index']);
-Route::get('material-movements', [MaterialMovementController::class, 'index']);
+Route::middleware(['role:admin'])->group(function () {
+    Route::get('drivers', [DriverController::class, 'index']);
+    Route::get('trucks', [TruckController::class, 'index']);
+    Route::get('stations', [StationController::class, 'index']);
+    Route::get('checkers', [CheckerController::class, 'index']);
+    Route::get('material-movements', [MaterialMovementController::class, 'index']);
+});
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('driver', [DriverController::class, 'store']);
     Route::get('driver/{id}', [DriverController::class, 'show']);
     Route::post('driver/{id}', [DriverController::class, 'update']);
@@ -59,4 +61,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('material-movement/{id}', [MaterialMovementController::class, 'show']);
     Route::post('material-movement/{id}', [MaterialMovementController::class, 'update']);
     Route::delete('material-movement/{id}', [MaterialMovementController::class, 'destroy']);
+});
+
+Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
+    Route::post('checker/store/material-movement', [MaterialMovementController::class, 'store']);
 });

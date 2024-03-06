@@ -44,4 +44,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function checker()
+    {
+        return $this->hasOne(Checker::class);
+    }
+
+    public function hasChecker()
+    {
+        return $this->checker()->exists();
+    }
 }

@@ -16,7 +16,8 @@ class StoreCheckerRequest extends FormRequest
         return [
             'code' => 'required|string|max:255|unique:checkers,code',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:checkers,email',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required|string|max:255',
             'is_active' => 'required|boolean',
         ];
     }

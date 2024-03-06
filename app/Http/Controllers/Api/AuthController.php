@@ -19,6 +19,15 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
+        if ($user->hasChecker()) {
+            if ($user->is_active == false) {
+                return response([
+                    'success' => false,
+                    'message' => ['Your account is not active.'],
+                ], 404);
+            }
+        }
+
         $credentials = request(['email', 'password']);
 
         if (! Auth::attempt($credentials)) {

@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Enum\UserRoleEnum;
 use App\Models\Truck;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class TruckAPITest extends TestCase
@@ -18,7 +20,9 @@ class TruckAPITest extends TestCase
 
     public function test_truck_api_call_index_expect_success()
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
 
         $this->actingAs($user);
 
@@ -31,7 +35,9 @@ class TruckAPITest extends TestCase
 
     public function test_truck_api_call_create_with_auto_code_expect_success()
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
 
         $this->actingAs($user);
 
@@ -46,7 +52,9 @@ class TruckAPITest extends TestCase
 
     public function test_truck_api_call_show_expect_success()
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
 
         $this->actingAs($user);
 
@@ -59,7 +67,9 @@ class TruckAPITest extends TestCase
 
     public function test_truck_api_call_update_with_auto_code_expect_success()
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
 
         $this->actingAs($user);
 
@@ -76,7 +86,9 @@ class TruckAPITest extends TestCase
 
     public function test_truck_api_call_delete_expect_success()
     {
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
 
         $this->actingAs($user);
 
