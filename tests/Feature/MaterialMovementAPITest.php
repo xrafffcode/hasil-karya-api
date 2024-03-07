@@ -80,6 +80,31 @@ class MaterialMovementAPITest extends TestCase
         $this->assertDatabaseHas('material_movements', $materialMovement);
     }
 
+    public function test_material_movement_api_call_create_with_auto_code_and_wrong_formatted_date_expect_failed()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $checker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create(['is_active' => true]);
+
+        $materialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
+            ->for($checker, 'checker')
+            ->make(['code' => 'AUTO', 'date' => '2021-13-01 22:12'])
+            ->toArray();
+
+        $response = $this->json('POST', '/api/v1/material-movement', $materialMovement);
+
+        $response->assertStatus(422);
+    }
+
     public function test_material_movement_api_call_create_with_auto_code_and_checker_user_expect_success()
     {
         $user = User::factory()
