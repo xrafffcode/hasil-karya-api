@@ -20,10 +20,10 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user->hasChecker()) {
-            if ($user->is_active == false) {
+            if ($user->checker->is_active === false) {
                 return response([
                     'success' => false,
-                    'message' => ['Your account is not active.'],
+                    'message' => "Your account is not active. Please contact the administrator."
                 ], 404);
             }
         }
@@ -33,7 +33,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials)) {
             return response([
                 'success' => false,
-                'message' => ['These credentials do not match our records.'],
+                'message' => "Invalid credentials. Please try again."
             ], 404);
         }
 
