@@ -47,7 +47,7 @@ class MaterialMovementController extends Controller
         try {
             $materialMovement = $this->MaterialMovementRepository->create($request);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new MaterialMovementResource($materialMovement), 201);
+            return ResponseHelper::jsonResponse(true, 'Material movement berhasil ditambahkan.', new MaterialMovementResource($materialMovement), 201);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -59,7 +59,7 @@ class MaterialMovementController extends Controller
             $materialMovement = $this->MaterialMovementRepository->getMaterialMovementById($id);
 
             if (! $materialMovement) {
-                return ResponseHelper::jsonResponse(false, 'Material Movement not found', null, 404);
+                return ResponseHelper::jsonResponse(false, 'Material movement tidak ditemukan.', null, 404);
             }
 
             return ResponseHelper::jsonResponse(true, 'Success', new MaterialMovementResource($materialMovement), 200);
@@ -85,7 +85,7 @@ class MaterialMovementController extends Controller
         try {
             $materialMovement = $this->MaterialMovementRepository->update($request, $id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new MaterialMovementResource($materialMovement), 200);
+            return ResponseHelper::jsonResponse(true, 'Material movement berhasil diperbaharui.', new MaterialMovementResource($materialMovement), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -96,7 +96,7 @@ class MaterialMovementController extends Controller
         try {
             $materialMovement = $this->MaterialMovementRepository->delete($id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new MaterialMovementResource($materialMovement), 200);
+            return ResponseHelper::jsonResponse(true, 'Material movement berhasil dihapus.', new MaterialMovementResource($materialMovement), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

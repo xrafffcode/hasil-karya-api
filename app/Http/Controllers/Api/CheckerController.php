@@ -100,7 +100,7 @@ class CheckerController extends Controller
 
             $message = $checker->is_active ? 'Checker berhasil diaktifkan.' : 'Checker berhasil dinonaktifkan.';
 
-            return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 200);
+            return ResponseHelper::jsonResponse(true, $message, new CheckerResource($checker), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
