@@ -17,24 +17,24 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if ($user->hasChecker()) {
-            if ($user->is_active == false) {
-                return response([
-                    'success' => false,
-                    'message' => ['Your account is not active.'],
-                ], 404);
-            }
-        }
-
         $credentials = request(['email', 'password']);
 
         if (! Auth::attempt($credentials)) {
             return response([
                 'success' => false,
-                'message' => ['These credentials do not match our records.'],
+                'message' => "Invalid credentials. Please try again."
             ], 404);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user->hasChecker()) {
+            if ($user->checker->is_active === false) {
+                return response([
+                    'success' => false,
+                    'message' => "Your account is not active. Please contact the administrator."
+                ], 404);
+            }
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
