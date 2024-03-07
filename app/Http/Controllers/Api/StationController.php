@@ -47,7 +47,7 @@ class StationController extends Controller
         try {
             $station = $this->StationRepository->create($request);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new StationResource($station), 201);
+            return ResponseHelper::jsonResponse(true, 'Data station berhasil ditambahkan.', new StationResource($station), 201);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -59,7 +59,7 @@ class StationController extends Controller
             $station = $this->StationRepository->getStationById($id);
 
             if (! $station) {
-                return ResponseHelper::jsonResponse(false, 'Station not found', null, 404);
+                return ResponseHelper::jsonResponse(false, 'Data station tidak ditemukan.', null, 404);
             }
 
             return ResponseHelper::jsonResponse(true, 'Success', new StationResource($station), 200);
@@ -85,7 +85,7 @@ class StationController extends Controller
         try {
             $station = $this->StationRepository->update($request, $id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new StationResource($station), 200);
+            return ResponseHelper::jsonResponse(true, 'Data station berhasil di perbaharui.', new StationResource($station), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -98,7 +98,9 @@ class StationController extends Controller
         try {
             $station = $this->StationRepository->updateActiveStatus($id, $status);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new StationResource($station), 200);
+            $message = $station->is_active ? 'Station berhasil diaktifkan.' : 'Station berhasil dinonaktifkan.';
+
+            return ResponseHelper::jsonResponse(true, $message, new StationResource($station), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -109,7 +111,7 @@ class StationController extends Controller
         try {
             $station = $this->StationRepository->delete($id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new StationResource($station), 200);
+            return ResponseHelper::jsonResponse(true, 'Data station berhasil dihapus.', new StationResource($station), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

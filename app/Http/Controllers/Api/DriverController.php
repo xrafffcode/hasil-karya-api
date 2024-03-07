@@ -47,7 +47,7 @@ class DriverController extends Controller
         try {
             $driver = $this->DriverRepository->create($request);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new DriverResource($driver), 201);
+            return ResponseHelper::jsonResponse(true, 'Data driver berhasil ditambahkan.', new DriverResource($driver), 201);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -59,7 +59,7 @@ class DriverController extends Controller
             $driver = $this->DriverRepository->getDriverById($id);
 
             if (! $driver) {
-                return ResponseHelper::jsonResponse(false, 'Driver not found', null, 404);
+                return ResponseHelper::jsonResponse(false, 'Data driver tidak ditemukan.', null, 404);
             }
 
             return ResponseHelper::jsonResponse(true, 'Success', new DriverResource($driver), 200);
@@ -85,7 +85,7 @@ class DriverController extends Controller
         try {
             $driver = $this->DriverRepository->update($request, $id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new DriverResource($driver), 200);
+            return ResponseHelper::jsonResponse(true, 'Data driver berhasil diperbaharui.', new DriverResource($driver), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -98,7 +98,9 @@ class DriverController extends Controller
         try {
             $driver = $this->DriverRepository->updateActiveStatus($id, $status);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new DriverResource($driver), 200);
+            $message = $driver->is_active ? 'Driver berhasil diaktifkan.' : 'Driver berhasil dinonaktifkan.';
+
+            return ResponseHelper::jsonResponse(true, $message, new DriverResource($driver), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -109,7 +111,7 @@ class DriverController extends Controller
         try {
             $driver = $this->DriverRepository->delete($id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new DriverResource($driver), 200);
+            return ResponseHelper::jsonResponse(true, 'Driver berhasil dihapus.', new DriverResource($driver), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

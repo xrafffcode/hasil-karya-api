@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response([
                 'success' => false,
                 'message' => ['These credentials do not match our records.'],
