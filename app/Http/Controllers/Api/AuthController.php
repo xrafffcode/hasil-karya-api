@@ -22,7 +22,7 @@ class AuthController extends Controller
         if (!Auth::attempt($credentials)) {
             return response([
                 'success' => false,
-                'message' => ['These credentials do not match our records.'],
+                'message' => "Invalid credentials. Please try again."
             ], 404);
         }
 
