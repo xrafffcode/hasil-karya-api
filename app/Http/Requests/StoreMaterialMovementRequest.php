@@ -28,7 +28,18 @@ class StoreMaterialMovementRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if (!$this->has('remarks')) {
+        if (! $this->has('code')) {
+            $this->merge(['code' => 'AUTO']);
+        }
+
+        if (! $this->has('date')) {
+            $this->merge(['date' => now()]);
+        }
+
+        if (! $this->has('amount')) {
+            $this->merge(['amount' => -1]);
+        }
+        if (! $this->has('remarks')) {
             $this->merge(['remarks' => '']);
         }
     }
