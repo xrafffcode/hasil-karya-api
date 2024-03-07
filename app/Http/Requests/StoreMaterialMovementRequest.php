@@ -25,9 +25,10 @@ class StoreMaterialMovementRequest extends FormRequest
         ];
     }
 
+
     public function prepareForValidation()
     {
-        if (! $this->has('remarks')) {
+        if (!$this->has('remarks')) {
             $this->merge(['remarks' => '']);
         }
     }
