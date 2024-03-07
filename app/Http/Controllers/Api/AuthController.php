@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response([
                 'success' => false,
                 'message' => "Invalid credentials. Please try again."

@@ -47,7 +47,7 @@ class CheckerController extends Controller
         try {
             $checker = $this->CheckerRepository->create($request);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 201);
+            return ResponseHelper::jsonResponse(true, 'Data checker berhasil ditambahkan.', new CheckerResource($checker), 201);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -59,7 +59,7 @@ class CheckerController extends Controller
             $checker = $this->CheckerRepository->getCheckerById($id);
 
             if (! $checker) {
-                return ResponseHelper::jsonResponse(false, 'Checker not found', null, 404);
+                return ResponseHelper::jsonResponse(false, 'Data checker tidak ditemukan.', null, 404);
             }
 
             return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 200);
@@ -85,7 +85,7 @@ class CheckerController extends Controller
         try {
             $checker = $this->CheckerRepository->update($request, $id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 200);
+            return ResponseHelper::jsonResponse(true, 'Data checker berhasil di perbaharui.', new CheckerResource($checker), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -98,6 +98,8 @@ class CheckerController extends Controller
         try {
             $checker = $this->CheckerRepository->updateActiveStatus($id, $status);
 
+            $message = $checker->is_active ? 'Checker berhasil diaktifkan.' : 'Checker berhasil dinonaktifkan.';
+
             return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
@@ -109,7 +111,7 @@ class CheckerController extends Controller
         try {
             $checker = $this->CheckerRepository->delete($id);
 
-            return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 200);
+            return ResponseHelper::jsonResponse(true, 'Checker berhasil dihapus.', new CheckerResource($checker), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
