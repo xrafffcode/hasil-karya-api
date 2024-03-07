@@ -14,7 +14,7 @@ class UpdateStationRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:255|unique:stations,code,'.$this->route('station'),
+            'code' => 'required|string|max:255|unique:stations,code,'.$this->route('id').',id',
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'is_active' => 'required|boolean',

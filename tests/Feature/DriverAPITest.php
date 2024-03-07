@@ -84,6 +84,44 @@ class DriverAPITest extends TestCase
         $this->assertDatabaseHas('drivers', $updatedDriver);
     }
 
+    public function test_driver_api_call_update_with_existing_code_in_same_driver_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $driver = Driver::factory()->create();
+
+        $updatedDriver = Driver::factory()->make(['code' => $driver->code])->toArray();
+
+        $response = $this->json('POST', '/api/v1/driver/'.$driver->id, $updatedDriver);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('drivers', $updatedDriver);
+    }
+
+    public function test_driver_api_call_update_with_existing_code_in_different_driver_expect_failed()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $existingDriver = Driver::factory()->create();
+
+        $newDriver = Driver::factory()->create();
+
+        $updatedDriver = Driver::factory()->make(['code' => $existingDriver->code])->toArray();
+
+        $response = $this->json('POST', '/api/v1/driver/'.$newDriver->id, $updatedDriver);
+
+        $response->assertStatus(422);
+    }
+
     public function test_driver_api_call_delete_expect_success()
     {
         $user = User::factory()

@@ -14,7 +14,7 @@ class UpdateDriverRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:255|unique:drivers,code,'.$this->route('driver'),
+            'code' => 'required|string|max:255|unique:drivers,code,'.$this->route('id').',id',
             'name' => 'required|string|max:255',
             'is_active' => 'required|boolean',
         ];

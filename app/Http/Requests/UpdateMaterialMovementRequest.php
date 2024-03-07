@@ -14,7 +14,7 @@ class UpdateMaterialMovementRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|unique:material_movements,code,'.$this->route('material_movement'),
+            'code' => 'required|unique:material_movements,code,'.$this->route('id').',id',
             'driver_id' => 'required|exists:drivers,id',
             'truck_id' => 'required|exists:trucks,id',
             'station_id' => 'required|exists:stations,id',
