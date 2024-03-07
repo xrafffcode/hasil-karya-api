@@ -21,6 +21,14 @@ class UpdateMaterialMovementRequest extends FormRequest
             'checker_id' => 'required|exists:checkers,id',
             'date' => 'required|date',
             'amount' => 'required|numeric',
+            'remarks' => 'nullable|string',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        if (! $this->has('remarks')) {
+            $this->merge(['remarks' => '']);
+        }
     }
 }

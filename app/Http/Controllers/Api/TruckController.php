@@ -81,6 +81,19 @@ class TruckController extends Controller
         }
     }
 
+    public function updateActiveStatus(Request $request, $id)
+    {
+        $status = $request->input('is_active');
+
+        try {
+            $truck = $this->TruckRepository->updateActiveStatus($id, $status);
+
+            return ResponseHelper::jsonResponse(true, 'Success', new TruckResource($truck), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function destroy($id)
     {
         try {

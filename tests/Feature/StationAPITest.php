@@ -126,6 +126,29 @@ class StationAPITest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_station_api_call_update_active_status_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $station = Station::factory()->create(['is_active' => true]);
+
+        $response = $this->json('POST', '/api/v1/station/active/'.$station->id, ['is_active' => false]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('stations', ['id' => $station->id, 'is_active' => false]);
+
+        $response = $this->json('POST', '/api/v1/station/active/'.$station->id, ['is_active' => false]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('stations', ['id' => $station->id, 'is_active' => false]);
+    }
+
     public function test_station_api_call_delete_expect_success()
     {
         $user = User::factory()

@@ -12,6 +12,8 @@ interface DriverRepositoryInterface
 
     public function update(array $data, string $id);
 
+    public function updateActiveStatus(string $id, bool $status);
+
     public function delete(string $id);
 
     public function generateCode(int $tryCount): string;

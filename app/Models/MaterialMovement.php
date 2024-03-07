@@ -19,6 +19,7 @@ class MaterialMovement extends Model
         'checker_id',
         'date',
         'amount',
+        'remarks',
     ];
 
     public function driver()

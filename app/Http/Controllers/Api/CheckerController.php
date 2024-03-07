@@ -91,6 +91,19 @@ class CheckerController extends Controller
         }
     }
 
+    public function updateActiveStatus(Request $request, $id)
+    {
+        $status = $request->input('is_active');
+
+        try {
+            $checker = $this->CheckerRepository->updateActiveStatus($id, $status);
+
+            return ResponseHelper::jsonResponse(true, 'Success', new CheckerResource($checker), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function destroy($id)
     {
         try {

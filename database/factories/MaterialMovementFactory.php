@@ -18,6 +18,7 @@ class MaterialMovementFactory extends Factory
             'code' => strval(Str::random(10)),
             'date' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
             'amount' => $this->faker->randomFloat(2, 0, 1000),
+            'remarks' => $this->faker->text(),
         ];
     }
 }

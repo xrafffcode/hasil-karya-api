@@ -45,6 +45,15 @@ class TruckRepository implements TruckRepositoryInterface
         return $truck;
     }
 
+    public function updateActiveStatus($id, $status)
+    {
+        $truck = Truck::find($id);
+        $truck->is_active = $status;
+        $truck->save();
+
+        return $truck;
+    }
+
     public function delete($id)
     {
         $truck = Truck::find($id);

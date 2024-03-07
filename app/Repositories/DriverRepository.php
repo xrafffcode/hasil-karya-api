@@ -43,6 +43,15 @@ class DriverRepository implements DriverRepositoryInterface
         return $driver;
     }
 
+    public function updateActiveStatus($id, $status)
+    {
+        $driver = Driver::find($id);
+        $driver->is_active = $status;
+        $driver->save();
+
+        return $driver;
+    }
+
     public function delete($id)
     {
         $driver = Driver::find($id);

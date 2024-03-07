@@ -130,7 +130,7 @@ class CheckerAPITest extends TestCase
         $this->assertDatabaseHas('checkers', Arr::except($updatedChecker, ['email', 'password']));
     }
 
-    public function test_checker_api_call_update_with_existing_code_in_different_checker_expect_failer()
+    public function test_checker_api_call_update_with_existing_code_in_different_checker_expect_failed()
     {
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
@@ -154,6 +154,31 @@ class CheckerAPITest extends TestCase
         $response = $this->json('POST', '/api/v1/checker/'.$newChecker->id, $updatedChecker);
 
         $response->assertStatus(422);
+    }
+
+    public function test_checker_api_call_update_active_status_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $checker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create(['is_active' => true]);
+
+        $response = $this->json('POST', '/api/v1/checker/active/'.$checker->id, ['is_active' => false]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('checkers', ['id' => $checker->id, 'is_active' => false]);
+
+        $response = $this->json('POST', '/api/v1/checker/active/'.$checker->id, ['is_active' => true]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('checkers', ['id' => $checker->id, 'is_active' => true]);
     }
 
     public function test_checker_api_call_delete_expect_success()
