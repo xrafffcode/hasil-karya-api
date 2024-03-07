@@ -68,6 +68,14 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
+        $amount = $request['amount'];
+        if ($amount == -1) {
+            $amount = $truck->capacity;
+            $request['amount'] = $amount;
+        } elseif ($amount < -1) {
+            return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
+        }
+
         try {
             $materialMovement = $this->MaterialMovementRepository->create($request);
 
@@ -124,6 +132,14 @@ class MaterialMovementController extends Controller
         $checker = Checker::find($request['checker_id']);
         if ($checker->is_active == false) {
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
+        }
+
+        $amount = $request['amount'];
+        if ($amount == -1) {
+            $amount = $truck->capacity;
+            $request['amount'] = $amount;
+        } elseif ($amount < -1) {
+            return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
         }
 
         try {
