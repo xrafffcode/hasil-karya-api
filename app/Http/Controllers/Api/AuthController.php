@@ -95,6 +95,10 @@ class AuthController extends Controller
             $user = Auth::user();
             $user->roles;
 
+            if ($user->checker()->exists()) {
+                $user->checker;
+            }
+
             return response()->json([
                 'message' => 'User data',
                 'data' => $user,
