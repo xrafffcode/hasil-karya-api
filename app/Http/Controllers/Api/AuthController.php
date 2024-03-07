@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (! Auth::attempt($credentials)) {
+        if (!Auth::attempt($credentials)) {
             return response([
                 'success' => false,
                 'message' => ['These credentials do not match our records.'],
@@ -87,5 +87,22 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
+    }
+
+    public function me()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $user->roles;
+
+            return response()->json([
+                'message' => 'User data',
+                'data' => $user,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'You are not logged in',
+        ], 401);
     }
 }

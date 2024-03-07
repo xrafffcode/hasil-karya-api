@@ -35,6 +35,7 @@ Route::middleware(['role:admin'])->group(function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me'])->name('me');
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('driver', [DriverController::class, 'store']);
