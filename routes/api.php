@@ -24,12 +24,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['role:admin'])->group(function () {
-    Route::get('drivers', [DriverController::class, 'index']);
-    Route::get('trucks', [TruckController::class, 'index']);
-    Route::get('stations', [StationController::class, 'index']);
-    Route::get('checkers', [CheckerController::class, 'index']);
-    Route::get('material-movements', [MaterialMovementController::class, 'index']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('drivers', [DriverController::class, 'index']);
+        Route::get('trucks', [TruckController::class, 'index']);
+        Route::get('stations', [StationController::class, 'index']);
+        Route::get('checkers', [CheckerController::class, 'index']);
+        Route::get('material-movements', [MaterialMovementController::class, 'index']);
+    });
 });
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
