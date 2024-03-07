@@ -22,7 +22,9 @@ class MaterialMovementResource extends JsonResource
             'station' => StationResource::make($this->whenLoaded('station')),
             'checker' => CheckerResource::make($this->whenLoaded('checker')),
             'date' => $this->date,
+            'formatted_date' => $this->formatted_date,
             'amount' => $this->amount,
+            'remarks' => $this->remarks
         ];
     }
 }

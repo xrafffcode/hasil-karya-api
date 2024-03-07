@@ -44,26 +44,30 @@ class MaterialMovementController extends Controller
             do {
                 $code = $this->MaterialMovementRepository->generateCode($tryCount);
                 $tryCount++;
-            } while (! $this->MaterialMovementRepository->isUniqueCode($code));
+            } while (!$this->MaterialMovementRepository->isUniqueCode($code));
             $request['code'] = $code;
         }
 
         $driver = Driver::find($request['driver_id']);
+
         if ($driver->is_active == false) {
             return ResponseHelper::jsonResponse(false, 'Driver tidak aktif.', null, 405);
         }
 
         $truck = Truck::find($request['truck_id']);
+
         if ($truck->is_active == false) {
             return ResponseHelper::jsonResponse(false, 'Truck tidak aktif.', null, 405);
         }
 
         $station = Station::find($request['station_id']);
+
         if ($station->is_active == false) {
             return ResponseHelper::jsonResponse(false, 'Station tidak aktif.', null, 405);
         }
 
         $checker = Checker::find($request['checker_id']);
+
         if ($checker->is_active == false) {
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
@@ -90,7 +94,7 @@ class MaterialMovementController extends Controller
         try {
             $materialMovement = $this->MaterialMovementRepository->getMaterialMovementById($id);
 
-            if (! $materialMovement) {
+            if (!$materialMovement) {
                 return ResponseHelper::jsonResponse(false, 'Material movement tidak ditemukan.', null, 404);
             }
 
@@ -110,7 +114,7 @@ class MaterialMovementController extends Controller
             do {
                 $code = $this->MaterialMovementRepository->generateCode($tryCount);
                 $tryCount++;
-            } while (! $this->MaterialMovementRepository->isUniqueCode($code, $id));
+            } while (!$this->MaterialMovementRepository->isUniqueCode($code, $id));
             $request['code'] = $code;
         }
 

@@ -9,7 +9,8 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
 {
     public function getAllMaterialMovements()
     {
-        $materialMovements = MaterialMovement::orderBy('date', 'desc')->get();
+        $materialMovements = MaterialMovement::with('driver', 'truck', 'station', 'checker')
+            ->orderBy('date', 'desc')->get();
 
         return $materialMovements;
     }
@@ -32,7 +33,8 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
 
     public function getMaterialMovementById($id)
     {
-        $materialMovement = MaterialMovement::find($id);
+        $materialMovement = MaterialMovement::with('driver', 'truck', 'station', 'checker')
+            ->find($id);
 
         return $materialMovement;
     }
@@ -64,7 +66,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function generateCode(int $tryCount): string
     {
         $count = MaterialMovement::count() + 1 + $tryCount;
-        $code = 'MM'.str_pad($count, 2, '0', STR_PAD_LEFT);
+        $code = 'MM' . str_pad($count, 2, '0', STR_PAD_LEFT);
 
         return $code;
     }

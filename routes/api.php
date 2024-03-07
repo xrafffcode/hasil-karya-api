@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::middleware(['role:admin'])->group(function () {
+    Route::middleware(['role:admin|checker'])->group(function () {
         Route::get('drivers', [DriverController::class, 'index']);
         Route::get('trucks', [TruckController::class, 'index']);
         Route::get('stations', [StationController::class, 'index']);

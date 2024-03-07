@@ -25,6 +25,7 @@ class StoreMaterialMovementRequest extends FormRequest
         ];
     }
 
+
     public function prepareForValidation()
     {
         if (! $this->has('code')) {
@@ -38,7 +39,6 @@ class StoreMaterialMovementRequest extends FormRequest
         if (! $this->has('amount')) {
             $this->merge(['amount' => -1]);
         }
-
         if (! $this->has('remarks')) {
             $this->merge(['remarks' => '']);
         }

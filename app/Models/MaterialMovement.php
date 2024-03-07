@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\UUID;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -40,5 +41,12 @@ class MaterialMovement extends Model
     public function checker()
     {
         return $this->belongsTo(Checker::class);
+    }
+
+    public function getFormattedDateAttribute()
+    {
+        $tanggal = Carbon::createFromFormat('Y-m-d H:i:s', $this->date);
+
+        return $tanggal->isoFormat('DD MMMM YYYY');
     }
 }
