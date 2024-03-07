@@ -167,6 +167,79 @@ class MaterialMovementAPITest extends TestCase
         $this->assertDatabaseHas('material_movements', $updatedMaterialMovement);
     }
 
+    public function test_material_movement_api_call_update_with_existing_code_in_same_material_movement_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $checker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create();
+
+        $materialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(), 'driver')
+            ->for(Truck::factory()->create(), 'truck')
+            ->for(Station::factory()->create(), 'station')
+            ->for($checker, 'checker')
+            ->create();
+
+        $updatedMaterialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(), 'driver')
+            ->for(Truck::factory()->create(), 'truck')
+            ->for(Station::factory()->create(), 'station')
+            ->for($checker, 'checker')
+            ->make(['code' => $materialMovement->code])
+            ->toArray();
+
+        $response = $this->json('POST', '/api/v1/material-movement/'.$materialMovement->id, $updatedMaterialMovement);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('material_movements', $updatedMaterialMovement);
+    }
+
+    public function test_material_movement_api_call_update_with_existing_code_in_different_material_movement_expect_failed()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $checker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create();
+
+        $existingMaterialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(), 'driver')
+            ->for(Truck::factory()->create(), 'truck')
+            ->for(Station::factory()->create(), 'station')
+            ->for($checker, 'checker')
+            ->create();
+
+        $newMaterialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(), 'driver')
+            ->for(Truck::factory()->create(), 'truck')
+            ->for(Station::factory()->create(), 'station')
+            ->for($checker, 'checker')
+            ->create();
+
+        $updatedMaterialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(), 'driver')
+            ->for(Truck::factory()->create(), 'truck')
+            ->for(Station::factory()->create(), 'station')
+            ->for($checker, 'checker')
+            ->make(['code' => $existingMaterialMovement->code])
+            ->toArray();
+
+        $response = $this->json('POST', '/api/v1/material-movement/'.$newMaterialMovement->id, $updatedMaterialMovement);
+
+        $response->assertStatus(422);
+    }
+
     public function test_material_movement_api_call_delete_expect_success()
     {
         $user = User::factory()

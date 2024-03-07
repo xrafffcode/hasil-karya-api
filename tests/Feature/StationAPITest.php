@@ -88,6 +88,44 @@ class StationAPITest extends TestCase
         $this->assertDatabaseHas('stations', $updatedStation);
     }
 
+    public function test_station_api_call_update_with_existing_code_in_same_station_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $station = Station::factory()->create();
+
+        $updatedStation = Station::factory()->make(['code' => $station->code])->toArray();
+
+        $response = $this->json('POST', '/api/v1/station/'.$station->id, $updatedStation);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('stations', $updatedStation);
+    }
+
+    public function test_station_api_call_update_with_existing_code_in_different_station_expect_failed()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $existingStation = Station::factory()->create();
+
+        $newStation = Station::factory()->create();
+
+        $updatedStation = Station::factory()->make(['code' => $existingStation->code])->toArray();
+
+        $response = $this->json('POST', '/api/v1/station/'.$newStation->id, $updatedStation);
+
+        $response->assertStatus(422);
+    }
+
     public function test_station_api_call_delete_expect_success()
     {
         $user = User::factory()

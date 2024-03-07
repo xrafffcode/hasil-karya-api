@@ -84,6 +84,44 @@ class TruckAPITest extends TestCase
         $this->assertDatabaseHas('trucks', $updatedTruck);
     }
 
+    public function test_truck_api_call_update_with_existing_code_in_same_truck_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $truck = Truck::factory()->create();
+
+        $updatedTruck = Truck::factory()->make(['code' => $truck->code])->toArray();
+
+        $response = $this->json('POST', '/api/v1/truck/'.$truck->id, $updatedTruck);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('trucks', $updatedTruck);
+    }
+
+    public function test_truck_api_call_update_with_existing_code_in_different_truck_expect_failed()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $existingTruck = Truck::factory()->create();
+
+        $newTruck = Truck::factory()->create();
+
+        $updatedTruck = Truck::factory()->make(['code' => $existingTruck->code])->toArray();
+
+        $response = $this->json('POST', '/api/v1/truck/'.$newTruck->id, $updatedTruck);
+
+        $response->assertStatus(422);
+    }
+
     public function test_truck_api_call_delete_expect_success()
     {
         $user = User::factory()

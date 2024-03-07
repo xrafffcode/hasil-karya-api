@@ -106,6 +106,56 @@ class CheckerAPITest extends TestCase
         $this->assertDatabaseHas('checkers', Arr::except($updatedChecker, ['email', 'password']));
     }
 
+    public function test_checker_api_call_update_with_existing_code_in_same_checker_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $checker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create();
+
+        $updatedChecker = Checker::factory()
+            ->withCredentials()
+            ->make(['code' => $checker->code])
+            ->toArray();
+
+        $response = $this->json('POST', '/api/v1/checker/'.$checker->id, $updatedChecker);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('checkers', Arr::except($updatedChecker, ['email', 'password']));
+    }
+
+    public function test_checker_api_call_update_with_existing_code_in_different_checker_expect_failer()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $existingChecker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create();
+
+        $newChecker = Checker::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
+            ->create();
+
+        $updatedChecker = Checker::factory()
+            ->withCredentials()
+            ->make(['code' => $existingChecker->code])
+            ->toArray();
+
+        $response = $this->json('POST', '/api/v1/checker/'.$newChecker->id, $updatedChecker);
+
+        $response->assertStatus(422);
+    }
+
     public function test_checker_api_call_delete_expect_success()
     {
         $user = User::factory()
