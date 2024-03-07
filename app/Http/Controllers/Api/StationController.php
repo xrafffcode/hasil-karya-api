@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enum\StationCategoryEnum;
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStationRequest;
@@ -44,6 +45,13 @@ class StationController extends Controller
             $request['code'] = $code;
         }
 
+        $category = $request['category'];
+        if (StationCategoryEnum::isValid($category)) {
+            $request['category'] = StationCategoryEnum::resolveToEnum($category)->value;
+        } else {
+            return ResponseHelper::jsonResponse(false, 'Kategori station tidak valid.', null, 400);
+        }
+
         try {
             $station = $this->StationRepository->create($request);
 
@@ -68,6 +76,17 @@ class StationController extends Controller
         }
     }
 
+    public function getStationCategory()
+    {
+        try {
+            $categories = $this->StationRepository->getStationCategory();
+
+            return ResponseHelper::jsonResponse(true, 'Success', $categories, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function update(UpdateStationRequest $request, $id)
     {
         $request = $request->validated();
@@ -80,6 +99,13 @@ class StationController extends Controller
                 $tryCount++;
             } while (! $this->StationRepository->isUniqueCode($code, $id));
             $request['code'] = $code;
+        }
+
+        $category = $request['category'];
+        if (StationCategoryEnum::isValid($category)) {
+            $request['category'] = StationCategoryEnum::resolveToEnum($category)->value;
+        } else {
+            return ResponseHelper::jsonResponse(false, 'Kategori station tidak valid.', null, 400);
         }
 
         try {

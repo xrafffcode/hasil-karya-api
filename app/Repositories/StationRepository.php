@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enum\StationCategoryEnum;
 use App\Interfaces\StationRepositoryInterface;
 use App\Models\Station;
 
@@ -31,6 +32,13 @@ class StationRepository implements StationRepositoryInterface
         $station = Station::find($id);
 
         return $station;
+    }
+
+    public function getStationCategory()
+    {
+        $categories = StationCategoryEnum::toArray();
+
+        return $categories;
     }
 
     public function update(array $data, $id)

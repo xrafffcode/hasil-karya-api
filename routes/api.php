@@ -54,6 +54,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::post('station', [StationController::class, 'store']);
     Route::get('station/{id}', [StationController::class, 'show']);
+    Route::get('station/read/categories', [StationController::class, 'getStationCategory']);
     Route::post('station/{id}', [StationController::class, 'update']);
     Route::post('station/active/{id}', [StationController::class, 'updateActiveStatus']);
     Route::delete('station/{id}', [StationController::class, 'destroy']);

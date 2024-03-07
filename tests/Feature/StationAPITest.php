@@ -67,6 +67,19 @@ class StationAPITest extends TestCase
         $response->assertSuccessful();
     }
 
+    public function test_station_api_call_read_categories_expect_collection()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $response = $this->json('GET', '/api/v1/station/read/categories');
+
+        $response->assertSuccessful();
+    }
+
     public function test_station_api_call_update_with_auto_code_expect_success()
     {
         $user = User::factory()

@@ -10,6 +10,8 @@ interface StationRepositoryInterface
 
     public function getStationById(string $id);
 
+    public function getStationCategory();
+
     public function update(array $data, string $id);
 
     public function updateActiveStatus(string $id, bool $status);

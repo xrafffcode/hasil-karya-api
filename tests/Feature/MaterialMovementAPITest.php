@@ -32,12 +32,12 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $materialMovements = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->count(5)
             ->create();
@@ -61,12 +61,12 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->make(['code' => 'AUTO'])
             ->toArray();
@@ -88,12 +88,12 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $checker = Checker::factory()->for($user)->create();
+        $checker = Checker::factory()->for($user)->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->make(['code' => 'AUTO'])
             ->toArray();
@@ -117,12 +117,12 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->create();
 
@@ -141,19 +141,19 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->create();
 
         $updatedMaterialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->make(['code' => 'AUTO'])
             ->toArray();
@@ -177,19 +177,19 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->create();
 
         $updatedMaterialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->make(['code' => $materialMovement->code])
             ->toArray();
@@ -211,26 +211,26 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $existingMaterialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->create();
 
         $newMaterialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->create();
 
         $updatedMaterialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->make(['code' => $existingMaterialMovement->code])
             ->toArray();
@@ -250,12 +250,12 @@ class MaterialMovementAPITest extends TestCase
 
         $checker = Checker::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first()))
-            ->create();
+            ->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
-            ->for(Driver::factory()->create(), 'driver')
-            ->for(Truck::factory()->create(), 'truck')
-            ->for(Station::factory()->create(), 'station')
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
             ->create();
 

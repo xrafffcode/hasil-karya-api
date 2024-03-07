@@ -22,7 +22,7 @@ class AuthController extends Controller
         if (! Auth::attempt($credentials)) {
             return response([
                 'success' => false,
-                'message' => "Invalid credentials. Please try again."
+                'message' => 'Invalid credentials. Please try again.',
             ], 404);
         }
 
@@ -32,7 +32,7 @@ class AuthController extends Controller
             if ($user->checker->is_active === false) {
                 return response([
                     'success' => false,
-                    'message' => "Your account is not active. Please contact the administrator."
+                    'message' => 'Your account is not active. Please contact the administrator.',
                 ], 404);
             }
         }
