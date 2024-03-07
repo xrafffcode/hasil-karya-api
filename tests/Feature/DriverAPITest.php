@@ -122,6 +122,29 @@ class DriverAPITest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_driver_api_call_update_active_status_expect_succes()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $driver = Driver::factory()->create(['is_active' => true]);
+
+        $response = $this->json('POST', '/api/v1/driver/active/'.$driver->id, ['is_active' => false]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('drivers', ['id' => $driver->id, 'is_active' => false]);
+
+        $response = $this->json('POST', '/api/v1/driver/active/'.$driver->id, ['is_active' => true]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('drivers', ['id' => $driver->id, 'is_active' => true]);
+    }
+
     public function test_driver_api_call_delete_expect_success()
     {
         $user = User::factory()

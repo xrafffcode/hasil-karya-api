@@ -40,21 +40,25 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('driver', [DriverController::class, 'store']);
     Route::get('driver/{id}', [DriverController::class, 'show']);
     Route::post('driver/{id}', [DriverController::class, 'update']);
+    Route::post('driver/active/{id}', [DriverController::class, 'updateActiveStatus']);
     Route::delete('driver/{id}', [DriverController::class, 'destroy']);
 
     Route::post('truck', [TruckController::class, 'store']);
     Route::get('truck/{id}', [TruckController::class, 'show']);
     Route::post('truck/{id}', [TruckController::class, 'update']);
+    Route::post('truck/active/{id}', [TruckController::class, 'updateActiveStatus']);
     Route::delete('truck/{id}', [TruckController::class, 'destroy']);
 
     Route::post('station', [StationController::class, 'store']);
     Route::get('station/{id}', [StationController::class, 'show']);
     Route::post('station/{id}', [StationController::class, 'update']);
+    Route::post('station/active/{id}', [StationController::class, 'updateActiveStatus']);
     Route::delete('station/{id}', [StationController::class, 'destroy']);
 
     Route::post('checker', [CheckerController::class, 'store']);
     Route::get('checker/{id}', [CheckerController::class, 'show']);
     Route::post('checker/{id}', [CheckerController::class, 'update']);
+    Route::post('checker/active/{id}', [CheckerController::class, 'updateActiveStatus']);
     Route::delete('checker/{id}', [CheckerController::class, 'destroy']);
 
     Route::post('material-movement', [MaterialMovementController::class, 'store']);

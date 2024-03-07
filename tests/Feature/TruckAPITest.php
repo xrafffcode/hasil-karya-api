@@ -122,6 +122,29 @@ class TruckAPITest extends TestCase
         $response->assertStatus(422);
     }
 
+    public function test_truck_api_call_update_active_status_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $truck = Truck::factory()->create(['is_active' => true]);
+
+        $response = $this->json('POST', '/api/v1/truck/active/'.$truck->id, ['is_active' => false]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('trucks', ['id' => $truck->id, 'is_active' => false]);
+
+        $response = $this->json('POST', '/api/v1/truck/active/'.$truck->id, ['is_active' => true]);
+
+        $response->assertSuccessful();
+
+        $this->assertDatabaseHas('trucks', ['id' => $truck->id, 'is_active' => true]);
+    }
+
     public function test_truck_api_call_delete_expect_success()
     {
         $user = User::factory()

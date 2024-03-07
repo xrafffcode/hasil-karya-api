@@ -24,6 +24,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->checker_id = $data['checker_id'];
         $materialMovement->date = $data['date'];
         $materialMovement->amount = $data['amount'];
+        $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
 
         return $materialMovement;
@@ -46,6 +47,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->checker_id = $data['checker_id'];
         $materialMovement->date = $data['date'];
         $materialMovement->amount = $data['amount'];
+        $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
 
         return $materialMovement;

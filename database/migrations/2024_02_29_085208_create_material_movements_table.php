@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreign('checker_id')->references('id')->on('checkers');
             $table->datetime('date');
             $table->decimal('amount');
+            $table->text('remarks')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

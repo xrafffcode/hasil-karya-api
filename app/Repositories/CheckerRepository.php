@@ -79,6 +79,15 @@ class CheckerRepository implements CheckerRepositoryInterface
         }
     }
 
+    public function updateActiveStatus($id, $status)
+    {
+        $checker = Checker::find($id);
+        $checker->is_active = $status;
+        $checker->save();
+
+        return $checker;
+    }
+
     public function delete($id)
     {
         $checker = Checker::find($id);

@@ -45,6 +45,15 @@ class StationRepository implements StationRepositoryInterface
         return $station;
     }
 
+    public function updateActiveStatus($id, $status)
+    {
+        $station = Station::find($id);
+        $station->is_active = $status;
+        $station->save();
+
+        return $station;
+    }
+
     public function delete($id)
     {
         $station = Station::find($id);
