@@ -36,7 +36,13 @@ class StationRepository implements StationRepositoryInterface
 
     public function getStationCategory()
     {
-        $categories = StationCategoryEnum::toArray();
+        $categories = [];
+
+        foreach (StationCategoryEnum::toArray() as $category) {
+            $categories[] = [
+                'name' => $category,
+            ];
+        }
 
         return $categories;
     }
@@ -73,7 +79,7 @@ class StationRepository implements StationRepositoryInterface
     public function generateCode(int $tryCount): string
     {
         $count = Station::count() + 1 + $tryCount;
-        $code = 'STA'.str_pad($count, 2, '0', STR_PAD_LEFT);
+        $code = 'STA' . str_pad($count, 2, '0', STR_PAD_LEFT);
 
         return $code;
     }
