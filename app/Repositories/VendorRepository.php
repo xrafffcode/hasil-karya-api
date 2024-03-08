@@ -19,8 +19,8 @@ class VendorRepository implements VendorRepositoryInterface
         $vendor = new Vendor();
         $vendor->code = $data['code'];
         $vendor->name = $data['name'];
-        $vendor->address = $data['address'];
-        $vendor->phone = $data['phone'];
+        $vendor->address = $data['address'] ?? null;
+        $vendor->phone = $data['phone'] ?? null;
         $vendor->save();
 
         return $vendor;
@@ -38,8 +38,8 @@ class VendorRepository implements VendorRepositoryInterface
         $vendor = Vendor::find($id);
         $vendor->code = $data['code'];
         $vendor->name = $data['name'];
-        $vendor->address = $data['address'];
-        $vendor->phone = $data['phone'];
+        $vendor->address = $data['address'] ?? null;
+        $vendor->phone = $data['phone'] ?? null;
         $vendor->save();
 
         return $vendor;
