@@ -12,6 +12,8 @@ interface VendorRepositoryInterface
 
     public function update(array $data, string $id);
 
+    public function updateActiveStatus($id, $status);
+
     public function delete(string $id);
 
     public function generateCode(int $tryCount): string;

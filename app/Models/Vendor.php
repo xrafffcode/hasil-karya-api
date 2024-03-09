@@ -16,5 +16,15 @@ class Vendor extends Model
         'name',
         'address',
         'phone',
+        'is_active',
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    public function Trucks()
+    {
+        return $this->hasMany(Truck::class);
+    }
 }

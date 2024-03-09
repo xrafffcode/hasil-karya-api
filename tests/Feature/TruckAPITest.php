@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enum\UserRoleEnum;
 use App\Models\Truck;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -26,7 +27,9 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        Truck::factory()->count(5)->create();
+        Truck::factory()
+            ->for(Vendor::factory())
+            ->count(5)->create();
 
         $response = $this->json('GET', '/api/v1/trucks');
 
@@ -41,7 +44,9 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()->make()->toArray();
+        $truck = Truck::factory()
+            ->for(Vendor::factory())
+            ->make()->toArray();
 
         $response = $this->json('POST', '/api/v1/truck', $truck);
 
@@ -58,7 +63,9 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()->create();
+        $truck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
 
         $response = $this->json('GET', '/api/v1/truck/'.$truck->id);
 
@@ -73,9 +80,13 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()->create();
+        $truck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
 
-        $updatedTruck = Truck::factory()->make()->toArray();
+        $updatedTruck = Truck::factory()
+            ->for(Vendor::factory())
+            ->make()->toArray();
 
         $response = $this->json('POST', '/api/v1/truck/'.$truck->id, $updatedTruck);
 
@@ -92,9 +103,13 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()->create();
+        $truck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
 
-        $updatedTruck = Truck::factory()->make(['code' => $truck->code])->toArray();
+        $updatedTruck = Truck::factory()        
+            ->for(Vendor::factory())
+            ->make(['code' => $truck->code])->toArray();
 
         $response = $this->json('POST', '/api/v1/truck/'.$truck->id, $updatedTruck);
 
@@ -111,9 +126,13 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $existingTruck = Truck::factory()->create();
+        $existingTruck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
 
-        $newTruck = Truck::factory()->create();
+        $newTruck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
 
         $updatedTruck = Truck::factory()->make(['code' => $existingTruck->code])->toArray();
 
@@ -130,7 +149,9 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()->create(['is_active' => true]);
+        $truck = Truck::factory()        
+            ->for(Vendor::factory())
+            ->create(['is_active' => true]);
 
         $response = $this->json('POST', '/api/v1/truck/active/'.$truck->id, ['is_active' => false]);
 
@@ -153,7 +174,9 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()->create();
+        $truck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
 
         $response = $this->json('DELETE', '/api/v1/truck/'.$truck->id);
 

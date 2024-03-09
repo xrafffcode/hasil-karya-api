@@ -17,8 +17,11 @@ class TruckResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'name' => $this->name,
+            'brand' => $this->brand,
+            'model' => $this->model,
             'capacity' => $this->capacity,
+            'production_year' => $this->production_year,
+            'vendor' => new VendorResource($this->vendor),
             'is_active' => $this->is_active,
         ];
     }

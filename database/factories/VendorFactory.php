@@ -15,7 +15,11 @@ class VendorFactory extends Factory
     public function definition(): array
     {
         return [
-            // Define your default state here
+            'code' => strval($this->faker->unique()->randomNumber(5)),
+            'name' => $this->faker->name,
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
+            'is_active' => $this->faker->boolean,
         ];
     }
 }

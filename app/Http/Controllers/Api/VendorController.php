@@ -78,12 +78,27 @@ class VendorController extends Controller
         }
     }
 
+    public function updateActiveStatus(Request $request, $id)
+    {
+        $status = $request->input('is_active');
+
+        try {
+            $vendor = $this->VendorRepository->updateActiveStatus($id, $status);
+
+            $message = $vendor->is_active ? 'Vendor berhasil di aktifkan.' : 'Vendor berhasil dinonaktifkan.';
+
+            return ResponseHelper::jsonResponse(true, $message, new VendorResource($vendor), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function destroy($id)
     {
         try {
             $vendor = $this->VendorRepository->delete($id);
 
-            return ResponseHelper::jsonResponse(true, 'Data vendor berhasil dihapus.', new VendorResource($vendor), 200);
+            return ResponseHelper::jsonResponse(true, 'Vendor berhasil dihapus.', new VendorResource($vendor), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

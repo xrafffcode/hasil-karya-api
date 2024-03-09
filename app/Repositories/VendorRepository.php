@@ -21,6 +21,7 @@ class VendorRepository implements VendorRepositoryInterface
         $vendor->name = $data['name'];
         $vendor->address = $data['address'] ?? null;
         $vendor->phone = $data['phone'] ?? null;
+        $vendor->is_active = $data['is_active'];
         $vendor->save();
 
         return $vendor;
@@ -40,6 +41,16 @@ class VendorRepository implements VendorRepositoryInterface
         $vendor->name = $data['name'];
         $vendor->address = $data['address'] ?? null;
         $vendor->phone = $data['phone'] ?? null;
+        $vendor->is_active = $data['is_active'];
+        $vendor->save();
+
+        return $vendor;
+    }
+
+    public function updateActiveStatus($id, $status)
+    {
+        $vendor = Vendor::find($id);
+        $vendor->is_active = $status;
         $vendor->save();
 
         return $vendor;
