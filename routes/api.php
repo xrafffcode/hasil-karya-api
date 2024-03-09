@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\MaterialMovementController;
 use App\Http\Controllers\Api\StationController;
 use App\Http\Controllers\Api\TruckController;
+use App\Http\Controllers\Api\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::middleware(['role:admin|checker'])->group(function () {
         Route::get('drivers', [DriverController::class, 'index']);
+        Route::get('vendors', [VendorController::class, 'index']);
         Route::get('trucks', [TruckController::class, 'index']);
         Route::get('stations', [StationController::class, 'index']);
         Route::get('checkers', [CheckerController::class, 'index']);
@@ -45,6 +47,12 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('driver/{id}', [DriverController::class, 'update']);
     Route::post('driver/active/{id}', [DriverController::class, 'updateActiveStatus']);
     Route::delete('driver/{id}', [DriverController::class, 'destroy']);
+
+    Route::post('vendor', [VendorController::class, 'store']);
+    Route::get('vendor/{id}', [VendorController::class, 'show']);
+    Route::post('vendor/{id}', [VendorController::class, 'update']);
+    Route::delete('vendor/{id}', [VendorController::class, 'destroy']);
+
 
     Route::post('truck', [TruckController::class, 'store']);
     Route::get('truck/{id}', [TruckController::class, 'show']);
