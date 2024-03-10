@@ -4,13 +4,14 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CheckerController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\HeavyVehicleController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\MaterialMovementController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\StationController;
 use App\Http\Controllers\Api\TechnicalAdminController;
 use App\Http\Controllers\Api\TruckController;
-use App\Http\Controllers\Api\TruckRentalRecordController;
+use App\Http\Controllers\Api\VehicleRentalRecordController;
 use App\Http\Controllers\Api\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('drivers', [DriverController::class, 'index']);
         Route::get('vendors', [VendorController::class, 'index']);
         Route::get('trucks', [TruckController::class, 'index']);
-        Route::get('truck-rental-records', [TruckRentalRecordController::class, 'index']);
+        Route::get('heavy-vehicles', [HeavyVehicleController::class, 'index']);
+        Route::get('vehicle-rental-records', [VehicleRentalRecordController::class, 'index']);
         Route::get('materials', [MaterialController::class, 'index']);
         Route::get('stations', [StationController::class, 'index']);
         Route::get('technical-admins', [TechnicalAdminController::class, 'index']);
@@ -80,11 +82,17 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('truck/active/{id}', [TruckController::class, 'updateActiveStatus']);
     Route::delete('truck/{id}', [TruckController::class, 'destroy']);
 
-    Route::post('truck-rental-record', [TruckRentalRecordController::class, 'store']);
-    Route::get('truck-rental-record/{id}', [TruckRentalRecordController::class, 'show']);
-    Route::post('truck-rental-record/{id}', [TruckRentalRecordController::class, 'update']);
-    Route::post('truck-rental-record/payment/{id}', [TruckRentalRecordController::class, 'updateRentalPaymentStatus']);
-    Route::delete('truck-rental-record/{id}', [TruckRentalRecordController::class, 'destroy']);
+    Route::post('heavy-vehicle', [HeavyVehicleController::class, 'store']);
+    Route::get('heavy-vehicle/{id}', [HeavyVehicleController::class, 'show']);
+    Route::post('heavy-vehicle/{id}', [HeavyVehicleController::class, 'update']);
+    Route::post('heavy-vehicle/active/{id}', [HeavyVehicleController::class, 'updateActiveStatus']);
+    Route::delete('heavy-vehicle/{id}', [HeavyVehicleController::class, 'destroy']);
+
+    Route::post('vehicle-rental-record', [VehicleRentalRecordController::class, 'store']);
+    Route::get('vehicle-rental-record/{id}', [VehicleRentalRecordController::class, 'show']);
+    Route::post('vehicle-rental-record/{id}', [VehicleRentalRecordController::class, 'update']);
+    Route::post('vehicle-rental-record/payment/{id}', [VehicleRentalRecordController::class, 'updateRentalPaymentStatus']);
+    Route::delete('vehicle-rental-record/{id}', [VehicleRentalRecordController::class, 'destroy']);
 
     Route::post('material', [MaterialController::class, 'store']);
     Route::get('material/{id}', [MaterialController::class, 'show']);

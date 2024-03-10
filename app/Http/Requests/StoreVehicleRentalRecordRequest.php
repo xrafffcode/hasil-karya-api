@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTruckRentalRecordRequest extends FormRequest
+class StoreVehicleRentalRecordRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,13 +14,19 @@ class UpdateTruckRentalRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:255|unique:truck_rental_records,code,'.$this->route('id').',id',
-            'truck_id' => 'required|exists:trucks,id',
+            'code' => 'required|string|max:255|unique:vehicle_rental_records,code',
+            'truck_id' => 'required_without:heavy_vehicle_id|exists:trucks,id',
+            'heavy_vehicle_id' => 'required_without:truck_id|exists:heavy_vehicles,id',
             'start_date' => 'required|date',
             'rental_duration' => 'required|numeric|min:1',
             'rental_cost' => 'required|numeric|min:0',
             'is_paid' => 'required|boolean',
             'remarks' => 'nullable|string|max:255',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+
     }
 }

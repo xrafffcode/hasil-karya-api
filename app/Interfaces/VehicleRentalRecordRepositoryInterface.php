@@ -2,13 +2,13 @@
 
 namespace App\Interfaces;
 
-interface TruckRentalRecordRepositoryInterface
+interface VehicleRentalRecordRepositoryInterface
 {
-    public function getAllTruckRentalRecords();
+    public function getAllVehicleRentalRecords();
 
     public function create(array $data);
 
-    public function getTruckRentalRecordById(string $id);
+    public function getVehicleRentalRecordById(string $id);
 
     public function update(array $data, string $id);
 

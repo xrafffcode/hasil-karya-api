@@ -20,11 +20,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\CheckerRepositoryInterface::class, \App\Repositories\CheckerRepository::class);
         $this->app->bind(\App\Interfaces\MaterialMovementRepositoryInterface::class, \App\Repositories\MaterialMovementRepository::class);
         $this->app->bind(\App\Interfaces\VendorRepositoryInterface::class, \App\Repositories\VendorRepository::class);
-        $this->app->bind(\App\Interfaces\TruckRentalRecordRepositoryInterface::class, \App\Repositories\TruckRentalRecordRepository::class);
+        $this->app->bind(\App\Interfaces\VehicleRentalRecordRepositoryInterface::class, \App\Repositories\VehicleRentalRecordRepository::class);
         $this->app->bind(\App\Interfaces\MaterialRepositoryInterface::class, \App\Repositories\MaterialRepository::class);
         $this->app->bind(\App\Interfaces\ProjectRepositoryInterface::class, \App\Repositories\ProjectRepository::class);
         $this->app->bind(\App\Interfaces\ClientRepositoryInterface::class, \App\Repositories\ClientRepository::class);
         $this->app->bind(\App\Interfaces\TechnicalAdminRepositoryInterface::class, \App\Repositories\TechnicalAdminRepository::class);
+        $this->app->bind(\App\Interfaces\HeavyVehicleRepositoryInterface::class, \App\Repositories\HeavyVehicleRepository::class);
     }
 
     /**
