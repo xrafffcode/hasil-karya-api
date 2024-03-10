@@ -66,7 +66,7 @@ class VendorRepository implements VendorRepositoryInterface
 
     public function generateCode(int $tryCount): string
     {
-        $code = 'VENDOR' . str_pad($tryCount, 3, '0', STR_PAD_LEFT);
+        $code = 'VENDOR'.str_pad($tryCount, 3, '0', STR_PAD_LEFT);
 
         return $code;
     }

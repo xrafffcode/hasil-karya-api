@@ -21,6 +21,11 @@ class Driver extends Model
         'is_active' => 'boolean',
     ];
 
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_driver_pivot');
+    }
+
     public function materialMovements()
     {
         return $this->hasMany(MaterialMovement::class);

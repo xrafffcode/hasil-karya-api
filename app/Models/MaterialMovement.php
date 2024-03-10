@@ -19,7 +19,10 @@ class MaterialMovement extends Model
         'station_id',
         'checker_id',
         'date',
-        'amount',
+        'observation_ratio_percentage',
+        'observation_ratio_number',
+        'solid_ratio',
+        'solid_volume_estimate',
         'remarks',
     ];
 

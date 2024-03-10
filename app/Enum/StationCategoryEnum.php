@@ -10,4 +10,5 @@ enum StationCategoryEnum: string
 
     case QUARY = 'Quary';
     case DISPOSAL = 'Disposal';
+    case GAS = 'Gas';
 }

@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\MaterialMovementRepositoryInterface;
 use App\Models\MaterialMovement;
+use App\Models\Truck;
 
 class MaterialMovementRepository implements MaterialMovementRepositoryInterface
 {
@@ -24,7 +25,10 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->station_id = $data['station_id'];
         $materialMovement->checker_id = $data['checker_id'];
         $materialMovement->date = $data['date'];
-        $materialMovement->amount = $data['amount'];
+        $materialMovement->observation_ratio_percentage = $data['observation_ratio_percentage'];
+        $materialMovement->observation_ratio_number = Truck::find($data['truck_id'])->capacity * $materialMovement->observation_ratio_percentage;
+        $materialMovement->solid_ratio = $data['solid_ratio'] ? $data['solid_ratio'] : 0;
+        $materialMovement->solid_volume_estimate = $materialMovement->observation_ratio_number * $materialMovement->solid_ratio;
         $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
 
@@ -48,7 +52,10 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->station_id = $data['station_id'];
         $materialMovement->checker_id = $data['checker_id'];
         $materialMovement->date = $data['date'];
-        $materialMovement->amount = $data['amount'];
+        $materialMovement->observation_ratio_percentage = $data['observation_ratio_percentage'];
+        $materialMovement->observation_ratio_number = Truck::find($data['truck_id'])->capacity * $materialMovement->observation_ratio_percentage;
+        $materialMovement->solid_ratio = $data['solid_ratio'] ? $data['solid_ratio'] : 0;
+        $materialMovement->solid_volume_estimate = $materialMovement->observation_ratio_number * $materialMovement->solid_ratio;
         $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
 
@@ -66,7 +73,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function generateCode(int $tryCount): string
     {
         $count = MaterialMovement::count() + 1 + $tryCount;
-        $code = 'MM' . str_pad($count, 2, '0', STR_PAD_LEFT);
+        $code = 'MM'.str_pad($count, 2, '0', STR_PAD_LEFT);
 
         return $code;
     }

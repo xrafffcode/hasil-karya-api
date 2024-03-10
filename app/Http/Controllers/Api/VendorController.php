@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVendorRequest;
 use App\Http\Requests\UpdateVendorRequest;
 use App\Http\Resources\VendorResource;
 use App\Interfaces\VendorRepositoryInterface;
 use Illuminate\Http\Request;
-use App\Helpers\ResponseHelper;
 
 class VendorController extends Controller
 {

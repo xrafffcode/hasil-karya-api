@@ -2,10 +2,15 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CheckerController;
+use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\MaterialMovementController;
+use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\StationController;
+use App\Http\Controllers\Api\TechnicalAdminController;
 use App\Http\Controllers\Api\TruckController;
+use App\Http\Controllers\Api\TruckRentalRecordController;
 use App\Http\Controllers\Api\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,10 +32,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::middleware(['role:admin|checker'])->group(function () {
+        Route::get('clients', [ClientController::class, 'index']);
+        Route::get('projects', [ProjectController::class, 'index']);
         Route::get('drivers', [DriverController::class, 'index']);
         Route::get('vendors', [VendorController::class, 'index']);
         Route::get('trucks', [TruckController::class, 'index']);
+        Route::get('truck-rental-records', [TruckRentalRecordController::class, 'index']);
+        Route::get('materials', [MaterialController::class, 'index']);
         Route::get('stations', [StationController::class, 'index']);
+        Route::get('technical-admins', [TechnicalAdminController::class, 'index']);
         Route::get('checkers', [CheckerController::class, 'index']);
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
     });
@@ -42,6 +52,16 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me'])->name('me');
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::post('client', [ClientController::class, 'store']);
+    Route::get('client/{id}', [ClientController::class, 'show']);
+    Route::post('client/{id}', [ClientController::class, 'update']);
+    Route::delete('client/{id}', [ClientController::class, 'destroy']);
+
+    Route::post('project', [ProjectController::class, 'store']);
+    Route::get('project/{id}', [ProjectController::class, 'show']);
+    Route::post('project/{id}', [ProjectController::class, 'update']);
+    Route::delete('project/{id}', [ProjectController::class, 'destroy']);
+
     Route::post('driver', [DriverController::class, 'store']);
     Route::get('driver/{id}', [DriverController::class, 'show']);
     Route::post('driver/{id}', [DriverController::class, 'update']);
@@ -60,12 +80,29 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('truck/active/{id}', [TruckController::class, 'updateActiveStatus']);
     Route::delete('truck/{id}', [TruckController::class, 'destroy']);
 
+    Route::post('truck-rental-record', [TruckRentalRecordController::class, 'store']);
+    Route::get('truck-rental-record/{id}', [TruckRentalRecordController::class, 'show']);
+    Route::post('truck-rental-record/{id}', [TruckRentalRecordController::class, 'update']);
+    Route::post('truck-rental-record/payment/{id}', [TruckRentalRecordController::class, 'updateRentalPaymentStatus']);
+    Route::delete('truck-rental-record/{id}', [TruckRentalRecordController::class, 'destroy']);
+
+    Route::post('material', [MaterialController::class, 'store']);
+    Route::get('material/{id}', [MaterialController::class, 'show']);
+    Route::post('material/{id}', [MaterialController::class, 'update']);
+    Route::delete('material/{id}', [MaterialController::class, 'destroy']);
+
     Route::post('station', [StationController::class, 'store']);
     Route::get('station/{id}', [StationController::class, 'show']);
     Route::get('station/read/categories', [StationController::class, 'getStationCategory']);
     Route::post('station/{id}', [StationController::class, 'update']);
     Route::post('station/active/{id}', [StationController::class, 'updateActiveStatus']);
     Route::delete('station/{id}', [StationController::class, 'destroy']);
+
+    Route::post('technical-admin', [TechnicalAdminController::class, 'store']);
+    Route::get('technical-admin/{id}', [TechnicalAdminController::class, 'show']);
+    Route::post('technical-admin/{id}', [TechnicalAdminController::class, 'update']);
+    Route::post('technical-admin/active/{id}', [TechnicalAdminController::class, 'updateActiveStatus']);
+    Route::delete('technical-admin/{id}', [TechnicalAdminController::class, 'destroy']);
 
     Route::post('checker', [CheckerController::class, 'store']);
     Route::get('checker/{id}', [CheckerController::class, 'show']);

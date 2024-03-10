@@ -6,6 +6,7 @@ use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 // use Carbon\Carbon;
 
 class Checker extends Model
@@ -30,21 +31,13 @@ class Checker extends Model
         return $this->hasMany(MaterialMovement::class);
     }
 
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_checker_pivot');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    // public function getCreatedAtAttribute($value)
-    // {
-    //     $carbon = Carbon::parse($value);
-    //     $date = $carbon->toDateTimeString();
-    //     $this->attributes['created_at'] = $date;
-    // }
-
-    // public function getUpdatedAtAttribute($value)
-    // {
-    //     $carbon = Carbon::parse($value);
-    //     $this->attributes['updated_at'] = $carbon->toDateTimeString();
-    // }
 }

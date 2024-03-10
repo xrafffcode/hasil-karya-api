@@ -6,6 +6,7 @@ use App\Enum\UserRoleEnum;
 use App\Models\Truck;
 use App\Models\User;
 use App\Models\Vendor;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -46,11 +47,13 @@ class TruckAPITest extends TestCase
 
         $truck = Truck::factory()
             ->for(Vendor::factory())
-            ->make()->toArray();
+            ->make(['code' => 'AUTO'])->toArray();
 
         $response = $this->json('POST', '/api/v1/truck', $truck);
 
         $response->assertSuccessful();
+
+        $truck['code'] = $response['data']['code'];
 
         $this->assertDatabaseHas('trucks', $truck);
     }
@@ -86,11 +89,13 @@ class TruckAPITest extends TestCase
 
         $updatedTruck = Truck::factory()
             ->for(Vendor::factory())
-            ->make()->toArray();
+            ->make(['code' => 'AUTO'])->toArray();
 
         $response = $this->json('POST', '/api/v1/truck/'.$truck->id, $updatedTruck);
 
         $response->assertSuccessful();
+
+        $updatedTruck['code'] = $response['data']['code'];
 
         $this->assertDatabaseHas('trucks', $updatedTruck);
     }
@@ -107,7 +112,7 @@ class TruckAPITest extends TestCase
             ->for(Vendor::factory())
             ->create();
 
-        $updatedTruck = Truck::factory()        
+        $updatedTruck = Truck::factory()
             ->for(Vendor::factory())
             ->make(['code' => $truck->code])->toArray();
 
@@ -149,7 +154,7 @@ class TruckAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $truck = Truck::factory()        
+        $truck = Truck::factory()
             ->for(Vendor::factory())
             ->create(['is_active' => true]);
 
@@ -182,6 +187,9 @@ class TruckAPITest extends TestCase
 
         $response->assertSuccessful();
 
-        $this->assertSoftDeleted('trucks', $truck->toArray());
+        $truck = $truck->toArray();
+        $truck = Arr::except($truck, ['created_at', 'updated_at', 'deleted_at']);
+
+        $this->assertSoftDeleted('trucks', $truck);
     }
 }

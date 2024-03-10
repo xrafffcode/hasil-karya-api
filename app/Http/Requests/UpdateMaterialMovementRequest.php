@@ -20,7 +20,7 @@ class UpdateMaterialMovementRequest extends FormRequest
             'station_id' => 'required|exists:stations,id',
             'checker_id' => 'required|exists:checkers,id',
             'date' => 'required|date',
-            'amount' => 'required|numeric',
+            'observation_ratio_percentage' => 'required|numeric',
             'remarks' => 'nullable|string',
         ];
     }
@@ -35,8 +35,8 @@ class UpdateMaterialMovementRequest extends FormRequest
             $this->merge(['date' => now()]);
         }
 
-        if (! $this->has('amount')) {
-            $this->merge(['amount' => -1]);
+        if (! $this->has('observation_ratio_percentage')) {
+            $this->merge(['observation_ratio_percentage' => -1]);
         }
 
         if (! $this->has('remarks')) {

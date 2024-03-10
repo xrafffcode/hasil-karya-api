@@ -106,11 +106,11 @@ class CheckerRepository implements CheckerRepositoryInterface
 
     public function isUniqueCode(string $code, $exceptId = null): bool
     {
-        $checker = Checker::where('code', $code);
+        $query = Checker::where('code', $code);
         if ($exceptId) {
-            $checker->where('id', '!=', $exceptId);
+            $query->where('id', '!=', $exceptId);
         }
 
-        return $checker->count() == 0;
+        return $query->count() == 0;
     }
 }

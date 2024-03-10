@@ -44,7 +44,7 @@ class MaterialMovementController extends Controller
             do {
                 $code = $this->MaterialMovementRepository->generateCode($tryCount);
                 $tryCount++;
-            } while (!$this->MaterialMovementRepository->isUniqueCode($code));
+            } while (! $this->MaterialMovementRepository->isUniqueCode($code));
             $request['code'] = $code;
         }
 
@@ -72,13 +72,16 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
-        $amount = $request['amount'];
-        if ($amount == -1) {
-            $amount = $truck->capacity;
-            $request['amount'] = $amount;
-        } elseif ($amount < -1) {
+        $observation_ratio_percentage = $request['observation_ratio_percentage'];
+        if ($observation_ratio_percentage == -1) {
+            $observation_ratio_percentage = $truck->capacity;
+            $request['observation_ratio_percentage'] = $observation_ratio_percentage;
+        } elseif ($observation_ratio_percentage < -1) {
             return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
         }
+
+        $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
+        $request['solid_ratio'] = $solid_ratio;
 
         try {
             $materialMovement = $this->MaterialMovementRepository->create($request);
@@ -94,7 +97,7 @@ class MaterialMovementController extends Controller
         try {
             $materialMovement = $this->MaterialMovementRepository->getMaterialMovementById($id);
 
-            if (!$materialMovement) {
+            if (! $materialMovement) {
                 return ResponseHelper::jsonResponse(false, 'Material movement tidak ditemukan.', null, 404);
             }
 
@@ -114,7 +117,7 @@ class MaterialMovementController extends Controller
             do {
                 $code = $this->MaterialMovementRepository->generateCode($tryCount);
                 $tryCount++;
-            } while (!$this->MaterialMovementRepository->isUniqueCode($code, $id));
+            } while (! $this->MaterialMovementRepository->isUniqueCode($code, $id));
             $request['code'] = $code;
         }
 
@@ -138,13 +141,16 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
-        $amount = $request['amount'];
-        if ($amount == -1) {
-            $amount = $truck->capacity;
-            $request['amount'] = $amount;
-        } elseif ($amount < -1) {
+        $observation_ratio_percentage = $request['observation_ratio_percentage'];
+        if ($observation_ratio_percentage == -1) {
+            $observation_ratio_percentage = $truck->capacity;
+            $request['observation_ratio_percentage'] = $observation_ratio_percentage;
+        } elseif ($observation_ratio_percentage < -1) {
             return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
         }
+
+        $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
+        $request['solid_ratio'] = $solid_ratio;
 
         try {
             $materialMovement = $this->MaterialMovementRepository->update($request, $id);

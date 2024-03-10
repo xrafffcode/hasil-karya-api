@@ -2,19 +2,20 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Enum\UserRoleEnum;
 use App\Models\User;
 use App\Models\Vendor;
-use App\Enum\UserRoleEnum;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class VendorAPITest extends TestCase
-{   
+{
     public function setUp(): void
     {
         parent::setUp();
-        
+
         Storage::fake('public');
     }
 
@@ -23,7 +24,7 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         Vendor::factory()->count(5)->create();
@@ -38,7 +39,7 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         $vendor = Vendor::factory()->make()->toArray();
@@ -55,12 +56,12 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         $vendor = Vendor::factory()->create();
 
-        $response = $this->json('GET', '/api/v1/vendor/' . $vendor->id);
+        $response = $this->json('GET', '/api/v1/vendor/'.$vendor->id);
 
         $response->assertSuccessful();
     }
@@ -70,14 +71,14 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         $vendor = Vendor::factory()->create();
 
         $updatedVendor = Vendor::factory()->make()->toArray();
 
-        $response = $this->json('POST', '/api/v1/vendor/' . $vendor->id, $updatedVendor);
+        $response = $this->json('POST', '/api/v1/vendor/'.$vendor->id, $updatedVendor);
 
         $response->assertSuccessful();
 
@@ -89,14 +90,14 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         $vendor = Vendor::factory()->create();
 
         $updatedVendor = Vendor::factory()->make()->toArray();
 
-        $response = $this->json('POST', '/api/v1/vendor/' . $vendor->id, $updatedVendor);
+        $response = $this->json('POST', '/api/v1/vendor/'.$vendor->id, $updatedVendor);
 
         $response->assertSuccessful();
 
@@ -108,7 +109,7 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         $existingVendor = Vendor::factory()->create();
@@ -117,28 +118,28 @@ class VendorAPITest extends TestCase
 
         $updatedVendor = Vendor::factory()->make(['code' => $existingVendor->code])->toArray();
 
-        $response = $this->json('POST', '/api/v1/vendor/' . $newVendor->id, $updatedVendor);
+        $response = $this->json('POST', '/api/v1/vendor/'.$newVendor->id, $updatedVendor);
 
         $response->assertStatus(422);
     }
-    
+
     public function test_vendor_api_call_update_active_status_expect_success()
     {
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
-        $this->actingAs($user);        
+
+        $this->actingAs($user);
 
         $vendor = Vendor::factory()->create(['is_active' => true]);
 
-        $response = $this->json('POST', '/api/v1/vendor/active/' . $vendor->id, ['is_active' => false]);
+        $response = $this->json('POST', '/api/v1/vendor/active/'.$vendor->id, ['is_active' => false]);
 
         $response->assertSuccessful();
 
         $this->assertDatabaseHas('vendors', ['id' => $vendor->id, 'is_active' => false]);
 
-        $response = $this->json('POST', '/api/v1/vendor/active/' . $vendor->id, ['is_active' => true]);
+        $response = $this->json('POST', '/api/v1/vendor/active/'.$vendor->id, ['is_active' => true]);
 
         $response->assertSuccessful();
 
@@ -150,15 +151,18 @@ class VendorAPITest extends TestCase
         $user = User::factory()
             ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
             ->create();
-        
+
         $this->actingAs($user);
 
         $vendor = Vendor::factory()->create();
 
-        $response = $this->json('DELETE', '/api/v1/vendor/' . $vendor->id);
+        $response = $this->json('DELETE', '/api/v1/vendor/'.$vendor->id);
 
         $response->assertSuccessful();
 
-        $this->assertSoftDeleted('vendors', $vendor->toArray());
+        $vendor = $vendor->toArray();
+        $vendor = Arr::except($vendor, ['created_at', 'updated_at', 'deleted_at']);
+
+        $this->assertSoftDeleted('vendors', $vendor);
     }
 }

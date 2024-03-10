@@ -13,14 +13,28 @@ class Station extends Model
 
     protected $fillable = [
         'code',
-        'name',
+        'province',
+        'regency',
+        'district',
+        'subdistrict',
         'category',
+        'material_id',
         'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function material()
+    {
+        return $this->belongsTo(Material::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_station_pivot');
+    }
 
     public function materialMovements()
     {

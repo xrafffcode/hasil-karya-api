@@ -197,6 +197,9 @@ class CheckerAPITest extends TestCase
 
         $response->assertSuccessful();
 
-        $this->assertSoftDeleted('checkers', $checker->toArray());
+        $checker = $checker->toArray();
+        $checker = Arr::except($checker, ['created_at', 'updated_at', 'deleted_at']);
+
+        $this->assertSoftDeleted('checkers', $checker);
     }
 }

@@ -8,7 +8,7 @@ use App\Models\Truck;
 class TruckRepository implements TruckRepositoryInterface
 {
     public function getAllTrucks()
-    {        
+    {
         $trucks = Truck::with('vendor')->get();
         $trucks = $trucks->sortBy('vendor.name')
             ->sortBy('brand')
