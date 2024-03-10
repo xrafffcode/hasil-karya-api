@@ -23,8 +23,11 @@ class MaterialMovementResource extends JsonResource
             'checker' => CheckerResource::make($this->whenLoaded('checker')),
             'date' => $this->date,
             'formatted_date' => $this->formatted_date,
-            'amount' => $this->amount,
-            'remarks' => $this->remarks
+            'observation_ratio_percentage' => $this->observation_ratio_percentage,
+            'observation_ratio_number' => $this->observation_ratio_number,
+            'solid_ratio' => $this->solid_ratio,
+            'solid_volume_estimate' => $this->solid_volume_estimate,
+            'remarks' => $this->remarks,
         ];
     }
 }

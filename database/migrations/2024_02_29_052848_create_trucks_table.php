@@ -15,8 +15,12 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('code');
-            $table->string('name');
+            $table->string('brand');
+            $table->string('model');
             $table->decimal('capacity');
+            $table->string('production_year');
+            $table->uuid('vendor_id');
+            $table->foreign('vendor_id')->references('id')->on('vendors');
             $table->string('is_active');
 
             $table->softDeletes();

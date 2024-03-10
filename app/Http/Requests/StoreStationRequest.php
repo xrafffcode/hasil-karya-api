@@ -15,9 +15,20 @@ class StoreStationRequest extends FormRequest
     {
         return [
             'code' => 'required|string|max:255|unique:stations,code',
-            'name' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'regency' => 'required|string|max:255',
+            'district' => 'required|string|max:255',
+            'subdistrict' => 'required|string|max:255',
             'category' => 'required|string|max:255',
+            'material_id' => 'nullable|exists:materials,id',
             'is_active' => 'required|boolean',
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        if (! $this->has('material_id')) {
+            $this->merge(['material_id' => null]);
+        }
     }
 }

@@ -15,8 +15,10 @@ class TruckFactory extends Factory
     {
         return [
             'code' => strval($this->faker->unique()->randomNumber(5)),
-            'name' => $this->faker->name,
+            'brand' => $this->faker->word,
+            'model' => $this->faker->word,
             'capacity' => $this->faker->randomFloat(2, 1, 100),
+            'production_year' => $this->faker->year,
             'is_active' => $this->faker->boolean,
         ];
     }

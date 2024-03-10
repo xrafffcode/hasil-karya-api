@@ -188,8 +188,10 @@ class MakeApiCommand extends Command
 
     protected function modifyMigration()
     {
-        $name = Str::lower($this->argument('name'));
-        $migration = database_path('migrations/'.date('Y_m_d_His').'_create_'.Str::plural($name).'_table.php');
+        $name = $this->argument('name');
+        $name = Str::snake($name);
+        $name = Str::plural($name);
+        $migration = database_path('migrations/'.date('Y_m_d_His').'_create_'.$name.'_table.php');
 
         $migrationContent = "<?php\n\n";
         $migrationContent .= "use Illuminate\Database\Migrations\Migration;\n";
@@ -202,7 +204,7 @@ class MakeApiCommand extends Command
         $migrationContent .= "     */\n";
         $migrationContent .= "    public function up()\n";
         $migrationContent .= "    {\n";
-        $migrationContent .= "        Schema::create('{$name}s', function (Blueprint \$table) {\n";
+        $migrationContent .= "        Schema::create('{$name}', function (Blueprint \$table) {\n";
         $migrationContent .= "            \$table->uuid('id')->primary();\n";
         $migrationContent .= "            // Add your columns here\n";
         $migrationContent .= "            \$table->softDeletes();\n";
@@ -214,7 +216,7 @@ class MakeApiCommand extends Command
         $migrationContent .= "     */\n";
         $migrationContent .= "    public function down()\n";
         $migrationContent .= "    {\n";
-        $migrationContent .= "        Schema::dropIfExists('{$name}s');\n";
+        $migrationContent .= "        Schema::dropIfExists('{$name}');\n";
         $migrationContent .= "    }\n";
         $migrationContent .= "};\n";
 

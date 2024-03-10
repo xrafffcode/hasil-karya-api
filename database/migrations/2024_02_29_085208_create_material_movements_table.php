@@ -24,7 +24,11 @@ return new class extends Migration
             $table->uuid('checker_id');
             $table->foreign('checker_id')->references('id')->on('checkers');
             $table->datetime('date');
-            $table->decimal('amount');
+            $table->decimal('observation_ratio_percentage', 16, 8)->default(0);
+            $table->decimal('observation_ratio_number', 16, 8)->default(0);
+            $table->decimal('solid_ratio', 16, 8)->default(0);
+            $table->decimal('solid_volume_estimate', 16, 8)->default(0);
+
             $table->text('remarks')->nullable();
 
             $table->softDeletes();

@@ -15,8 +15,11 @@ class StoreTruckRequest extends FormRequest
     {
         return [
             'code' => 'required|string|max:255|unique:trucks,code',
-            'name' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
             'capacity' => 'required|numeric',
+            'production_year' => 'required|date_format:Y',
+            'vendor_id' => 'required|exists:vendors,id',
             'is_active' => 'required|boolean',
         ];
     }

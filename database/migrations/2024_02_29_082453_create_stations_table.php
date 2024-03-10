@@ -15,8 +15,13 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('code');
-            $table->string('name');
+            $table->string('province');
+            $table->string('regency');
+            $table->string('district');
+            $table->string('subdistrict');
             $table->string('category');
+            $table->uuid('material_id')->nullable();
+            $table->foreign('material_id')->references('id')->on('materials');
             $table->string('is_active');
 
             $table->softDeletes();

@@ -7,9 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// use Carbon\Carbon;
+
 class Checker extends Model
 {
     use HasFactory, SoftDeletes, UUID;
+
+    // protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
         'user_id',
@@ -25,6 +29,11 @@ class Checker extends Model
     public function materialMovements()
     {
         return $this->hasMany(MaterialMovement::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_checker_pivot');
     }
 
     public function user()

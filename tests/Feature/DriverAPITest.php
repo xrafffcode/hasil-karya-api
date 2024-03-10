@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enum\UserRoleEnum;
 use App\Models\Driver;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -159,6 +160,9 @@ class DriverAPITest extends TestCase
 
         $response->assertSuccessful();
 
-        $this->assertSoftDeleted('drivers', $driver->toArray());
+        $driver = $driver->toArray();
+        $driver = Arr::except($driver, ['created_at', 'updated_at', 'deleted_at']);
+
+        $this->assertSoftDeleted('drivers', $driver);
     }
 }

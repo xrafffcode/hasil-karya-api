@@ -13,14 +13,27 @@ class Truck extends Model
 
     protected $fillable = [
         'code',
-        'name',
+        'brand',
+        'model',
         'capacity',
+        'production_year',
+        'vendor_id',
         'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_truck_pivot');
+    }
 
     public function materialMovements()
     {

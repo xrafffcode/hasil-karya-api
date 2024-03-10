@@ -18,6 +18,7 @@ class UpdateVendorRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:255',
+            'is_active' => 'required|boolean',
         ];
     }
 }

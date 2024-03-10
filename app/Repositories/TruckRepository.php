@@ -9,7 +9,12 @@ class TruckRepository implements TruckRepositoryInterface
 {
     public function getAllTrucks()
     {
-        $trucks = Truck::orderBy('name')->get();
+        $trucks = Truck::with('vendor')->get();
+        $trucks = $trucks->sortBy('vendor.name')
+            ->sortBy('brand')
+            ->sortBy('model')
+            ->sortBy('capacity')
+            ->sortBy('production_year');
 
         return $trucks;
     }
@@ -18,8 +23,11 @@ class TruckRepository implements TruckRepositoryInterface
     {
         $truck = new Truck();
         $truck->code = $data['code'];
-        $truck->name = $data['name'];
+        $truck->brand = $data['brand'];
+        $truck->model = $data['model'];
         $truck->capacity = $data['capacity'];
+        $truck->production_year = $data['production_year'];
+        $truck->vendor_id = $data['vendor_id'];
         $truck->is_active = $data['is_active'];
         $truck->save();
 
@@ -37,8 +45,11 @@ class TruckRepository implements TruckRepositoryInterface
     {
         $truck = Truck::find($id);
         $truck->code = $data['code'];
-        $truck->name = $data['name'];
+        $truck->brand = $data['brand'];
+        $truck->model = $data['model'];
         $truck->capacity = $data['capacity'];
+        $truck->production_year = $data['production_year'];
+        $truck->vendor_id = $data['vendor_id'];
         $truck->is_active = $data['is_active'];
         $truck->save();
 

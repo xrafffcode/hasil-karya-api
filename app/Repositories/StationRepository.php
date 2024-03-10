@@ -10,7 +10,11 @@ class StationRepository implements StationRepositoryInterface
 {
     public function getAllStations()
     {
-        $stations = Station::orderBy('name', 'asc')->get();
+        $stations = Station::orderBy('province', 'asc')
+            ->orderBy('regency', 'asc')
+            ->orderBy('district', 'asc')
+            ->orderBy('subdistrict', 'asc')
+            ->get();
 
         return $stations;
     }
@@ -19,8 +23,12 @@ class StationRepository implements StationRepositoryInterface
     {
         $station = new Station();
         $station->code = $data['code'];
-        $station->name = $data['name'];
+        $station->province = $data['province'];
+        $station->regency = $data['regency'];
+        $station->district = $data['district'];
+        $station->subdistrict = $data['subdistrict'];
         $station->category = $data['category'];
+        $station->material_id = $data['material_id'];
         $station->is_active = $data['is_active'];
         $station->save();
 
@@ -51,8 +59,12 @@ class StationRepository implements StationRepositoryInterface
     {
         $station = Station::find($id);
         $station->code = $data['code'];
-        $station->name = $data['name'];
+        $station->province = $data['province'];
+        $station->regency = $data['regency'];
+        $station->district = $data['district'];
+        $station->subdistrict = $data['subdistrict'];
         $station->category = $data['category'];
+        $station->material_id = $data['material_id'];
         $station->is_active = $data['is_active'];
         $station->save();
 
@@ -79,7 +91,7 @@ class StationRepository implements StationRepositoryInterface
     public function generateCode(int $tryCount): string
     {
         $count = Station::count() + 1 + $tryCount;
-        $code = 'STA' . str_pad($count, 2, '0', STR_PAD_LEFT);
+        $code = 'STA'.str_pad($count, 4, '0', STR_PAD_LEFT);
 
         return $code;
     }

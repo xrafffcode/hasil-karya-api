@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Enum\UserRoleEnum;
+use App\Models\Material;
 use App\Models\Station;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -41,7 +43,9 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $station = Station::factory()->make(['code' => 'AUTO'])->toArray();
+        $station = Station::factory()
+            ->for(Material::factory())
+            ->make(['code' => 'AUTO'])->toArray();
 
         $response = $this->json('POST', '/api/v1/station', $station);
 
@@ -60,7 +64,9 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $station = Station::factory()->create();
+        $station = Station::factory()
+            ->for(Material::factory())
+            ->create();
 
         $response = $this->json('GET', '/api/v1/station/'.$station->id);
 
@@ -88,9 +94,13 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $station = Station::factory()->create();
+        $station = Station::factory()
+            ->for(Material::factory())
+            ->create();
 
-        $updatedStation = Station::factory()->make(['code' => 'AUTO'])->toArray();
+        $updatedStation = Station::factory()
+            ->for(Material::factory())
+            ->make(['code' => 'AUTO'])->toArray();
 
         $response = $this->json('POST', '/api/v1/station/'.$station->id, $updatedStation);
 
@@ -109,9 +119,13 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $station = Station::factory()->create();
+        $station = Station::factory()
+            ->for(Material::factory())
+            ->create();
 
-        $updatedStation = Station::factory()->make(['code' => $station->code])->toArray();
+        $updatedStation = Station::factory()
+            ->for(Material::factory())
+            ->make(['code' => $station->code])->toArray();
 
         $response = $this->json('POST', '/api/v1/station/'.$station->id, $updatedStation);
 
@@ -128,11 +142,18 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $existingStation = Station::factory()->create();
+        $existingStation = Station::factory()
+            ->for(Material::factory())
+            ->create();
 
-        $newStation = Station::factory()->create();
+        $newStation = Station::factory()
+            ->for(Material::factory())
+            ->create();
 
-        $updatedStation = Station::factory()->make(['code' => $existingStation->code])->toArray();
+        $updatedStation = Station::factory()
+            ->for(Material::factory())
+            ->make(['code' => $existingStation->code])
+            ->toArray();
 
         $response = $this->json('POST', '/api/v1/station/'.$newStation->id, $updatedStation);
 
@@ -147,7 +168,9 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $station = Station::factory()->create(['is_active' => true]);
+        $station = Station::factory()
+            ->for(Material::factory())
+            ->create(['is_active' => true]);
 
         $response = $this->json('POST', '/api/v1/station/active/'.$station->id, ['is_active' => false]);
 
@@ -170,12 +193,17 @@ class StationAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $station = Station::factory()->create();
+        $station = Station::factory()
+            ->for(Material::factory())
+            ->create();
 
         $response = $this->json('DELETE', '/api/v1/station/'.$station->id);
 
         $response->assertSuccessful();
 
-        $this->assertSoftDeleted('stations', $station->toArray());
+        $station = $station->toArray();
+        $station = Arr::except($station, ['deleted_at', 'created_at', 'updated_at']);
+
+        $this->assertSoftDeleted('stations', $station);
     }
 }

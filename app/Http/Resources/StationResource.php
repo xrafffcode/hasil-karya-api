@@ -17,8 +17,12 @@ class StationResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'name' => $this->name,
+            'province' => $this->province,
+            'regency' => $this->regency,
+            'district' => $this->district,
+            'subdistrict' => $this->subdistrict,
             'category' => $this->category,
+            'material' => new MaterialResource($this->material),
             'is_active' => $this->is_active,
         ];
     }
