@@ -42,6 +42,11 @@ class Project extends Model
         return $this->belongsToMany(Truck::class, 'project_truck_pivot');
     }
 
+    public function heavyVehicles()
+    {
+        return $this->belongsToMany(HeavyVehicle::class, 'project_heavy_vehicle_pivot');
+    }
+
     public function stations()
     {
         return $this->belongsToMany(Station::class, 'project_station_pivot');
