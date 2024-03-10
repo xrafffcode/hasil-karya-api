@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-// use Carbon\Carbon;
-
-class Checker extends Model
+class GasOperator extends Model
 {
     use HasFactory, SoftDeletes, UUID;
 
@@ -23,16 +21,6 @@ class Checker extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
-
-    public function materialMovements()
-    {
-        return $this->hasMany(MaterialMovement::class);
-    }
-
-    public function projects()
-    {
-        return $this->belongsToMany(Project::class, 'project_checker_pivot');
-    }
 
     public function user()
     {
