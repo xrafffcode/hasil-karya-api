@@ -23,6 +23,10 @@ return new class extends Migration
             $table->decimal('amount', 15, 2);
             $table->uuid('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->string('province')->nullable();
+            $table->string('regency')->nullable();
+            $table->string('district')->nullable();
+            $table->string('subdistrict')->nullable();
             $table->string('status');
 
             $table->softDeletes();

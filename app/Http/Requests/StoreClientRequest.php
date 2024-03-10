@@ -25,4 +25,20 @@ class StoreClientRequest extends FormRequest
             'email' => 'required|string|email|max:255',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        if (! $this->has('province')) {
+            $this->merge(['province' => null]);
+        }
+        if (! $this->has('regency')) {
+            $this->merge(['regency' => null]);
+        }
+        if (! $this->has('district')) {
+            $this->merge(['district' => null]);
+        }
+        if (! $this->has('subdistrict')) {
+            $this->merge(['subdistrict' => null]);
+        }
+    }
 }

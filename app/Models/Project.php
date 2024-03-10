@@ -20,6 +20,10 @@ class Project extends Model
         'person_in_charge',
         'amount',
         'client_id',
+        'province',
+        'regency',
+        'district',
+        'subdistrict',
         'status',
     ];
 

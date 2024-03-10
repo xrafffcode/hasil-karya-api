@@ -22,6 +22,10 @@ class StoreProjectRequest extends FormRequest
             'person_in_charge' => 'required|string|max:255',
             'amount' => 'required|numeric',
             'client_id' => 'required|exists:clients,id',
+            'province' => 'nullable|string|max:255',
+            'regency' => 'nullable|string|max:255',
+            'district' => 'nullable|string|max:255',
+            'subdistrict' => 'nullable|string|max:255',
             'status' => 'required|string|max:255',
             'drivers' => 'nullable|array',
             'drivers.*' => 'required|exists:drivers,id',
@@ -36,6 +40,17 @@ class StoreProjectRequest extends FormRequest
 
     public function prepareForValidation()
     {
-
+        if (! $this->has('province')) {
+            $this->merge(['province' => null]);
+        }
+        if (! $this->has('regency')) {
+            $this->merge(['regency' => null]);
+        }
+        if (! $this->has('district')) {
+            $this->merge(['district' => null]);
+        }
+        if (! $this->has('subdistrict')) {
+            $this->merge(['subdistrict' => null]);
+        }
     }
 }
