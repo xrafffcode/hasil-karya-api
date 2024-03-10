@@ -25,6 +25,10 @@ class ProjectFactory extends Factory
             'end_date' => $end_date,
             'person_in_charge' => $this->faker->name,
             'amount' => $this->faker->randomFloat(2, 0, 1000000),
+            'province' => $this->faker->state,
+            'regency' => $this->faker->city,
+            'district' => $this->faker->streetName,
+            'subdistrict' => $this->faker->secondaryAddress,
             'status' => $this->faker->randomElement(ProjectStatusEnum::toArray()),
         ];
     }

@@ -4,10 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\ProjectRepositoryInterface;
 use App\Models\Project;
-use App\Models\ProjectChecker;
-use App\Models\ProjectDriver;
-use App\Models\ProjectStation;
-use App\Models\ProjectTruck;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
@@ -29,6 +25,10 @@ class ProjectRepository implements ProjectRepositoryInterface
         $project->person_in_charge = $data['person_in_charge'];
         $project->amount = $data['amount'];
         $project->client_id = $data['client_id'];
+        $project->province = $data['province'];
+        $project->regency = $data['regency'];
+        $project->district = $data['district'];
+        $project->subdistrict = $data['subdistrict'];
         $project->status = $data['status'];
         $project->save();
 
@@ -66,53 +66,12 @@ class ProjectRepository implements ProjectRepositoryInterface
         $project->person_in_charge = $data['person_in_charge'];
         $project->amount = $data['amount'];
         $project->client_id = $data['client_id'];
+        $project->province = $data['province'];
+        $project->regency = $data['regency'];
+        $project->district = $data['district'];
+        $project->subdistrict = $data['subdistrict'];
         $project->status = $data['status'];
         $project->save();
-
-        // if ($project->drivers()->exists()) {
-        //     $project->drivers()->delete();
-        // }
-        // if (isset($data['drivers'])) {
-        //             foreach ($data['drivers'] as $driver) {
-        //     $projectDriver = new ProjectDriver();
-        //     $projectDriver->project_id = $project->id;
-        //     $projectDriver->driver_id = $driver;
-        //     $projectDriver->save();
-        // }
-        // }
-        // if ($project->trucks()->exists()) {
-        //     $project->trucks()->delete();
-        // }
-        // if (isset($data['trucks'])) {
-        //     foreach ($data['trucks'] as $truck) {
-        //         $projectTruck = new ProjectTruck();
-        //         $projectTruck->project_id = $project->id;
-        //         $projectTruck->truck_id = $truck;
-        //         $projectTruck->save();
-        //     }
-        // }
-        // if ($project->stations()->exists()) {
-        //     $project->stations()->delete();
-        // }
-        // if (isset($data['stations'])) {
-        //     foreach ($data['stations'] as $station) {
-        //         $projectStation = new ProjectStation();
-        //         $projectStation->project_id = $project->id;
-        //         $projectStation->station_id = $station;
-        //         $projectStation->save();
-        //     }
-        // }
-        // if ($project->checkers()->exists()) {
-        //     $project->checkers()->delete();
-        // }
-        // if (isset($data['checkers'])) {
-        //     foreach ($data['checkers'] as $checker) {
-        //         $projectChecker = new ProjectChecker();
-        //         $projectChecker->project_id = $project->id;
-        //         $projectChecker->checker_id = $checker;
-        //         $projectChecker->save();
-        //     }
-        // }
 
         if (isset($data['drivers'])) {
             $project->drivers()->sync($data['drivers']);
