@@ -108,6 +108,17 @@ class FuelLogController extends Controller
         }
     }
 
+    public function getFuelType()
+    {
+        try {
+            $fuelTypes = $this->FuelLogRepository->getFuelType();
+
+            return ResponseHelper::jsonResponse(true, 'Success', $fuelTypes, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function update(UpdateFuelLogRequest $request, $id)
     {
         $request = $request->validated();

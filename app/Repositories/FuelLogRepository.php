@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enum\FuelTypeEnum;
 use App\Interfaces\FuelLogRepositoryInterface;
 use App\Models\FuelLog;
 
@@ -41,6 +42,19 @@ class FuelLogRepository implements FuelLogRepositoryInterface
             ->find($id);
 
         return $fuelLog;
+    }
+
+    public function getFuelType()
+    {
+        $fuelTypes = [];
+
+        foreach (FuelTypeEnum::toArray() as $type) {
+            $fuelTypes[] = [
+                'name' => $type,
+            ];
+        }
+
+        return $fuelTypes;
     }
 
     public function update(array $data, string $id)

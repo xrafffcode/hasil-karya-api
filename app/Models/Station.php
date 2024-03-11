@@ -13,10 +13,12 @@ class Station extends Model
 
     protected $fillable = [
         'code',
+        'name',
         'province',
         'regency',
         'district',
         'subdistrict',
+        'address',
         'category',
         'material_id',
         'is_active',

@@ -130,6 +130,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::post('fuel-log', [FuelLogController::class, 'store']);
     Route::get('fuel-log/{id}', [FuelLogController::class, 'show']);
+    Route::get('fuel-log/read/fuel-types', [FuelLogController::class, 'getFuelType']);
     Route::post('fuel-log/{id}', [FuelLogController::class, 'update']);
     Route::delete('fuel-log/{id}', [FuelLogController::class, 'destroy']);
 
