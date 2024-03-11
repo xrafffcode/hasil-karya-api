@@ -21,15 +21,23 @@ class FuelLogRepository implements FuelLogRepositoryInterface
         $fuelLog = new FuelLog();
         $fuelLog->code = $data['code'];
         $fuelLog->date = $data['date'];
-        $fuelLog->truck_id = $data['truck_id'];
-        $fuelLog->heavy_vehicle_id = $data['heavy_vehicle_id'];
+        if (isset($data['truck_id'])) {
+            $fuelLog->truck_id = $data['truck_id'];
+        }
+        if (isset($data['heavy_vehicle_id'])) {
+            $fuelLog->heavy_vehicle_id = $data['heavy_vehicle_id'];
+        }
         $fuelLog->driver_id = $data['driver_id'];
         $fuelLog->station_id = $data['station_id'];
         $fuelLog->gas_operator_id = $data['gas_operator_id'];
         $fuelLog->fuel_type = $data['fuel_type'];
         $fuelLog->volume = $data['volume'];
-        $fuelLog->odometer = $data['odometer'];
-        $fuelLog->hourmeter = $data['hourmeter'];
+        if (isset($data['odometer'])) {
+            $fuelLog->odometer = $data['odometer'];
+        }
+        if (isset($data['hourmeter'])) {
+            $fuelLog->hourmeter = $data['hourmeter'];
+        }
         $fuelLog->remarks = $data['remarks'];
         $fuelLog->save();
 
@@ -62,15 +70,23 @@ class FuelLogRepository implements FuelLogRepositoryInterface
         $fuelLog = FuelLog::find($id);
         $fuelLog->code = $data['code'];
         $fuelLog->date = $data['date'];
-        $fuelLog->truck_id = $data['truck_id'];
-        $fuelLog->heavy_vehicle_id = $data['heavy_vehicle_id'];
+        if (isset($data['truck_id'])) {
+            $fuelLog->truck_id = $data['truck_id'];
+        }
+        if (isset($data['heavy_vehicle_id'])) {
+            $fuelLog->heavy_vehicle_id = $data['heavy_vehicle_id'];
+        }
         $fuelLog->driver_id = $data['driver_id'];
         $fuelLog->station_id = $data['station_id'];
         $fuelLog->gas_operator_id = $data['gas_operator_id'];
         $fuelLog->fuel_type = $data['fuel_type'];
         $fuelLog->volume = $data['volume'];
-        $fuelLog->odometer = $data['odometer'];
-        $fuelLog->hourmeter = $data['hourmeter'];
+        if (isset($data['odometer'])) {
+            $fuelLog->odometer = $data['odometer'];
+        }
+        if (isset($data['hourmeter'])) {
+            $fuelLog->hourmeter = $data['hourmeter'];
+        }
         $fuelLog->remarks = $data['remarks'];
         $fuelLog->save();
 

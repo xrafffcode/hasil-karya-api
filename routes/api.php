@@ -128,10 +128,12 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('checker/active/{id}', [CheckerController::class, 'updateActiveStatus']);
     Route::delete('checker/{id}', [CheckerController::class, 'destroy']);
 
-    Route::post('fuel-log', [FuelLogController::class, 'store']);
+    Route::post('fuel-log/truck', [FuelLogController::class, 'storeTruck']);
+    Route::post('fuel-log/heavy-vehicle', [FuelLogController::class, 'storeHeavyVehicle']);
     Route::get('fuel-log/{id}', [FuelLogController::class, 'show']);
     Route::get('fuel-log/read/fuel-types', [FuelLogController::class, 'getFuelType']);
-    Route::post('fuel-log/{id}', [FuelLogController::class, 'update']);
+    Route::post('fuel-log/truck/{id}', [FuelLogController::class, 'updateTruck']);
+    Route::post('fuel-log/heavy-vehicle/{id}', [FuelLogController::class, 'updateHeavyVehicle']);
     Route::delete('fuel-log/{id}', [FuelLogController::class, 'destroy']);
 
     Route::post('material-movement', [MaterialMovementController::class, 'store']);
@@ -145,5 +147,6 @@ Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {
-    Route::post('gas-operator/fuel-log/store', [FuelLogController::class, 'store']);
+    Route::post('gas-operator/fuel-log/truck/store', [FuelLogController::class, 'storeTruck']);
+    Route::post('gas-operator/fuel-log/heavy-vehicle/store', [FuelLogController::class, 'storeHeavyVehicle']);
 });
