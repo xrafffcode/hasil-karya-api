@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('heavy_vehicles', function (Blueprint $table) {
+        Schema::create('gas_operators', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('code');
-            $table->string('brand');
-            $table->string('model');
-            $table->string('production_year');
-            $table->uuid('vendor_id');
-            $table->foreign('vendor_id')->references('id')->on('vendors');
+            $table->string('name');
             $table->boolean('is_active');
 
             $table->softDeletes();
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('heavy_vehicles');
+        Schema::dropIfExists('gas_operators');
     }
 };

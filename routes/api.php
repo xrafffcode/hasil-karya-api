@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CheckerController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\FuelLogController;
+use App\Http\Controllers\Api\GasOperatorController;
 use App\Http\Controllers\Api\HeavyVehicleController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\MaterialMovementController;
@@ -32,7 +34,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::middleware(['role:admin|checker'])->group(function () {
+    Route::middleware(['role:admin|checker|technical-admin|gas-operator'])->group(function () {
         Route::get('clients', [ClientController::class, 'index']);
         Route::get('projects', [ProjectController::class, 'index']);
         Route::get('drivers', [DriverController::class, 'index']);
@@ -43,7 +45,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('materials', [MaterialController::class, 'index']);
         Route::get('stations', [StationController::class, 'index']);
         Route::get('technical-admins', [TechnicalAdminController::class, 'index']);
+        Route::get('gas-operators', [GasOperatorController::class, 'index']);
         Route::get('checkers', [CheckerController::class, 'index']);
+        Route::get('fuel-logs', [FuelLogController::class, 'index']);
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
     });
 });
@@ -112,11 +116,22 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('technical-admin/active/{id}', [TechnicalAdminController::class, 'updateActiveStatus']);
     Route::delete('technical-admin/{id}', [TechnicalAdminController::class, 'destroy']);
 
+    Route::post('gas-operator', [GasOperatorController::class, 'store']);
+    Route::get('gas-operator/{id}', [GasOperatorController::class, 'show']);
+    Route::post('gas-operator/{id}', [GasOperatorController::class, 'update']);
+    Route::post('gas-operator/active/{id}', [GasOperatorController::class, 'updateActiveStatus']);
+    Route::delete('gas-operator/{id}', [GasOperatorController::class, 'destroy']);
+
     Route::post('checker', [CheckerController::class, 'store']);
     Route::get('checker/{id}', [CheckerController::class, 'show']);
     Route::post('checker/{id}', [CheckerController::class, 'update']);
     Route::post('checker/active/{id}', [CheckerController::class, 'updateActiveStatus']);
     Route::delete('checker/{id}', [CheckerController::class, 'destroy']);
+
+    Route::post('fuel-log', [FuelLogController::class, 'store']);
+    Route::get('fuel-log/{id}', [FuelLogController::class, 'show']);
+    Route::post('fuel-log/{id}', [FuelLogController::class, 'update']);
+    Route::delete('fuel-log/{id}', [FuelLogController::class, 'destroy']);
 
     Route::post('material-movement', [MaterialMovementController::class, 'store']);
     Route::get('material-movement/{id}', [MaterialMovementController::class, 'show']);
@@ -125,5 +140,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
-    Route::post('checker/store/material-movement', [MaterialMovementController::class, 'store']);
+    Route::post('checker/material-movement/store', [MaterialMovementController::class, 'store']);
+});
+
+Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {
+    Route::post('gas-operator/fuel-log/store', [FuelLogController::class, 'store']);
 });

@@ -7,15 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vendor extends Model
+class GasOperator extends Model
 {
     use HasFactory, SoftDeletes, UUID;
 
     protected $fillable = [
+        'user_id',
         'code',
         'name',
-        'address',
-        'phone',
         'is_active',
     ];
 
@@ -23,13 +22,8 @@ class Vendor extends Model
         'is_active' => 'boolean',
     ];
 
-    public function Trucks()
+    public function user()
     {
-        return $this->hasMany(Truck::class);
-    }
-
-    public function HeavyVehicles()
-    {
-        return $this->hasMany(HeavyVehicle::class);
+        return $this->belongsTo(User::class);
     }
 }

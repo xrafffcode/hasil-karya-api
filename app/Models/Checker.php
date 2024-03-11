@@ -13,8 +13,6 @@ class Checker extends Model
 {
     use HasFactory, SoftDeletes, UUID;
 
-    // protected $dateFormat = 'Y-m-d H:i:s';
-
     protected $fillable = [
         'user_id',
         'code',

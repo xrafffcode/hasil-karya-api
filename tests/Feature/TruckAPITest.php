@@ -47,7 +47,8 @@ class TruckAPITest extends TestCase
 
         $truck = Truck::factory()
             ->for(Vendor::factory())
-            ->make(['code' => 'AUTO'])->toArray();
+            ->make(['code' => 'AUTO'])
+            ->toArray();
 
         $response = $this->json('POST', '/api/v1/truck', $truck);
 
@@ -89,7 +90,8 @@ class TruckAPITest extends TestCase
 
         $updatedTruck = Truck::factory()
             ->for(Vendor::factory())
-            ->make(['code' => 'AUTO'])->toArray();
+            ->make(['code' => 'AUTO'])
+            ->toArray();
 
         $response = $this->json('POST', '/api/v1/truck/'.$truck->id, $updatedTruck);
 
@@ -114,7 +116,8 @@ class TruckAPITest extends TestCase
 
         $updatedTruck = Truck::factory()
             ->for(Vendor::factory())
-            ->make(['code' => $truck->code])->toArray();
+            ->make(['code' => $truck->code])
+            ->toArray();
 
         $response = $this->json('POST', '/api/v1/truck/'.$truck->id, $updatedTruck);
 
@@ -139,7 +142,10 @@ class TruckAPITest extends TestCase
             ->for(Vendor::factory())
             ->create();
 
-        $updatedTruck = Truck::factory()->make(['code' => $existingTruck->code])->toArray();
+        $updatedTruck = Truck::factory()
+            ->for(Vendor::factory())
+            ->make(['code' => $existingTruck->code])
+            ->toArray();
 
         $response = $this->json('POST', '/api/v1/truck/'.$newTruck->id, $updatedTruck);
 
