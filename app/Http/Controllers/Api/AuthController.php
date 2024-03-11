@@ -99,6 +99,10 @@ class AuthController extends Controller
                 $user->checker;
             }
 
+            if ($user->gasOperator()->exists()) {
+                $user->gasOperator;
+            }
+
             return response()->json([
                 'message' => 'User data',
                 'data' => $user,
