@@ -270,6 +270,19 @@ class FuelLogAPITest extends TestCase
         $response->assertSuccessful();
     }
 
+    public function test_fuel_log_api_call_read_fuel_types_expect_collection()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $response = $this->getJson('/api/v1/fuel-log/read/fuel-types');
+
+        $response->assertSuccessful();
+    }
+
     public function test_fuel_log_api_call_update_with_auto_code_expect_success()
     {
         $user = User::factory()

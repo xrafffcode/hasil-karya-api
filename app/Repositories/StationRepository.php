@@ -23,10 +23,12 @@ class StationRepository implements StationRepositoryInterface
     {
         $station = new Station();
         $station->code = $data['code'];
+        $station->name = $data['name'];
         $station->province = $data['province'];
         $station->regency = $data['regency'];
         $station->district = $data['district'];
         $station->subdistrict = $data['subdistrict'];
+        $station->address = $data['address'];
         $station->category = $data['category'];
         $station->material_id = $data['material_id'];
         $station->is_active = $data['is_active'];
@@ -59,10 +61,12 @@ class StationRepository implements StationRepositoryInterface
     {
         $station = Station::find($id);
         $station->code = $data['code'];
+        $station->name = $data['name'];
         $station->province = $data['province'];
         $station->regency = $data['regency'];
         $station->district = $data['district'];
         $station->subdistrict = $data['subdistrict'];
+        $station->address = $data['address'];
         $station->category = $data['category'];
         $station->material_id = $data['material_id'];
         $station->is_active = $data['is_active'];
