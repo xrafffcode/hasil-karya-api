@@ -137,7 +137,7 @@ class MaterialMovementAPITest extends TestCase
             ->for(Truck::factory()->for(Vendor::factory())->create(['is_active' => true]), 'truck')
             ->for(Station::factory()->create(['is_active' => true]), 'station')
             ->for($checker, 'checker')
-            ->make(['code' => 'AUTO', 'date' => '2021-13-01 22:12'])
+            ->make(['code' => 'AUTO', 'date' => strval(mt_rand(1000000000, 9999999999))])
             ->toArray();
 
         $response = $this->json('POST', '/api/v1/material-movement', $materialMovement);

@@ -22,7 +22,7 @@ class StoreFuelLogRequest extends FormRequest
             'station_id' => 'required|exists:stations,id',
             'gas_operator_id' => 'required|exists:gas_operators,id',
             'fuel_type' => 'required|string',
-            'volume' => 'required|numeric',
+            'volume' => 'required|numeric|min:0',
             'odometer' => 'required_if:truck_id,!=,null|numeric|min:0',
             'hourmeter' => 'required_if:heavy_vehicle_id,!=,null|numeric|min:0',
             'remarks' => 'nullable|string',

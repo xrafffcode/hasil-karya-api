@@ -56,6 +56,6 @@ class FuelLog extends Model
     {
         $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->date);
 
-        return $this->date->isoFormat('DD MMMM YYYY');
+        return $date->isoFormat('DD MMMM YYYY');
     }
 }
