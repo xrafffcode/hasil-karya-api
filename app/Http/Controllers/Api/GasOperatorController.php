@@ -89,7 +89,7 @@ class GasOperatorController extends Controller
 
     public function updateActiveStatus(Request $request, $id)
     {
-        $status = $request->status;
+        $status = $request->input('is_active');
 
         try {
             $gasOperator = $this->GasOperatorRepository->updateActiveStatus($id, $status);

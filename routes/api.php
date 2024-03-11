@@ -35,19 +35,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::middleware(['role:admin|checker|technical-admin|gas-operator'])->group(function () {
-        Route::get('clients', [ClientController::class, 'index']);
+        Route::get('clients', [ClientController::class, 'index']); // Done
         Route::get('projects', [ProjectController::class, 'index']);
-        Route::get('drivers', [DriverController::class, 'index']);
-        Route::get('vendors', [VendorController::class, 'index']);
-        Route::get('trucks', [TruckController::class, 'index']);
-        Route::get('heavy-vehicles', [HeavyVehicleController::class, 'index']);
+        Route::get('drivers', [DriverController::class, 'index']); // Done
+        Route::get('vendors', [VendorController::class, 'index']); // Done
+        Route::get('trucks', [TruckController::class, 'index']); // Done
+        Route::get('heavy-vehicles', [HeavyVehicleController::class, 'index']); // Done
         Route::get('vehicle-rental-records', [VehicleRentalRecordController::class, 'index']);
         Route::get('materials', [MaterialController::class, 'index']);
         Route::get('stations', [StationController::class, 'index']);
         Route::get('technical-admins', [TechnicalAdminController::class, 'index']);
-        Route::get('gas-operators', [GasOperatorController::class, 'index']);
-        Route::get('checkers', [CheckerController::class, 'index']);
-        Route::get('fuel-logs', [FuelLogController::class, 'index']);
+        Route::get('gas-operators', [GasOperatorController::class, 'index']); // Done
+        Route::get('checkers', [CheckerController::class, 'index']); // Done
+        Route::get('fuel-logs', [FuelLogController::class, 'index']); // Done
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
     });
 });

@@ -54,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->checker()->exists();
     }
+
+    public function gasOperator()
+    {
+        return $this->hasOne(GasOperator::class);
+    }
+
+    public function hasGasOperator()
+    {
+        return $this->gasOperator()->exists();
+    }
 }
