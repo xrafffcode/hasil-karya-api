@@ -26,4 +26,9 @@ class TechnicalAdmin extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_technical_admin_pivot');
+    }
 }

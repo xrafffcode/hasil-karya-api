@@ -56,4 +56,9 @@ class Project extends Model
     {
         return $this->belongsToMany(Checker::class, 'project_checker_pivot');
     }
+
+    public function technicalAdmins()
+    {
+        return $this->belongsToMany(TechnicalAdmin::class, 'project_technical_admin_pivot');
+    }
 }

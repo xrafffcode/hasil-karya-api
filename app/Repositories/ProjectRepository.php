@@ -44,6 +44,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         if (isset($data['checkers'])) {
             $project->checkers()->attach($data['checkers']);
         }
+        if (isset($data['technical_admins'])) {
+            $project->technicalAdmins()->attach($data['technical_admins']);
+        }
 
         return $project;
     }
@@ -84,6 +87,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         }
         if (isset($data['checkers'])) {
             $project->checkers()->sync($data['checkers']);
+        }
+        if (isset($data['technical_admins'])) {
+            $project->technicalAdmins()->sync($data['technical_admins']);
         }
 
         return $project;

@@ -29,13 +29,13 @@ class Checker extends Model
         return $this->hasMany(MaterialMovement::class);
     }
 
-    public function projects()
-    {
-        return $this->belongsToMany(Project::class, 'project_checker_pivot');
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_checker_pivot');
     }
 }
