@@ -27,4 +27,9 @@ class Vendor extends Model
     {
         return $this->hasMany(Truck::class);
     }
+
+    public function HeavyVehicles()
+    {
+        return $this->hasMany(HeavyVehicle::class);
+    }
 }

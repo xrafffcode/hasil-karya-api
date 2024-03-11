@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('production_year');
             $table->uuid('vendor_id');
             $table->foreign('vendor_id')->references('id')->on('vendors');
-            $table->decimal('is_active');
+            $table->boolean('is_active');
 
             $table->softDeletes();
             $table->timestamps();

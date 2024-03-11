@@ -188,7 +188,7 @@ class MaterialMovementAPITest extends TestCase
             ->make(['code' => 'AUTO'])
             ->toArray();
 
-        $response = $this->json('POST', '/api/v1/checker/store/material-movement', $materialMovement);
+        $response = $this->json('POST', '/api/v1/checker/material-movement/store', $materialMovement);
 
         $response->assertSuccessful();
 

@@ -27,6 +27,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\TechnicalAdminRepositoryInterface::class, \App\Repositories\TechnicalAdminRepository::class);
         $this->app->bind(\App\Interfaces\HeavyVehicleRepositoryInterface::class, \App\Repositories\HeavyVehicleRepository::class);
         $this->app->bind(\App\Interfaces\GasOperatorRepositoryInterface::class, \App\Repositories\GasOperatorRepository::class);
+        $this->app->bind(\App\Interfaces\FuelLogRepositoryInterface::class, \App\Repositories\FuelLogRepository::class);
     }
 
     /**
