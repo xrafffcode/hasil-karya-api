@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\FuelTypeEnum;
 use App\Enum\UserRoleEnum;
 use App\Models\Driver;
 use App\Models\GasOperator;
@@ -26,7 +27,7 @@ class FuelLogFactory extends Factory
         return [
             'code' => strval(Str::random(10)),
             'date' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
-            'fuel_type' => $this->faker->randomElement(['Diesel', 'Gasoline']),
+            'fuel_type' => $this->faker->randomElement(FuelTypeEnum::toArrayValue()),
             'volume' => $this->faker->randomFloat(2, 0.3, 1),
             'odometer' => $this->faker->randomFloat(2, 0.3, 1),
             'hourmeter' => $this->faker->randomFloat(2, 0.3, 1),
