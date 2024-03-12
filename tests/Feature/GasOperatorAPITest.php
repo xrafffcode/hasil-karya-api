@@ -168,13 +168,13 @@ class GasOperatorAPITest extends TestCase
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::GAS_OPERATOR)->first()))
             ->create(['is_active' => true]);
 
-        $response = $this->json('POST', '/api/v1/gas-operator/active/'.$gasOperator->id, ['status' => false]);
+        $response = $this->json('POST', '/api/v1/gas-operator/active/'.$gasOperator->id, ['is_active' => false]);
 
         $response->assertSuccessful();
 
         $this->assertDatabaseHas('gas_operators', ['id' => $gasOperator->id, 'is_active' => false]);
 
-        $response = $this->json('POST', '/api/v1/gas-operator/active/'.$gasOperator->id, ['status' => true]);
+        $response = $this->json('POST', '/api/v1/gas-operator/active/'.$gasOperator->id, ['is_active' => true]);
 
         $response->assertSuccessful();
 

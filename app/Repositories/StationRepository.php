@@ -8,9 +8,19 @@ use App\Models\Station;
 
 class StationRepository implements StationRepositoryInterface
 {
-    public function getAllStations()
+    public function getAllStations(?string $type = null)
     {
-        $stations = Station::orderBy('province', 'asc')
+        $stations = Station::query();
+
+        if ($type == 'station') {
+            $stations = $stations
+                ->orWhere('category', StationCategoryEnum::QUARY)
+                ->orWhere('category', StationCategoryEnum::DISPOSAL);
+        } elseif ($type == 'gas_station') {
+            $stations = $stations->orWhere('category', StationCategoryEnum::GAS);
+        }
+
+        $stations = $stations->orderBy('province', 'asc')
             ->orderBy('regency', 'asc')
             ->orderBy('district', 'asc')
             ->orderBy('subdistrict', 'asc')
@@ -24,10 +34,10 @@ class StationRepository implements StationRepositoryInterface
         $station = new Station();
         $station->code = $data['code'];
         $station->name = $data['name'];
-        $station->province = $data['province'] ?? '';
-        $station->regency = $data['regency'] ?? '';
-        $station->district = $data['district'] ?? '';
-        $station->subdistrict = $data['subdistrict'] ?? '';
+        $station->province = $data['province'];
+        $station->regency = $data['regency'];
+        $station->district = $data['district'];
+        $station->subdistrict = $data['subdistrict'];
         $station->address = $data['address'];
         $station->category = $data['category'];
         $station->material_id = $data['material_id'];
@@ -62,10 +72,10 @@ class StationRepository implements StationRepositoryInterface
         $station = Station::find($id);
         $station->code = $data['code'];
         $station->name = $data['name'];
-        $station->province = $data['province'] ?? '';
-        $station->regency = $data['regency'] ?? '';
-        $station->district = $data['district'] ?? '';
-        $station->subdistrict = $data['subdistrict'] ?? '';
+        $station->province = $data['province'];
+        $station->regency = $data['regency'];
+        $station->district = $data['district'];
+        $station->subdistrict = $data['subdistrict'];
         $station->address = $data['address'];
         $station->category = $data['category'];
         $station->material_id = $data['material_id'];

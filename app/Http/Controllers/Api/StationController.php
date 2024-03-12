@@ -22,8 +22,10 @@ class StationController extends Controller
 
     public function index(Request $request)
     {
+        $type = $request->type ? $request->type : null;
+
         try {
-            $stations = $this->StationRepository->getAllStations($request->all());
+            $stations = $this->StationRepository->getAllStations($type);
 
             return ResponseHelper::jsonResponse(true, 'Success', StationResource::collection($stations), 200);
         } catch (\Exception $e) {
