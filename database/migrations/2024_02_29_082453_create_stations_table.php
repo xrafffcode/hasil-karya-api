@@ -16,10 +16,10 @@ return new class extends Migration
 
             $table->string('code');
             $table->string('name');
-            $table->string('province');
-            $table->string('regency');
-            $table->string('district');
-            $table->string('subdistrict');
+            $table->string('province')->nullable();
+            $table->string('regency')->nullable();
+            $table->string('district')->nullable();
+            $table->string('subdistrict')->nullable();
             $table->string('address');
             $table->string('category');
             $table->uuid('material_id')->nullable();

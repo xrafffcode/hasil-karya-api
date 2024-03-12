@@ -27,6 +27,8 @@ class StoreVehicleRentalRecordRequest extends FormRequest
 
     public function prepareForValidation()
     {
-
+        if (! $this->has('remarks')) {
+            $this->merge(['remarks' => '']);
+        }
     }
 }
