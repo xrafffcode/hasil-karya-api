@@ -35,6 +35,7 @@ class VehicleRentalRecordController extends Controller
         $request = $request->validated();
 
         $code = $request['code'];
+
         if ($code == 'AUTO') {
             $tryCount = 0;
             do {

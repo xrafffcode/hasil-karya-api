@@ -84,10 +84,11 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
     public function isUniqueCode(string $code, $exceptId = null): bool
     {
         $query = VehicleRentalRecord::where('code', $code);
+
         if ($exceptId) {
             $query->where('id', '!=', $exceptId);
         }
 
-        return $query->exists();
+        return $query->doesntExist();
     }
 }

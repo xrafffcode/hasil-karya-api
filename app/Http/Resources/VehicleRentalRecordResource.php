@@ -20,11 +20,12 @@ class VehicleRentalRecordResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'code' => $this->code,
             'truck' => new TruckResource($this->truck),
             'heavy_vehicle' => new HeavyVehicleResource($this->heavyVehicle),
-            'start_date' => $startDate,
+            'start_date' => $startDate->format('Y-m-d H:i:s'),
             'rental_duration' => $this->rental_duration,
-            'end_date' => $endDate,
+            'end_date' => $endDate->format('Y-m-d H:i:s'),
             'rental_cost' => $this->rental_cost,
             'is_paid' => $this->is_paid,
             'remarks' => $this->remarks,
