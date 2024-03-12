@@ -32,5 +32,21 @@ class UpdateStationRequest extends FormRequest
         if (! $this->has('material_id')) {
             $this->merge(['material_id' => null]);
         }
+
+        if (! $this->has('province')) {
+            $this->merge(['province' => true]);
+        }
+
+        if (! $this->has('regency')) {
+            $this->merge(['regency' => true]);
+        }
+
+        if (! $this->has('district')) {
+            $this->merge(['district' => true]);
+        }
+
+        if (! $this->has('subdistrict')) {
+            $this->merge(['subdistrict' => true]);
+        }
     }
 }
