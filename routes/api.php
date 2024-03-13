@@ -42,13 +42,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('trucks', [TruckController::class, 'index']); // Done
         Route::get('heavy-vehicles', [HeavyVehicleController::class, 'index']); // Done
         Route::get('vehicle-rental-records', [VehicleRentalRecordController::class, 'index']); // Done
-        Route::get('materials', [MaterialController::class, 'index']);
+        Route::get('materials', [MaterialController::class, 'index']); // Done
         Route::get('stations', [StationController::class, 'index']);
-        Route::get('technical-admins', [TechnicalAdminController::class, 'index']);
+        Route::get('technical-admins', [TechnicalAdminController::class, 'index']); // Done
         Route::get('gas-operators', [GasOperatorController::class, 'index']); // Done
         Route::get('checkers', [CheckerController::class, 'index']); // Done
         Route::get('fuel-logs', [FuelLogController::class, 'index']); // Done
-        Route::get('material-movements', [MaterialMovementController::class, 'index']);
+        Route::get('material-movements', [MaterialMovementController::class, 'index']); // Done
     });
 });
 
