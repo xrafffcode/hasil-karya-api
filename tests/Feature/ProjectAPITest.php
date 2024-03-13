@@ -6,6 +6,8 @@ use App\Enum\UserRoleEnum;
 use App\Models\Checker;
 use App\Models\Client;
 use App\Models\Driver;
+use App\Models\GasOperator;
+use App\Models\HeavyVehicle;
 use App\Models\Project;
 use App\Models\Station;
 use App\Models\TechnicalAdmin;
@@ -82,6 +84,10 @@ class ProjectAPITest extends TestCase
             ->for(Vendor::factory())
             ->count(5)->create();
 
+        HeavyVehicle::factory()
+            ->for(Vendor::factory())
+            ->count(5)->create();
+
         Station::factory()->count(5)->create();
 
         Checker::factory()
@@ -92,22 +98,28 @@ class ProjectAPITest extends TestCase
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::TECHNICAL_ADMIN)->first()))
             ->count(5)->create();
 
+        GasOperator::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::GAS_OPERATOR)->first()))
+            ->count(5)->create();
+
         $project = Project::factory()
             ->for(Client::factory())
             ->make(['code' => 'AUTO'])->toArray();
 
         $project['drivers'] = Driver::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $project['trucks'] = Truck::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
+        $project['heavy_vehicles'] = HeavyVehicle::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $project['stations'] = Station::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $project['checkers'] = Checker::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $project['technical_admins'] = TechnicalAdmin::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
+        $project['gas_operators'] = GasOperator::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
 
         $response = $this->json('POST', '/api/v1/project', $project);
 
         $response->assertSuccessful();
 
         $project['code'] = $response['data']['code'];
-        $project = Arr::except($project, ['drivers', 'trucks', 'stations', 'checkers', 'technical_admins']);
+        $project = Arr::except($project, ['drivers', 'trucks', 'stations', 'heavy_vehicles', 'checkers', 'technical_admins', 'gas_operators']);
 
         $this->assertDatabaseHas('projects', $project);
     }
@@ -170,6 +182,10 @@ class ProjectAPITest extends TestCase
             ->for(Vendor::factory())
             ->count(5)->create();
 
+        HeavyVehicle::factory()
+            ->for(Vendor::factory())
+            ->count(5)->create();
+
         Station::factory()->count(5)->create();
 
         Checker::factory()
@@ -178,6 +194,10 @@ class ProjectAPITest extends TestCase
 
         TechnicalAdmin::factory()
             ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::TECHNICAL_ADMIN)->first()))
+            ->count(5)->create();
+
+        GasOperator::factory()
+            ->for(User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::GAS_OPERATOR)->first()))
             ->count(5)->create();
 
         $project = Project::factory()
@@ -190,16 +210,18 @@ class ProjectAPITest extends TestCase
 
         $updatedProject['drivers'] = Driver::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $updatedProject['trucks'] = Truck::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
+        $updatedProject['heavy_vehicles'] = HeavyVehicle::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $updatedProject['stations'] = Station::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $updatedProject['checkers'] = Checker::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
         $updatedProject['technical_admins'] = TechnicalAdmin::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
+        $updatedProject['gas_operators'] = GasOperator::inRandomOrder()->limit(mt_rand(1, 5))->get()->pluck('id')->toArray();
 
         $response = $this->json('POST', '/api/v1/project/'.$project->id, $updatedProject);
 
         $response->assertSuccessful();
 
         $updatedProject['code'] = $response['data']['code'];
-        $updatedProject = Arr::except($updatedProject, ['drivers', 'trucks', 'stations', 'checkers', 'technical_admins']);
+        $updatedProject = Arr::except($updatedProject, ['drivers', 'trucks', 'heavy_vehicles', 'stations', 'checkers', 'technical_admins', 'gas_operators']);
 
         $this->assertDatabaseHas('projects', $updatedProject);
     }

@@ -61,4 +61,9 @@ class Project extends Model
     {
         return $this->belongsToMany(TechnicalAdmin::class, 'project_technical_admin_pivot');
     }
+
+    public function gasOperators()
+    {
+        return $this->belongsToMany(GasOperator::class, 'project_gas_operator_pivot');
+    }
 }
