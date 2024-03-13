@@ -38,6 +38,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         if (isset($data['trucks'])) {
             $project->trucks()->attach($data['trucks']);
         }
+        if (isset($data['heavy_vehicles'])) {
+            $project->heavyVehicles()->attach($data['heavy_vehicles']);
+        }
         if (isset($data['stations'])) {
             $project->stations()->attach($data['stations']);
         }
@@ -46,6 +49,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         }
         if (isset($data['technical_admins'])) {
             $project->technicalAdmins()->attach($data['technical_admins']);
+        }
+        if (isset($data['gas_operators'])) {
+            $project->gasOperators()->attach($data['gas_operators']);
         }
 
         return $project;
@@ -82,6 +88,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         if (isset($data['trucks'])) {
             $project->trucks()->sync($data['trucks']);
         }
+        if (isset($data['heavy_vehicles'])) {
+            $project->heavyVehicles()->sync($data['heavy_vehicles']);
+        }
         if (isset($data['stations'])) {
             $project->stations()->sync($data['stations']);
         }
@@ -90,6 +99,9 @@ class ProjectRepository implements ProjectRepositoryInterface
         }
         if (isset($data['technical_admins'])) {
             $project->technicalAdmins()->sync($data['technical_admins']);
+        }
+        if (isset($data['gas_operators'])) {
+            $project->gasOperators()->sync($data['gas_operators']);
         }
 
         return $project;

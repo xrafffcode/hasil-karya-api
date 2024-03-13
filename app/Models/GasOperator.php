@@ -26,4 +26,9 @@ class GasOperator extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_gas_operator_pivot');
+    }
 }

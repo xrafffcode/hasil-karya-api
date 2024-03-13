@@ -31,9 +31,11 @@ class ProjectResource extends JsonResource
             'status' => $this->status,
             'drivers' => DriverResource::collection($this->drivers),
             'trucks' => TruckResource::collection($this->trucks),
+            'heavy_vehicles' => HeavyVehicleResource::collection($this->heavyVehicles),
             'stations' => StationResource::collection($this->stations),
             'checkers' => CheckerResource::collection($this->checkers),
             'technical_admins' => TechnicalAdminResource::collection($this->technicalAdmins),
+            'gas_operators' => GasOperatorResource::collection($this->gasOperators),
         ];
     }
 }

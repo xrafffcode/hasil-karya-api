@@ -31,12 +31,16 @@ class UpdateProjectRequest extends FormRequest
             'drivers.*' => 'required|exists:drivers,id',
             'trucks' => 'nullable|array',
             'trucks.*' => 'required|exists:trucks,id',
+            'heavy_vehicles' => 'nullable|array',
+            'heavy_vehicles.*' => 'required|exists:heavy_vehicles,id',
             'stations' => 'nullable|array',
             'stations.*' => 'required|exists:stations,id',
             'checkers' => 'nullable|array',
             'checkers.*' => 'required|exists:checkers,id',
             'technical_admins' => 'nullable|array',
             'technical_admins.*' => 'required|exists:technical_admins,id',
+            'gas_operators' => 'nullable|array',
+            'gas_operators.*' => 'required|exists:gas_operators,id',
         ];
     }
 
