@@ -74,7 +74,7 @@ class FuelLogController extends Controller
         try {
             $fuelLog = $this->FuelLogRepository->create($request);
 
-            return ResponseHelper::jsonResponse(true, 'Catatan bahan bakar berhasil dibuat.', FuelLogResource::make($fuelLog), 201);
+            return ResponseHelper::jsonResponse(true, 'Catatan bahan bakar truk berhasil dibuat.', FuelLogResource::make($fuelLog), 201);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
@@ -117,7 +117,7 @@ class FuelLogController extends Controller
         try {
             $fuelLog = $this->FuelLogRepository->create($request);
 
-            return ResponseHelper::jsonResponse(true, 'Catatan bahan bakar berhasil dibuat.', FuelLogResource::make($fuelLog), 201);
+            return ResponseHelper::jsonResponse(true, 'Catatan bahan bakar alat berat berhasil dibuat.', FuelLogResource::make($fuelLog), 201);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

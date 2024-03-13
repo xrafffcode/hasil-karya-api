@@ -35,8 +35,12 @@ class TechnicalAdminRepository implements TechnicalAdminRepositoryInterface
             $technicalAdmin->is_active = $data['is_active'];
             $technicalAdmin->save();
 
+            DB::commit();
+
             return $technicalAdmin;
         } catch (\Exception $e) {
+            DB::rollback();
+
             return $e;
         }
     }

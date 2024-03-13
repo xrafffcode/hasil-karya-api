@@ -10,7 +10,7 @@ class FuelLogRepository implements FuelLogRepositoryInterface
 {
     public function getAllFuelLogs()
     {
-        $fuelLogs = FuelLog::with('truck', 'station')
+        $fuelLogs = FuelLog::with('truck', 'heavyVehicle', 'station', 'gasOperator', 'driver')
             ->orderBy('date', 'desc')->get();
 
         return $fuelLogs;
