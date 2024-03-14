@@ -27,7 +27,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->date = $data['date'];
         $materialMovement->observation_ratio_percentage = $data['observation_ratio_percentage'];
         $materialMovement->observation_ratio_number = Truck::find($data['truck_id'])->capacity * $materialMovement->observation_ratio_percentage;
-        $materialMovement->solid_ratio = $data['solid_ratio'] ? $data['solid_ratio'] : 0;
+        $materialMovement->solid_ratio = $data['solid_ratio'];
         $materialMovement->solid_volume_estimate = $materialMovement->observation_ratio_number * $materialMovement->solid_ratio;
         $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
@@ -54,7 +54,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->date = $data['date'];
         $materialMovement->observation_ratio_percentage = $data['observation_ratio_percentage'];
         $materialMovement->observation_ratio_number = Truck::find($data['truck_id'])->capacity * $materialMovement->observation_ratio_percentage;
-        $materialMovement->solid_ratio = $data['solid_ratio'] ? $data['solid_ratio'] : 0;
+        $materialMovement->solid_ratio = $data['solid_ratio'];
         $materialMovement->solid_volume_estimate = $materialMovement->observation_ratio_number * $materialMovement->solid_ratio;
         $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();

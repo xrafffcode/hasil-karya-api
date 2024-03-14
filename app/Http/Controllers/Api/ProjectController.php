@@ -68,6 +68,17 @@ class ProjectController extends Controller
         }
     }
 
+    public function getProjectStatus()
+    {
+        try {
+            $status = $this->ProjectRepository->getProjectStatus();
+
+            return ResponseHelper::jsonResponse(true, 'Success', $status, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function update(UpdateProjectRequest $request, $id)
     {
         $request = $request->validated();

@@ -68,16 +68,16 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
-        $observation_ratio_percentage = $request['observation_ratio_percentage'];
-        if ($observation_ratio_percentage == -1) {
-            $observation_ratio_percentage = $truck->capacity;
-            $request['observation_ratio_percentage'] = $observation_ratio_percentage;
-        } elseif ($observation_ratio_percentage < -1) {
-            return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
-        }
+        // $observation_ratio_percentage = $request['observation_ratio_percentage'];
+        // if ($observation_ratio_percentage == -1) {
+        //     $observation_ratio_percentage = $truck->capacity;
+        //     $request['observation_ratio_percentage'] = $observation_ratio_percentage;
+        // } elseif ($observation_ratio_percentage < -1) {
+        //     return ResponseHelper::jsonResponse(false, 'Rasio observasi harus diisi !', null, 422);
+        // }
 
-        $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
-        $request['solid_ratio'] = $solid_ratio;
+        // $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
+        // $request['solid_ratio'] = $solid_ratio;
 
         try {
             $materialMovement = $this->MaterialMovementRepository->create($request);
@@ -137,16 +137,16 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
-        $observation_ratio_percentage = $request['observation_ratio_percentage'];
-        if ($observation_ratio_percentage == -1) {
-            $observation_ratio_percentage = $truck->capacity;
-            $request['observation_ratio_percentage'] = $observation_ratio_percentage;
-        } elseif ($observation_ratio_percentage < -1) {
-            return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
-        }
+        // $observation_ratio_percentage = $request['observation_ratio_percentage'];
+        // if ($observation_ratio_percentage == -1) {
+        //     $observation_ratio_percentage = $truck->capacity;
+        //     $request['observation_ratio_percentage'] = $observation_ratio_percentage;
+        // } elseif ($observation_ratio_percentage < -1) {
+        //     return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
+        // }
 
-        $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
-        $request['solid_ratio'] = $solid_ratio;
+        // $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
+        // $request['solid_ratio'] = $solid_ratio;
 
         try {
             $materialMovement = $this->MaterialMovementRepository->update($request, $id);

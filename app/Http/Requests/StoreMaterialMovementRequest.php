@@ -20,7 +20,8 @@ class StoreMaterialMovementRequest extends FormRequest
             'station_id' => 'required|exists:stations,id',
             'checker_id' => 'required|exists:checkers,id',
             'date' => 'required|date',
-            'observation_ratio_percentage' => 'required|numeric',
+            'observation_ratio_percentage' => 'required|numeric|min:0',
+            'solid_ratio' => 'nullable|numeric|min:0',
             'remarks' => 'nullable|string',
         ];
     }
@@ -35,8 +36,16 @@ class StoreMaterialMovementRequest extends FormRequest
             $this->merge(['date' => now()]);
         }
 
+        // if (! $this->has('observation_ratio_percentage')) {
+        //     $this->merge(['observation_ratio_percentage' => -1]);
+        // }
+
         if (! $this->has('observation_ratio_percentage')) {
-            $this->merge(['observation_ratio_percentage' => -1]);
+            $this->merge(['observation_ratio_percentage' => 0]);
+        }
+
+        if (! $this->has('solid_ratio')) {
+            $this->merge(['solid_ratio' => 0]);
         }
 
         if (! $this->has('remarks')) {
