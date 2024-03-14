@@ -65,6 +65,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::post('project', [ProjectController::class, 'store']);
     Route::get('project/{id}', [ProjectController::class, 'show']);
+    Route::get('project/read/status', [ProjectController::class, 'getProjectStatus']);
     Route::post('project/{id}', [ProjectController::class, 'update']);
     Route::delete('project/{id}', [ProjectController::class, 'destroy']);
 

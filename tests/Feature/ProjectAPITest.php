@@ -143,6 +143,19 @@ class ProjectAPITest extends TestCase
         $this->assertDatabaseHas('projects', $project);
     }
 
+    public function test_project_api_call_read_status_expect_collection()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $response = $this->json('GET', '/api/v1/project/read/status');
+
+        $response->assertSuccessful();
+    }
+
     public function test_project_api_call_update_with_auto_code_expect_success()
     {
         $user = User::factory()

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enum\ProjectStatusEnum;
 use App\Interfaces\ProjectRepositoryInterface;
 use App\Models\Project;
 
@@ -62,6 +63,18 @@ class ProjectRepository implements ProjectRepositoryInterface
         $project = Project::find($id);
 
         return $project;
+    }
+
+    public function getProjectStatus()
+    {
+        $statuses = [];
+        foreach (ProjectStatusEnum::toArray() as $status) {
+            $statuses[] = [
+                'name' => $status,
+            ];
+        }
+
+        return $statuses;
     }
 
     public function update(array $data, string $id)

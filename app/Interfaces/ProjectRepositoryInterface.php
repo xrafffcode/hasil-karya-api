@@ -10,6 +10,8 @@ interface ProjectRepositoryInterface
 
     public function getProjectById(string $id);
 
+    public function getProjectStatus();
+
     public function update(array $data, string $id);
 
     public function delete(string $id);
