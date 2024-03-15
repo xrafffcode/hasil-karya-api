@@ -18,7 +18,6 @@ class FuelLogResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'date' => $this->date,
-            'formatted_date' => $this->formatted_date,
             'truck' => TruckResource::make($this->whenLoaded('truck')),
             'heavy_vehicle' => HeavyVehicleResource::make($this->whenLoaded('heavyVehicle')),
             'driver' => DriverResource::make($this->whenLoaded('driver')),

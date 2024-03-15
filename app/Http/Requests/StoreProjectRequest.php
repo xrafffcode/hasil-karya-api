@@ -39,6 +39,8 @@ class StoreProjectRequest extends FormRequest
             'checkers.*' => 'required|exists:checkers,id',
             'technical_admins' => 'nullable|array',
             'technical_admins.*' => 'required|exists:technical_admins,id',
+            'gas_operators' => 'nullable|array',
+            'gas_operators.*' => 'required|exists:gas_operators,id',
         ];
     }
 

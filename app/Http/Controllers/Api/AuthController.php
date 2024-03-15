@@ -22,20 +22,19 @@ class AuthController extends Controller
         if (! Auth::attempt($credentials)) {
             return response([
                 'success' => false,
-                'message' => 'Invalid credentials. Please try again.',
-            ], 404);
+                'message' => 'Email atau password salah',
+            ], 401);
         }
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user->hasChecker()) {
-            if ($user->checker->is_active === false) {
-                return response([
-                    'success' => false,
-                    'message' => 'Your account is not active. Please contact the administrator.',
-                ], 404);
-            }
+        if ($user->isActive() === false) {
+            return response([
+                'success' => false,
+                'message' => 'Akun anda sedang dinonaktifkan',
+            ], 401);
         }
+
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
