@@ -122,9 +122,11 @@ class TruckController extends Controller
         try {
             $isAvailable = $this->TruckRepository->isAvailable($id);
 
-            $message = $isAvailable ? 'Truck tersedia.' : 'Truck tidak tersedia.';
-
-            return ResponseHelper::jsonResponse(true, $message, null, 200);
+            if ($isAvailable) {
+                return ResponseHelper::jsonResponse(true, 'Truck tersedia.', null, 200);
+            } else {
+                return ResponseHelper::jsonResponse(false, 'Truck tidak tersedia.', null, 200);
+            }
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }

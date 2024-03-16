@@ -122,9 +122,11 @@ class DriverController extends Controller
         try {
             $isAvailable = $this->DriverRepository->isAvailable($id);
 
-            $message = $isAvailable ? 'Driver tersedia.' : 'Driver tidak tersedia.';
-
-            return ResponseHelper::jsonResponse(true, $message, null, 200);
+            if ($isAvailable) {
+                return ResponseHelper::jsonResponse(true, 'Driver tersedia.', null, 200);
+            } else {
+                return ResponseHelper::jsonResponse(false, 'Driver tidak tersedia.', null, 200);
+            }
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
