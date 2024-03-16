@@ -77,4 +77,11 @@ class DriverRepository implements DriverRepositoryInterface
 
         return $query->doesntExist();
     }
+
+    public function isAvailable($id): bool
+    {
+        $driver = Driver::find($id);
+
+        return $driver->is_active;
+    }
 }
