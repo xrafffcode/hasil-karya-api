@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::middleware(['role:admin|checker|technical-admin|gas-operator'])->group(function () {
         Route::get('clients', [ClientController::class, 'index']); // Done
-        Route::get('projects', [ProjectController::class, 'index']);
+        Route::get('projects', [ProjectController::class, 'index']); // Done
         Route::get('drivers', [DriverController::class, 'index']); // Done
         Route::get('vendors', [VendorController::class, 'index']); // Done
         Route::get('trucks', [TruckController::class, 'index']); // Done

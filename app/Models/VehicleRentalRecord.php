@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\UUID;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,6 +25,8 @@ class VehicleRentalRecord extends Model
 
     protected $casts = [
         'is_paid' => 'boolean',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     public function truck()
@@ -34,5 +37,12 @@ class VehicleRentalRecord extends Model
     public function heavyVehicle()
     {
         return $this->belongsTo(HeavyVehicle::class);
+    }
+
+    public function getFormattedStartDateAttribute()
+    {
+        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->start_date);
+
+        return $date->isoFormat('DD MMMM YYYY');
     }
 }

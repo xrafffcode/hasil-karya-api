@@ -46,7 +46,7 @@ class FuelLogRepository implements FuelLogRepositoryInterface
 
     public function getFuelLogById(string $id)
     {
-        $fuelLog = FuelLog::with('truck', 'station')
+        $fuelLog = FuelLog::with('truck', 'heavyVehicle', 'station', 'gasOperator', 'driver')
             ->find($id);
 
         return $fuelLog;

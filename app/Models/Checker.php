@@ -24,6 +24,7 @@ class Checker extends Model
         'is_active' => 'boolean',
     ];
 
+
     public function materialMovements()
     {
         return $this->hasMany(MaterialMovement::class);

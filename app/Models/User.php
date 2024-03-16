@@ -64,4 +64,27 @@ class User extends Authenticatable
     {
         return $this->gasOperator()->exists();
     }
+
+    public function technicalAdmin()
+    {
+        return $this->hasOne(TechnicalAdmin::class);
+    }
+
+    public function hasTechnicalAdmin()
+    {
+        return $this->technicalAdmin()->exists();
+    }
+
+    public function isActive()
+    {
+        if ($this->hasChecker()) {
+            return $this->checker->is_active;
+        }elseif ($this->hasGasOperator()) {
+            return $this->gasOperator->is_active;
+        }elseif ($this->hasTechnicalAdmin()) {
+            return $this->technicalAdmin->is_active;
+        }else {
+            return true;
+        }
+    }
 }
