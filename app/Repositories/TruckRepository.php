@@ -90,4 +90,11 @@ class TruckRepository implements TruckRepositoryInterface
 
         return $query->doesntExist();
     }
+
+    public function isAvailable($id): bool
+    {
+        $truck = Truck::find($id);
+
+        return $truck->is_active;
+    }
 }

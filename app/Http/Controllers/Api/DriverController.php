@@ -116,4 +116,17 @@ class DriverController extends Controller
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
     }
+
+    public function checkAvailability($id)
+    {
+        try {
+            $isAvailable = $this->DriverRepository->isAvailable($id);
+
+            $message = $isAvailable ? 'Driver tersedia.' : 'Driver tidak tersedia.';
+
+            return ResponseHelper::jsonResponse(true, $message, null, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
 }

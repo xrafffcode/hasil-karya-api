@@ -119,4 +119,11 @@ class StationRepository implements StationRepositoryInterface
 
         return $query->doesntExist();
     }
+
+    public function isAvailable(string $id): bool
+    {
+        $station = Station::find($id);
+
+        return $station->is_active;
+    }
 }

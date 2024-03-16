@@ -144,4 +144,17 @@ class StationController extends Controller
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
     }
+
+    public function checkAvailability($id)
+    {
+        try {
+            $isAvailable = $this->StationRepository->isAvailable($id);
+
+            $message = $isAvailable ? 'Station tersedia.' : 'Station tidak tersedia.';
+
+            return ResponseHelper::jsonResponse(true, $message, null, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
 }

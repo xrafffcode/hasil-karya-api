@@ -116,4 +116,17 @@ class TruckController extends Controller
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
     }
+
+    public function checkAvailability($id)
+    {
+        try {
+            $isAvailable = $this->TruckRepository->isAvailable($id);
+
+            $message = $isAvailable ? 'Truck tersedia.' : 'Truck tidak tersedia.';
+
+            return ResponseHelper::jsonResponse(true, $message, null, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
 }
