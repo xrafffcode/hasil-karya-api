@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('person_in_charge');
-            $table->decimal('amount', 15, 2);
+            $table->decimal('amount', 30, 2);
             $table->uuid('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->string('province')->nullable();

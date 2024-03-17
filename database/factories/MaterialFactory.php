@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Repositories\MaterialRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class MaterialFactory extends Factory
 {
@@ -14,8 +14,17 @@ class MaterialFactory extends Factory
      */
     public function definition(): array
     {
+        $materialRepository = new MaterialRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $materialRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $materialRepository->isUniqueCode($code));
+
         return [
-            'code' => Str::random(8),
+            'code' => $code,
             'name' => $this->faker->name,
         ];
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('brand');
             $table->string('model');
-            $table->decimal('capacity', 16, 8)->default(0);
+            $table->decimal('capacity', 30, 8)->default(0);
             $table->string('production_year');
             $table->uuid('vendor_id');
             $table->foreign('vendor_id')->references('id')->on('vendors');

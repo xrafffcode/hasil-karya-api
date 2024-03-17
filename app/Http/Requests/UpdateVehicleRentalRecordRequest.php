@@ -22,6 +22,7 @@ class UpdateVehicleRentalRecordRequest extends FormRequest
             'rental_cost' => 'required|numeric|min:0',
             'is_paid' => 'required|boolean',
             'remarks' => 'nullable|string|max:255',
+            'payment_proof_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -29,6 +30,10 @@ class UpdateVehicleRentalRecordRequest extends FormRequest
     {
         if (! $this->has('remarks')) {
             $this->merge(['remarks' => '']);
+        }
+
+        if (! $this->has('payment_proof_image')) {
+            $this->merge(['payment_proof_image' => null]);
         }
     }
 }

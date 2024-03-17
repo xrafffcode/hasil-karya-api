@@ -21,12 +21,13 @@ class VehicleRentalRecord extends Model
         'rental_cost',
         'is_paid',
         'remarks',
+        'payment_proof_image',
     ];
 
     protected $casts = [
         'is_paid' => 'boolean',
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'start_date' => 'datetime:Y-m-d H:i:s',
+        'end_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function truck()

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\ClientRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ClientFactory extends Factory
@@ -13,8 +14,17 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
+        $clientRepository = new ClientRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $clientRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $clientRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(8)),
+            'code' => $code,
             'name' => $this->faker->name,
             'province' => $this->faker->state,
             'regency' => $this->faker->city,
@@ -24,5 +34,17 @@ class ClientFactory extends Factory
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
         ];
+    }
+
+    public function withoutAdministrativeUnit(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'province' => null,
+                'regency' => null,
+                'district' => null,
+                'subdistrict' => null,
+            ];
+        });
     }
 }

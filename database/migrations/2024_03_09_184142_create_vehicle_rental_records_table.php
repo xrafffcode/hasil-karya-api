@@ -21,9 +21,10 @@ return new class extends Migration
             $table->foreign('heavy_vehicle_id')->references('id')->on('heavy_vehicles');
             $table->datetime('start_date');
             $table->integer('rental_duration');
-            $table->decimal('rental_cost', $precision = 16, $scale = 8)->default(0);
+            $table->decimal('rental_cost', 30, 8)->default(0);
             $table->boolean('is_paid')->default(false);
             $table->text('remarks')->nullable();
+            $table->string('payment_proof_image')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

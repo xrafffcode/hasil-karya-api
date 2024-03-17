@@ -27,6 +27,11 @@ class Project extends Model
         'status',
     ];
 
+    protected $dates = [
+        'start_date',
+        'end_date',
+    ];
+
     public function client()
     {
         return $this->belongsTo(Client::class);

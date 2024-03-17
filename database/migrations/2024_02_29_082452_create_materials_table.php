@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('code')->unique();
+            $table->string('code');
             $table->string('name');
 
             $table->softDeletes();

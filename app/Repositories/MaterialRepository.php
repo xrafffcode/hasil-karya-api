@@ -63,7 +63,6 @@ class MaterialRepository implements MaterialRepositoryInterface
         if ($exceptId) {
             $query->where('id', '!=', $exceptId);
         }
-        $material = $query->first();
 
         return $query->doesntExist();
     }

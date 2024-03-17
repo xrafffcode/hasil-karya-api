@@ -8,5 +8,5 @@ enum FuelTypeEnum: string
 {
     use EnumHelper;
 
-    case DIESEL = 'Diesel';
+    case DIESEL = 'diesel';
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\TechnicalAdminRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TechnicalAdminFactory extends Factory
@@ -13,8 +14,17 @@ class TechnicalAdminFactory extends Factory
      */
     public function definition(): array
     {
+        $technicalAdminRepository = new TechnicalAdminRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $technicalAdminRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $technicalAdminRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(8)),
+            'code' => $code,
             'name' => $this->faker->name,
             'is_active' => $this->faker->boolean,
         ];

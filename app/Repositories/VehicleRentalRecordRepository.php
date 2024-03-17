@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Interfaces\VehicleRentalRecordRepositoryInterface;
 use App\Models\VehicleRentalRecord;
+use Illuminate\Support\Facades\Storage;
 
 class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInterface
 {
@@ -27,6 +28,9 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
         $vehicleRentalRecord->rental_cost = $data['rental_cost'];
         $vehicleRentalRecord->is_paid = $data['is_paid'];
         $vehicleRentalRecord->remarks = $data['remarks'];
+        if ($data['payment_proof_image']) {
+            $vehicleRentalRecord->payment_proof_image = $data['payment_proof_image']->store('assets/vehicle_rental_records/payment_proofs', 'public');
+        }
         $vehicleRentalRecord->save();
 
         return $vehicleRentalRecord;
@@ -51,6 +55,7 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
         $vehicleRentalRecord->rental_cost = $data['rental_cost'];
         $vehicleRentalRecord->is_paid = $data['is_paid'];
         $vehicleRentalRecord->remarks = $data['remarks'];
+        $vehicleRentalRecord->payment_proof_image = $this->updateImage($vehicleRentalRecord->payment_proof_image, $data['payment_proof_image']);
         $vehicleRentalRecord->save();
 
         return $vehicleRentalRecord;
@@ -76,7 +81,7 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
     public function generateCode(int $tryCount): string
     {
         $count = VehicleRentalRecord::count() + 1 + $tryCount;
-        $code = 'VRR'.str_pad($count, 5, '0', STR_PAD_LEFT);
+        $code = 'VRR'.str_pad($count, 3, '0', STR_PAD_LEFT);
 
         return $code;
     }
@@ -89,6 +94,15 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
             $query->where('id', '!=', $exceptId);
         }
 
-        return $query->doesntExist();
+        return $query->count() == 0;
+    }
+
+    private function updateImage($oldImage, $newImage)
+    {
+        if ($oldImage) {
+            Storage::disk('public')->delete($oldImage);
+        }
+
+        return $newImage->store('assets/vehicle_rental_records/payment_proofs', 'public');
     }
 }
