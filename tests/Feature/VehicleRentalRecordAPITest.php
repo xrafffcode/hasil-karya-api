@@ -68,7 +68,7 @@ class VehicleRentalRecordAPITest extends TestCase
 
         $response->assertSuccessful();
 
-        $vehicleRentalRecord = Arr::except($vehicleRentalRecord, ['created_at', 'updated_at', 'deleted_at']);
+        $vehicleRentalRecord = Arr::except($vehicleRentalRecord, ['payment_proof_image', 'created_at', 'updated_at', 'deleted_at']);
 
         $this->assertDatabaseHas('vehicle_rental_records', $vehicleRentalRecord);
     }
@@ -118,7 +118,7 @@ class VehicleRentalRecordAPITest extends TestCase
 
         $response->assertSuccessful();
 
-        $updatedVehicleRentalRecord = Arr::except($updatedVehicleRentalRecord, ['created_at', 'updated_at', 'deleted_at']);
+        $updatedVehicleRentalRecord = Arr::except($updatedVehicleRentalRecord, ['payment_proof_image', 'created_at', 'updated_at', 'deleted_at']);
 
         $this->assertDatabaseHas('vehicle_rental_records', $updatedVehicleRentalRecord);
     }
@@ -147,7 +147,7 @@ class VehicleRentalRecordAPITest extends TestCase
 
         $response->assertSuccessful();
 
-        $updatedVehicleRentalRecord = Arr::except($updatedVehicleRentalRecord, ['created_at', 'updated_at', 'deleted_at']);
+        $updatedVehicleRentalRecord = Arr::except($updatedVehicleRentalRecord, ['payment_proof_image', 'created_at', 'updated_at', 'deleted_at']);
 
         $this->assertDatabaseHas('vehicle_rental_records', $updatedVehicleRentalRecord);
     }

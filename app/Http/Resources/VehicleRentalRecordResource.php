@@ -29,6 +29,8 @@ class VehicleRentalRecordResource extends JsonResource
             'rental_cost' => $this->rental_cost,
             'is_paid' => $this->is_paid,
             'remarks' => $this->remarks,
+            'payment_proof_image' => $this->payment_proof_image,
+            'payment_proof_image_url' => $this->payment_proof_image ? asset('storage/'.$this->payment_proof_image) : '',
         ];
     }
 }

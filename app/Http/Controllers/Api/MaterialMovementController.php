@@ -10,6 +10,7 @@ use App\Http\Resources\MaterialMovementResource;
 use App\Interfaces\MaterialMovementRepositoryInterface;
 use App\Models\Checker;
 use App\Models\Driver;
+use App\Models\MaterialMovement;
 use App\Models\Station;
 use App\Models\Truck;
 use Illuminate\Http\Request;
@@ -68,16 +69,10 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
-        // $observation_ratio_percentage = $request['observation_ratio_percentage'];
-        // if ($observation_ratio_percentage == -1) {
-        //     $observation_ratio_percentage = $truck->capacity;
-        //     $request['observation_ratio_percentage'] = $observation_ratio_percentage;
-        // } elseif ($observation_ratio_percentage < -1) {
-        //     return ResponseHelper::jsonResponse(false, 'Rasio observasi harus diisi !', null, 422);
-        // }
-
-        // $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
-        // $request['solid_ratio'] = $solid_ratio;
+        if ($request['truck_capacity'] == 0) {
+            $truck = Truck::find($request['truck_id']);
+            $request['truck_capacity'] = $truck->capacity;
+        }
 
         try {
             $materialMovement = $this->MaterialMovementRepository->create($request);
@@ -137,16 +132,16 @@ class MaterialMovementController extends Controller
             return ResponseHelper::jsonResponse(false, 'Checker tidak aktif.', null, 405);
         }
 
-        // $observation_ratio_percentage = $request['observation_ratio_percentage'];
-        // if ($observation_ratio_percentage == -1) {
-        //     $observation_ratio_percentage = $truck->capacity;
-        //     $request['observation_ratio_percentage'] = $observation_ratio_percentage;
-        // } elseif ($observation_ratio_percentage < -1) {
-        //     return ResponseHelper::jsonResponse(false, 'Jumlah harus diisi !', null, 422);
-        // }
+        if ($request['truck_capacity'] == 0) {
+            $oldTruck = MaterialMovement::find($id)->truck;
+            $newTruck = Truck::find($request['truck_id']);
 
-        // $solid_ratio = isset($request['solid_ratio']) ? $request['solid_ratio'] : 0;
-        // $request['solid_ratio'] = $solid_ratio;
+            if ($oldTruck->id == $newTruck->id) {
+                $request['truck_capacity'] = MaterialMovement::find($id)->truck_capacity;
+            } else {
+                $request['truck_capacity'] = $newTruck->capacity;
+            }
+        }
 
         try {
             $materialMovement = $this->MaterialMovementRepository->update($request, $id);

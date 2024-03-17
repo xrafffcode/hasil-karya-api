@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\GasOperatorRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GasOperatorFactory extends Factory
@@ -13,8 +14,17 @@ class GasOperatorFactory extends Factory
      */
     public function definition(): array
     {
+        $gasOperatorRepository = new GasOperatorRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $gasOperatorRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $gasOperatorRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(8)),
+            'code' => $code,
             'name' => $this->faker->name,
             'is_active' => $this->faker->boolean,
         ];

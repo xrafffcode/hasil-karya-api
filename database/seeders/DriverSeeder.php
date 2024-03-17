@@ -12,9 +12,7 @@ class DriverSeeder extends Seeder
      */
     public function run(): void
     {
-        Driver::factory()->create([
-            'code' => 'DRIVER-0001',
-            'name' => 'John Doe',
+        Driver::factory()->count(3)->create([
             'is_active' => true,
         ]);
     }

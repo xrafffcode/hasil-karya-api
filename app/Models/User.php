@@ -79,11 +79,11 @@ class User extends Authenticatable
     {
         if ($this->hasChecker()) {
             return $this->checker->is_active;
-        }elseif ($this->hasGasOperator()) {
+        } elseif ($this->hasGasOperator()) {
             return $this->gasOperator->is_active;
-        }elseif ($this->hasTechnicalAdmin()) {
+        } elseif ($this->hasTechnicalAdmin()) {
             return $this->technicalAdmin->is_active;
-        }else {
+        } else {
             return true;
         }
     }

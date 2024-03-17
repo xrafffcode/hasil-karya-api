@@ -27,9 +27,9 @@ return new class extends Migration
             $table->uuid('gas_operator_id');
             $table->foreign('gas_operator_id')->references('id')->on('gas_operators');
             $table->string('fuel_type');
-            $table->decimal('volume', 16, 8)->default(0);
-            $table->decimal('odometer', 16, 8)->default(0);
-            $table->decimal('hourmeter', 16, 8)->default(0);
+            $table->decimal('volume', 30, 8)->default(0);
+            $table->decimal('odometer', 30, 8)->default(0);
+            $table->decimal('hourmeter', 30, 8)->default(0);
             $table->text('remarks')->nullable();
 
             $table->softDeletes();

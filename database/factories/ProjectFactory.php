@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enum\ProjectStatusEnum;
+use App\Repositories\ProjectRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProjectFactory extends Factory
@@ -14,6 +15,15 @@ class ProjectFactory extends Factory
      */
     public function definition(): array
     {
+        $projectRepository = new ProjectRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $projectRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $projectRepository->isUniqueCode($code));
+
         $start_date = $this->faker->date();
         $end_date = $this->faker->dateTimeBetween($start_date, '+1 year')->format('Y-m-d');
 

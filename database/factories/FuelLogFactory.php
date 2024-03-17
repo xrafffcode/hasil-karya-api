@@ -11,6 +11,7 @@ use App\Models\Station;
 use App\Models\Truck;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Repositories\FuelLogRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
@@ -24,6 +25,15 @@ class FuelLogFactory extends Factory
      */
     public function definition(): array
     {
+        $fuelLogRepository = new FuelLogRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $fuelLogRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $fuelLogRepository->isUniqueCode($code));
+
         return [
             'code' => strval(Str::random(10)),
             'date' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),

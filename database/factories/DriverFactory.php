@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\DriverRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DriverFactory extends Factory
@@ -13,8 +14,17 @@ class DriverFactory extends Factory
      */
     public function definition(): array
     {
+        $driverRepository = new DriverRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $driverRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $driverRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(8)),
+            'code' => $code,
             'name' => $this->faker->name,
             'is_active' => $this->faker->boolean,
         ];

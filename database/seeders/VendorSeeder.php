@@ -12,12 +12,17 @@ class VendorSeeder extends Seeder
      */
     public function run(): void
     {
-        Vendor::factory()->create([
-            'code' => 'VENDOR-0001',
-            'name' => 'PT ABC',
-            'address' => 'Jl. Raya No. 1',
-            'phone' => '081234567890',
-            'is_active' => true,
-        ]);
+        $vendors = [
+            ['name' => 'Hino Indonesia'],
+            ['name' => 'Isuzu Astra Motor Indonesia'],
+            ['name' => 'Mitsubishi Fuso Truck and Bus Corporation'],
+        ];
+
+        foreach ($vendors as $vendor) {
+            Vendor::factory()->create([
+                'name' => $vendor['name'],
+                'is_active' => true,
+            ]);
+        }
     }
 }

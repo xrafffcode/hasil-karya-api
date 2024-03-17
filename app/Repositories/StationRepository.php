@@ -24,6 +24,7 @@ class StationRepository implements StationRepositoryInterface
             ->orderBy('regency', 'asc')
             ->orderBy('district', 'asc')
             ->orderBy('subdistrict', 'asc')
+            ->orderBy('name', 'asc')
             ->get();
 
         return $stations;

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\CheckerRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CheckerFactory extends Factory
@@ -13,8 +14,17 @@ class CheckerFactory extends Factory
      */
     public function definition(): array
     {
+        $checkerRepository = new CheckerRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $checkerRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $checkerRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(8)),
+            'code' => $code,
             'name' => $this->faker->name,
             'is_active' => $this->faker->boolean,
         ];

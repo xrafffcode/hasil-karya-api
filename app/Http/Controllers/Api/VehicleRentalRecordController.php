@@ -53,6 +53,10 @@ class VehicleRentalRecordController extends Controller
             $request['heavy_vehicle_id'] = null;
         }
 
+        if ($request['truck_id'] != null && $request['heavy_vehicle_id'] != null) {
+            return ResponseHelper::jsonResponse(false, 'Tidak boleh menyewa kendaraan truk dan kendaraan berat sekaligus.', null, 400);
+        }
+
         try {
             $vehicleRentalRecord = $this->VehicleRentalRecordRepository->create($request);
 
@@ -93,6 +97,10 @@ class VehicleRentalRecordController extends Controller
 
         if (! isset($request['heavy_vehicle_id'])) {
             $request['heavy_vehicle_id'] = null;
+        }
+
+        if ($request['truck_id'] != null && $request['heavy_vehicle_id'] != null) {
+            return ResponseHelper::jsonResponse(false, 'Tidak boleh menyewa kendaraan truk dan kendaraan berat sekaligus.', null, 400);
         }
 
         try {

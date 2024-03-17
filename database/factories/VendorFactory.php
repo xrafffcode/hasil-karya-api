@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\VendorRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class VendorFactory extends Factory
@@ -13,8 +14,17 @@ class VendorFactory extends Factory
      */
     public function definition(): array
     {
+        $vendorRepository = new VendorRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $vendorRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $vendorRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(5)),
+            'code' => $code,
             'name' => $this->faker->name,
             'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,

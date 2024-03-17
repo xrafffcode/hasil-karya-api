@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Repositories\HeavyVehicleRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class HeavyVehicleFactory extends Factory
@@ -13,8 +14,17 @@ class HeavyVehicleFactory extends Factory
      */
     public function definition(): array
     {
+        $heavyVehicleRepository = new HeavyVehicleRepository();
+
+        $code = '';
+        $tryCount = 0;
+        do {
+            $code = $heavyVehicleRepository->generateCode($tryCount);
+            $tryCount++;
+        } while (! $heavyVehicleRepository->isUniqueCode($code));
+
         return [
-            'code' => strval($this->faker->unique()->randomNumber(5)),
+            'code' => $code,
             'brand' => $this->faker->word,
             'model' => $this->faker->word,
             'production_year' => $this->faker->year,
