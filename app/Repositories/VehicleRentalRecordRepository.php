@@ -55,7 +55,9 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
         $vehicleRentalRecord->rental_cost = $data['rental_cost'];
         $vehicleRentalRecord->is_paid = $data['is_paid'];
         $vehicleRentalRecord->remarks = $data['remarks'];
-        $vehicleRentalRecord->payment_proof_image = $this->updateImage($vehicleRentalRecord->payment_proof_image, $data['payment_proof_image']);
+        if ($data['payment_proof_image']) {
+            $vehicleRentalRecord->payment_proof_image = $this->updateImage($vehicleRentalRecord->payment_proof_image, $data['payment_proof_image']);
+        }
         $vehicleRentalRecord->save();
 
         return $vehicleRentalRecord;

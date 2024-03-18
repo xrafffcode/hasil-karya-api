@@ -19,6 +19,6 @@ class CheckerSeeder extends Seeder
             ->hasAttached(Role::where('name', '=', UserRoleEnum::CHECKER)->first())
             ->create(['email' => 'checker@cvhasilkarya.com']);
 
-        Checker::factory()->for($user)->create();
+        Checker::factory()->for($user)->create(['is_active' => true]);
     }
 }

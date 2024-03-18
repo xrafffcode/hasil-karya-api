@@ -34,19 +34,19 @@ class StoreStationRequest extends FormRequest
         }
 
         if (! $this->has('province')) {
-            $this->merge(['province' => true]);
+            $this->merge(['province' => null]);
         }
 
         if (! $this->has('regency')) {
-            $this->merge(['regency' => true]);
+            $this->merge(['regency' => null]);
         }
 
         if (! $this->has('district')) {
-            $this->merge(['district' => true]);
+            $this->merge(['district' => null]);
         }
 
         if (! $this->has('subdistrict')) {
-            $this->merge(['subdistrict' => true]);
+            $this->merge(['subdistrict' => null]);
         }
     }
 }
