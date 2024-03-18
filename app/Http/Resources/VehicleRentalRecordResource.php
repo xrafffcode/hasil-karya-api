@@ -17,15 +17,17 @@ class VehicleRentalRecordResource extends JsonResource
         $startDate = new \DateTime($this->start_date);
         $endDate = clone $startDate;
         $endDate->modify('+'.$this->rental_duration.' days');
+        $endDate = $endDate->format('Y-m-d H:i:s');
 
         return [
             'id' => $this->id,
             'code' => $this->code,
             'truck' => new TruckResource($this->truck),
             'heavy_vehicle' => new HeavyVehicleResource($this->heavyVehicle),
-            'start_date' => $startDate->format('Y-m-d H:i:s'),
+            // 'start_date' => $startDate->format('Y-m-d H:i:s'),
+            'start_date' => $this->start_date,
             'rental_duration' => $this->rental_duration,
-            'end_date' => $endDate->format('Y-m-d H:i:s'),
+            'end_date' => $endDate,
             'rental_cost' => $this->rental_cost,
             'is_paid' => $this->is_paid,
             'remarks' => $this->remarks,

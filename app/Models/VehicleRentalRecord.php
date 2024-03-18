@@ -26,8 +26,8 @@ class VehicleRentalRecord extends Model
 
     protected $casts = [
         'is_paid' => 'boolean',
-        'start_date' => 'datetime:Y-m-d H:i:s',
-        'end_date' => 'datetime:Y-m-d H:i:s',
+        // 'start_date' => 'datetime:Y-m-d H:i:s',
+        // 'end_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     public function truck()
@@ -40,10 +40,10 @@ class VehicleRentalRecord extends Model
         return $this->belongsTo(HeavyVehicle::class);
     }
 
-    public function getFormattedStartDateAttribute()
-    {
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->start_date);
+    // public function getFormattedStartDateAttribute()
+    // {
+    //     $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->start_date);
 
-        return $date->isoFormat('DD MMMM YYYY');
-    }
+    //     return $date->isoFormat('DD MMMM YYYY');
+    // }
 }
