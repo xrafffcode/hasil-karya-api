@@ -160,3 +160,7 @@ Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {
     Route::post('gas-operator/fuel-log/truck/store', [FuelLogController::class, 'storeTruck']);
     Route::post('gas-operator/fuel-log/heavy-vehicle/store', [FuelLogController::class, 'storeHeavyVehicle']);
 });
+
+Route::middleware(['auth:sanctum', 'role:technical-admin'])->group(function () {
+    Route::post('technical-admin/material-movement/update/{id}', [MaterialMovementController::class, 'update']);
+});
