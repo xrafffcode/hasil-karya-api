@@ -59,13 +59,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('checkers', [CheckerController::class, 'index']);
         Route::get('fuel-logs', [FuelLogController::class, 'index']);
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
-        Route::get('technical-admins', [TechnicalAdminController::class, 'index']); // Done
-        Route::get('gas-operators', [GasOperatorController::class, 'index']); // Done
-        Route::get('checkers', [CheckerController::class, 'index']); // Done
-        Route::get('fuel-logs', [FuelLogController::class, 'index']); // Done
-        Route::get('material-movements', [MaterialMovementController::class, 'index']); // Done
 
-        Route::get('activity-logs', [ActivityLogController::class, 'index']); // Done
+        Route::get('activity-logs', [ActivityLogController::class, 'index']);
     });
 });
 
