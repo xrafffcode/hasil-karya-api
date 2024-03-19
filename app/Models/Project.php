@@ -6,10 +6,12 @@ use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Project extends Model
 {
-    use HasFactory, SoftDeletes, UUID;
+    use HasFactory, LogsActivity, SoftDeletes, UUID;
 
     protected $fillable = [
         'code',
@@ -31,6 +33,14 @@ class Project extends Model
         'start_date',
         'end_date',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['code', 'name', 'description', 'start_date', 'end_date', 'person_in_charge', 'amount', 'client_id', 'province', 'regency', 'district', 'subdistrict', 'status'])
+            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->useLogName('Project');
+    }
 
     public function client()
     {

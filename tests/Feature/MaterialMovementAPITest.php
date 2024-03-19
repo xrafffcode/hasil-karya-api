@@ -178,7 +178,9 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $checker = Checker::factory()->for($user)->create(['is_active' => true]);
+        $checker = Checker::factory()->for(
+            User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+        )->create(['is_active' => true]);
 
         $materialMovement = MaterialMovement::factory()
             ->for(Driver::factory()->create(['is_active' => true]), 'driver')
@@ -257,7 +259,43 @@ class MaterialMovementAPITest extends TestCase
 
         $updatedMaterialMovement['code'] = $response['data']['code'];
         unset($updatedMaterialMovement['observation_ratio_number']);
-        unset($updatedMaterialMovement['solid_ratio']);
+        unset($updatedMaterialMovement['solid_volume_estimate']);
+
+        $this->assertDatabaseHas('material_movements', $updatedMaterialMovement);
+    }
+
+    public function test_material_movement_api_call_update_with_existing_code_by_technical_admin_user_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::TECHNICAL_ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $checker = Checker::factory()->for(
+            User::factory()->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+        )->create(['is_active' => true]);
+
+        $materialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->for(Vendor::factory())->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
+            ->for($checker, 'checker')
+            ->create();
+
+        $updatedMaterialMovement = MaterialMovement::factory()
+            ->for(Driver::factory()->create(['is_active' => true]), 'driver')
+            ->for(Truck::factory()->for(Vendor::factory())->create(['is_active' => true]), 'truck')
+            ->for(Station::factory()->create(['is_active' => true]), 'station')
+            ->for($checker, 'checker')
+            ->make(['code' => $materialMovement->code])
+            ->toArray();
+
+        $response = $this->json('POST', '/api/v1/technical-admin/material-movement/update/'.$materialMovement->id, $updatedMaterialMovement);
+
+        $response->assertSuccessful();
+
+        unset($updatedMaterialMovement['observation_ratio_number']);
         unset($updatedMaterialMovement['solid_volume_estimate']);
 
         $this->assertDatabaseHas('material_movements', $updatedMaterialMovement);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ActivityLogController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CheckerController;
 use App\Http\Controllers\Api\ClientController;
@@ -58,6 +59,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('checkers', [CheckerController::class, 'index']); // Done
         Route::get('fuel-logs', [FuelLogController::class, 'index']); // Done
         Route::get('material-movements', [MaterialMovementController::class, 'index']); // Done
+
+        Route::get('activity-logs', [ActivityLogController::class, 'index']); // Done
     });
 });
 
@@ -159,4 +162,8 @@ Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {
     Route::post('gas-operator/fuel-log/truck/store', [FuelLogController::class, 'storeTruck']);
     Route::post('gas-operator/fuel-log/heavy-vehicle/store', [FuelLogController::class, 'storeHeavyVehicle']);
+});
+
+Route::middleware(['auth:sanctum', 'role:technical-admin'])->group(function () {
+    Route::post('technical-admin/material-movement/update/{id}', [MaterialMovementController::class, 'update']);
 });

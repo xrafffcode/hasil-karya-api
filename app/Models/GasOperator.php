@@ -6,10 +6,12 @@ use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class GasOperator extends Model
 {
-    use HasFactory, SoftDeletes, UUID;
+    use HasFactory, LogsActivity, SoftDeletes, UUID;
 
     protected $fillable = [
         'user_id',
@@ -21,6 +23,14 @@ class GasOperator extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['code', 'name', 'is_active'])
+            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->useLogName('GasOperator');
+    }
 
     public function user()
     {

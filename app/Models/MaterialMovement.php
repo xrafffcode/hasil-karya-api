@@ -7,10 +7,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class MaterialMovement extends Model
 {
-    use HasFactory, SoftDeletes, UUID;
+    use HasFactory, LogsActivity, SoftDeletes, UUID;
 
     protected $fillable = [
         'code',
@@ -26,6 +28,14 @@ class MaterialMovement extends Model
         'solid_volume_estimate',
         'remarks',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['code', 'driver_id', 'truck_id', 'station_id', 'checker_id', 'date', 'truck_capacity', 'observation_ratio_percentage', 'observation_ratio_number', 'solid_ratio', 'solid_volume_estimate', 'remarks'])
+            ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
+            ->useLogName('MaterialMovement');
+    }
 
     public function driver()
     {
