@@ -47,10 +47,10 @@ class MaterialMovement extends Model
         return $this->belongsTo(Checker::class);
     }
 
-    public function getFormattedDateAttribute()
-    {
-        $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->date);
+    // public function getFormattedDateAttribute()
+    // {
+    //     $date = Carbon::createFromFormat('Y-m-d H:i:s', $this->date);
 
-        return $date->isoFormat('DD MMMM YYYY');
-    }
+    //     return $date->isoFormat('DD MMMM YYYY');
+    // }
 }
