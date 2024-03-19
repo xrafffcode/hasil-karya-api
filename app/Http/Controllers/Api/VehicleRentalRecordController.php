@@ -54,7 +54,7 @@ class VehicleRentalRecordController extends Controller
         }
 
         if ($request['truck_id'] != null && $request['heavy_vehicle_id'] != null) {
-            return ResponseHelper::jsonResponse(false, 'Tidak boleh menyewa kendaraan truk dan kendaraan berat sekaligus.', null, 422);
+            return ResponseHelper::jsonResponse(false, 'Tidak boleh menyewa kendaraan truk dan kendaraan berat sekaligus.', null, 400);
         }
 
         try {
