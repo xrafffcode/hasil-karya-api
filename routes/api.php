@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\GasOperatorController;
 use App\Http\Controllers\Api\HeavyVehicleController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\MaterialMovementController;
+use App\Http\Controllers\Api\MaterialMovementErrorLogController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\StationController;
 use App\Http\Controllers\Api\TechnicalAdminController;
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('checkers', [CheckerController::class, 'index']);
         Route::get('fuel-logs', [FuelLogController::class, 'index']);
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
+        Route::get('material-movement-error-logs', [MaterialMovementErrorLogController::class, 'index']);
 
         Route::get('activity-logs', [ActivityLogController::class, 'index']);
     });
@@ -153,10 +155,15 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('material-movement/{id}', [MaterialMovementController::class, 'show']);
     Route::post('material-movement/{id}', [MaterialMovementController::class, 'update']);
     Route::delete('material-movement/{id}', [MaterialMovementController::class, 'destroy']);
+
+    Route::post('material-movement-error-log', [MaterialMovementErrorLogController::class, 'store']);
+    Route::get('material-movement-error-log/{id}', [MaterialMovementErrorLogController::class, 'show']);
 });
 
 Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
     Route::post('checker/material-movement/store', [MaterialMovementController::class, 'store']);
+
+    Route::post('checker/material-movement-error-log/store', [MaterialMovementErrorLogController::class, 'store']);
 });
 
 Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {

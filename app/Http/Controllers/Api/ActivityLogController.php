@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
-use App\Interfaces\ActivityLogRepositoryInterface;
+use App\Repositories\ActivityLogRepository;
 use Illuminate\Http\Request;
 
 class ActivityLogController extends Controller
 {
     protected $activityLogRepository;
 
-    public function __construct(ActivityLogRepositoryInterface $activityLogRepository)
+    public function __construct(ActivityLogRepository $activityLogRepository)
     {
         $this->activityLogRepository = $activityLogRepository;
     }
