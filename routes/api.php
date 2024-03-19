@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\HeavyVehicleController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\MaterialMovementController;
 use App\Http\Controllers\Api\MaterialMovementErrorLogController;
+use App\Http\Controllers\Api\NotificationRecepientController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\StationController;
 use App\Http\Controllers\Api\TechnicalAdminController;
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
         Route::get('material-movement-error-logs', [MaterialMovementErrorLogController::class, 'index']);
 
+        Route::get('notification-recepients', [NotificationRecepientController::class, 'index']);
         Route::get('activity-logs', [ActivityLogController::class, 'index']);
     });
 });
@@ -155,6 +157,11 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('material-movement/{id}', [MaterialMovementController::class, 'show']);
     Route::post('material-movement/{id}', [MaterialMovementController::class, 'update']);
     Route::delete('material-movement/{id}', [MaterialMovementController::class, 'destroy']);
+
+    Route::post('notification-recepient', [NotificationRecepientController::class, 'store']);
+    Route::get('notification-recepient/{id}', [NotificationRecepientController::class, 'show']);
+    Route::post('notification-recepient/{id}', [NotificationRecepientController::class, 'update']);
+    Route::delete('notification-recepient/{id}', [NotificationRecepientController::class, 'destroy']);
 
     Route::post('material-movement-error-log', [MaterialMovementErrorLogController::class, 'store']);
     Route::get('material-movement-error-log/{id}', [MaterialMovementErrorLogController::class, 'show']);
