@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ActivityLogController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CheckerController;
 use App\Http\Controllers\Api\ClientController;
@@ -58,6 +59,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('checkers', [CheckerController::class, 'index']); // Done
         Route::get('fuel-logs', [FuelLogController::class, 'index']); // Done
         Route::get('material-movements', [MaterialMovementController::class, 'index']); // Done
+
+        Route::get('activity-logs', [ActivityLogController::class, 'index']); // Done
     });
 });
 
