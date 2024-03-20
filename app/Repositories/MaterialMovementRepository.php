@@ -161,15 +161,15 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     {
         $rawQuery = '';
         if ($statisticType == 'min') {
-            $rawQuery = 'MIN(material_movements.solid_volume_estimate) as value';
+            $rawQuery = 'MIN(material_movements.observation_ratio_number) as value';
         } elseif ($statisticType == 'max') {
-            $rawQuery = 'MAX(material_movements.solid_volume_estimate) as value';
+            $rawQuery = 'MAX(material_movements.observation_ratio_number) as value';
         } elseif ($statisticType == 'avg') {
-            $rawQuery = 'AVG(material_movements.solid_volume_estimate) as value';
+            $rawQuery = 'AVG(material_movements.observation_ratio_number) as value';
         } elseif ($statisticType == 'sum') {
-            $rawQuery = 'SUM(material_movements.solid_volume_estimate) as value';
+            $rawQuery = 'SUM(material_movements.observation_ratio_number) as value';
         } elseif ($statisticType == 'count') {
-            $rawQuery = 'COUNT(material_movements.solid_volume_estimate) as value';
+            $rawQuery = 'COUNT(material_movements.observation_ratio_number) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
@@ -216,15 +216,15 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     {
         $rawQuery = '';
         if ($statisticType == 'min') {
-            $rawQuery = 'MIN(material_movements.observation_ratio_number) as value';
+            $rawQuery = 'MIN(material_movements.solid_volume_estimate) as value';
         } elseif ($statisticType == 'max') {
-            $rawQuery = 'MAX(material_movements.observation_ratio_number) as value';
+            $rawQuery = 'MAX(material_movements.solid_volume_estimate) as value';
         } elseif ($statisticType == 'avg') {
-            $rawQuery = 'AVG(material_movements.observation_ratio_number) as value';
+            $rawQuery = 'AVG(material_movements.solid_volume_estimate) as value';
         } elseif ($statisticType == 'sum') {
-            $rawQuery = 'SUM(material_movements.observation_ratio_number) as value';
+            $rawQuery = 'SUM(material_movements.solid_volume_estimate) as value';
         } elseif ($statisticType == 'count') {
-            $rawQuery = 'COUNT(material_movements.observation_ratio_number) as value';
+            $rawQuery = 'COUNT(material_movements.solid_volume_estimate) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();

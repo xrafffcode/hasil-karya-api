@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enum\StationCategoryEnum;
 use App\Models\Checker;
 use App\Models\Driver;
 use App\Models\MaterialMovement;
@@ -17,17 +18,23 @@ class MaterialMovementSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 150; $i++) {
-            $now = new DateTime();
-            $now->modify('first day of January');
-            $randomDays = rand(0, $now->format('z'));
-            $now->modify("+$randomDays days");
+        for ($i = 0; $i < 30; $i++) {
+            // $now = new DateTime();
+            // $now->modify('first day of January');
+            // $randomDays = rand(0, $now->format('z'));
+            // $now->modify("+$randomDays days");
+
+            // $start_date = new DateTime('2024-01-01');
+            $start_date = now()->startOfYear();
+            $current_date = new DateTime();
+            $interval = $current_date->diff($start_date);
+            $days_difference = $interval->days;
 
             $driver = Driver::inRandomOrder()->first();
             $truck = Truck::inRandomOrder()->first();
-            $station = Station::inRandomOrder()->first();
+            $station = Station::where('category', '!=', StationCategoryEnum::GAS->value)->inRandomOrder()->first();
             $checker = Checker::inRandomOrder()->first();
-            $date = now()->startOfYear()->addDays(rand(0, 360))->toDateTimeString();
+            $date = now()->startOfYear()->addDays(rand(0, $days_difference))->toDateTimeString();
             $truckCapacity = $truck->capacity;
             $observationRatioPercentage = rand(3, 10) / 10;
             $observationRatioNumber = $truckCapacity * $observationRatioPercentage;
