@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Enum\AggregateFunctionEnum;
+use App\Enum\DatePeriodEnum;
 use App\Interfaces\MaterialMovementRepositoryInterface;
 use App\Models\MaterialMovement;
 use App\Models\Station;
@@ -50,36 +52,36 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function getStatisticTruckPerDayByStation($statisticType = null, $dateType = null, $stationCategory = null)
     {
         $rawQuery = '';
-        if ($statisticType == 'min') {
+        if ($statisticType == AggregateFunctionEnum::MIN->value) {
             $rawQuery = 'MIN(material_movements.truck_id) as value';
-        } elseif ($statisticType == 'max') {
+        } elseif ($statisticType == AggregateFunctionEnum::MAX->value) {
             $rawQuery = 'MAX(material_movements.truck_id) as value';
-        } elseif ($statisticType == 'avg') {
+        } elseif ($statisticType == AggregateFunctionEnum::AVG->value) {
             $rawQuery = 'AVG(material_movements.truck_id) as value';
-        } elseif ($statisticType == 'sum') {
+        } elseif ($statisticType == AggregateFunctionEnum::SUM->value) {
             $rawQuery = 'SUM(material_movements.truck_id) as value';
-        } elseif ($statisticType == 'count') {
+        } elseif ($statisticType == AggregateFunctionEnum::COUNT->value) {
             $rawQuery = 'COUNT(material_movements.truck_id) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->endOfDay();
 
-        if ($dateType == 'today') {
+        if ($dateType == DatePeriodEnum::TODAY->value) {
             $startDate = Carbon::now()->startOfDay();
             $endDate = Carbon::now()->endOfDay();
-        } elseif ($dateType == 'week') {
+        } elseif ($dateType == DatePeriodEnum::WEEK->value) {
             $startDate = Carbon::now()->startOfWeek();
             $endDate = Carbon::now()->endOfWeek();
-        } elseif ($dateType == 'month') {
+        } elseif ($dateType == DatePeriodEnum::MONTH->value) {
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
-        } elseif ($dateType == 'year') {
+        } elseif ($dateType == DatePeriodEnum::YEAR->value) {
             $startDate = Carbon::now()->startOfYear();
             $endDate = Carbon::now()->endOfYear();
-        } elseif ($dateType == 'from_start') {
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now();
+        } elseif ($dateType == DatePeriodEnum::ALL->value) {
+            $startDate = MaterialMovement::orderBy('date', 'asc')->first()->date;
+            $endDate = MaterialMovement::orderBy('date', 'desc')->first()->date;
         }
 
         $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
@@ -105,36 +107,36 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function getStatisticRitagePerDayByStation($statisticType = null, $dateType = null, $stationCategory = null)
     {
         $rawQuery = '';
-        if ($statisticType == 'min') {
+        if ($statisticType == AggregateFunctionEnum::MIN->value) {
             $rawQuery = 'MIN(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'max') {
+        } elseif ($statisticType == AggregateFunctionEnum::MAX->value) {
             $rawQuery = 'MAX(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'avg') {
+        } elseif ($statisticType == AggregateFunctionEnum::AVG->value) {
             $rawQuery = 'AVG(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'sum') {
+        } elseif ($statisticType == AggregateFunctionEnum::SUM->value) {
             $rawQuery = 'SUM(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'count') {
+        } elseif ($statisticType == AggregateFunctionEnum::COUNT->value) {
             $rawQuery = 'COUNT(material_movements.observation_ratio_number) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->endOfDay();
 
-        if ($dateType == 'today') {
+        if ($dateType == DatePeriodEnum::TODAY->value) {
             $startDate = Carbon::now()->startOfDay();
             $endDate = Carbon::now()->endOfDay();
-        } elseif ($dateType == 'week') {
+        } elseif ($dateType == DatePeriodEnum::WEEK->value) {
             $startDate = Carbon::now()->startOfWeek();
             $endDate = Carbon::now()->endOfWeek();
-        } elseif ($dateType == 'month') {
+        } elseif ($dateType == DatePeriodEnum::MONTH->value) {
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
-        } elseif ($dateType == 'year') {
+        } elseif ($dateType == DatePeriodEnum::YEAR->value) {
             $startDate = Carbon::now()->startOfYear();
             $endDate = Carbon::now()->endOfYear();
-        } elseif ($dateType == 'from_start') {
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now();
+        } elseif ($dateType == DatePeriodEnum::ALL->value) {
+            $startDate = MaterialMovement::orderBy('date', 'asc')->first()->date;
+            $endDate = MaterialMovement::orderBy('date', 'desc')->first()->date;
         }
 
         $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
@@ -160,36 +162,36 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function getStatisticMeasurementVolumeByStation($statisticType = null, $dateType = null, $stationCategory = null)
     {
         $rawQuery = '';
-        if ($statisticType == 'min') {
+        if ($statisticType == AggregateFunctionEnum::MIN->value) {
             $rawQuery = 'MIN(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'max') {
+        } elseif ($statisticType == AggregateFunctionEnum::MAX->value) {
             $rawQuery = 'MAX(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'avg') {
+        } elseif ($statisticType == AggregateFunctionEnum::AVG->value) {
             $rawQuery = 'AVG(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'sum') {
+        } elseif ($statisticType == AggregateFunctionEnum::SUM->value) {
             $rawQuery = 'SUM(material_movements.observation_ratio_number) as value';
-        } elseif ($statisticType == 'count') {
+        } elseif ($statisticType == AggregateFunctionEnum::COUNT->value) {
             $rawQuery = 'COUNT(material_movements.observation_ratio_number) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->endOfDay();
 
-        if ($dateType == 'today') {
+        if ($dateType == DatePeriodEnum::TODAY->value) {
             $startDate = Carbon::now()->startOfDay();
             $endDate = Carbon::now()->endOfDay();
-        } elseif ($dateType == 'week') {
+        } elseif ($dateType == DatePeriodEnum::WEEK->value) {
             $startDate = Carbon::now()->startOfWeek();
             $endDate = Carbon::now()->endOfWeek();
-        } elseif ($dateType == 'month') {
+        } elseif ($dateType == DatePeriodEnum::MONTH->value) {
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
-        } elseif ($dateType == 'year') {
+        } elseif ($dateType == DatePeriodEnum::YEAR->value) {
             $startDate = Carbon::now()->startOfYear();
             $endDate = Carbon::now()->endOfYear();
-        } elseif ($dateType == 'from_start') {
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now();
+        } elseif ($dateType == DatePeriodEnum::ALL->value) {
+            $startDate = MaterialMovement::orderBy('date', 'asc')->first()->date;
+            $endDate = MaterialMovement::orderBy('date', 'desc')->first()->date;
         }
 
         $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
@@ -215,36 +217,36 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function getStatisticRitageVolumeByStation($statisticType = null, $dateType = null, $stationCategory = null)
     {
         $rawQuery = '';
-        if ($statisticType == 'min') {
+        if ($statisticType == AggregateFunctionEnum::MIN->value) {
             $rawQuery = 'MIN(material_movements.solid_volume_estimate) as value';
-        } elseif ($statisticType == 'max') {
+        } elseif ($statisticType == AggregateFunctionEnum::MAX->value) {
             $rawQuery = 'MAX(material_movements.solid_volume_estimate) as value';
-        } elseif ($statisticType == 'avg') {
+        } elseif ($statisticType == AggregateFunctionEnum::AVG->value) {
             $rawQuery = 'AVG(material_movements.solid_volume_estimate) as value';
-        } elseif ($statisticType == 'sum') {
+        } elseif ($statisticType == AggregateFunctionEnum::SUM->value) {
             $rawQuery = 'SUM(material_movements.solid_volume_estimate) as value';
-        } elseif ($statisticType == 'count') {
+        } elseif ($statisticType == AggregateFunctionEnum::COUNT->value) {
             $rawQuery = 'COUNT(material_movements.solid_volume_estimate) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->endOfDay();
 
-        if ($dateType == 'today') {
+        if ($dateType == DatePeriodEnum::TODAY->value) {
             $startDate = Carbon::now()->startOfDay();
             $endDate = Carbon::now()->endOfDay();
-        } elseif ($dateType == 'week') {
+        } elseif ($dateType == DatePeriodEnum::WEEK->value) {
             $startDate = Carbon::now()->startOfWeek();
             $endDate = Carbon::now()->endOfWeek();
-        } elseif ($dateType == 'month') {
+        } elseif ($dateType == DatePeriodEnum::MONTH->value) {
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
-        } elseif ($dateType == 'year') {
+        } elseif ($dateType == DatePeriodEnum::YEAR->value) {
             $startDate = Carbon::now()->startOfYear();
             $endDate = Carbon::now()->endOfYear();
-        } elseif ($dateType == 'from_start') {
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now();
+        } elseif ($dateType == DatePeriodEnum::ALL->value) {
+            $startDate = MaterialMovement::orderBy('date', 'asc')->first()->date;
+            $endDate = MaterialMovement::orderBy('date', 'desc')->first()->date;
         }
 
         $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
@@ -270,36 +272,36 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     public function getRatioMeasurementByRitage($statisticType = null, $dateType = null, $stationCategory = null)
     {
         $rawQuery = '';
-        if ($statisticType == 'min') {
+        if ($statisticType == AggregateFunctionEnum::MIN->value) {
             $rawQuery = 'MIN(material_movements.solid_ratio) as value';
-        } elseif ($statisticType == 'max') {
+        } elseif ($statisticType == AggregateFunctionEnum::MAX->value) {
             $rawQuery = 'MAX(material_movements.solid_ratio) as value';
-        } elseif ($statisticType == 'avg') {
+        } elseif ($statisticType == AggregateFunctionEnum::AVG->value) {
             $rawQuery = 'AVG(material_movements.solid_ratio) as value';
-        } elseif ($statisticType == 'sum') {
+        } elseif ($statisticType == AggregateFunctionEnum::SUM->value) {
             $rawQuery = 'SUM(material_movements.solid_ratio) as value';
-        } elseif ($statisticType == 'count') {
+        } elseif ($statisticType == AggregateFunctionEnum::COUNT->value) {
             $rawQuery = 'COUNT(material_movements.solid_ratio) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
         $endDate = Carbon::now()->endOfDay();
 
-        if ($dateType == 'today') {
+        if ($dateType == DatePeriodEnum::TODAY->value) {
             $startDate = Carbon::now()->startOfDay();
             $endDate = Carbon::now()->endOfDay();
-        } elseif ($dateType == 'week') {
+        } elseif ($dateType == DatePeriodEnum::WEEK->value) {
             $startDate = Carbon::now()->startOfWeek();
             $endDate = Carbon::now()->endOfWeek();
-        } elseif ($dateType == 'month') {
+        } elseif ($dateType == DatePeriodEnum::MONTH->value) {
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
-        } elseif ($dateType == 'year') {
+        } elseif ($dateType == DatePeriodEnum::YEAR->value) {
             $startDate = Carbon::now()->startOfYear();
             $endDate = Carbon::now()->endOfYear();
-        } elseif ($dateType == 'from_start') {
-            $startDate = Carbon::now()->startOfYear();
-            $endDate = Carbon::now();
+        } elseif ($dateType == DatePeriodEnum::ALL->value) {
+            $startDate = MaterialMovement::orderBy('date', 'asc')->first()->date;
+            $endDate = MaterialMovement::orderBy('date', 'desc')->first()->date;
         }
 
         $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
