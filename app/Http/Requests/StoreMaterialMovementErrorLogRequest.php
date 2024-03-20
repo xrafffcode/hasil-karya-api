@@ -27,4 +27,67 @@ class StoreMaterialMovementErrorLogRequest extends FormRequest
             'error_log' => 'required|string',
         ];
     }
+
+    public function prepareForValidation()
+    {
+        if (!$this->has('code')) {
+            $this->merge([
+                'code' => null
+            ]);
+        }
+
+        if (!$this->has('driver_id')) {
+            $this->merge([
+                'driver_id' => null
+            ]);
+        }
+
+        if (!$this->has('truck_id')) {
+            $this->merge([
+                'truck_id' => null
+            ]);
+        }
+
+        if (!$this->has('station_id')) {
+            $this->merge([
+                'station_id' => null
+            ]);
+        }
+
+        if (!$this->has('checker_id')) {
+            $this->merge([
+                'checker_id' => null
+            ]);
+        }
+
+        if (!$this->has('date')) {
+            $this->merge([
+                'date' => null
+            ]);
+        }
+
+        if (!$this->has('truck_capacity')) {
+            $this->merge([
+                'truck_capacity' => null
+            ]);
+        }
+
+        if (!$this->has('observation_ratio_percentage')) {
+            $this->merge([
+                'observation_ratio_percentage' => null
+            ]);
+        }
+
+        if (!$this->has('solid_ratio')) {
+            $this->merge([
+                'solid_ratio' => null
+            ]);
+        }
+
+        if (!$this->has('remarks')) {
+            $this->merge([
+                'remarks' => null
+            ]);
+        }
+    }
 }
