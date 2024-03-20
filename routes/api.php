@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\TechnicalAdminController;
 use App\Http\Controllers\Api\TruckController;
 use App\Http\Controllers\Api\VehicleRentalRecordController;
 use App\Http\Controllers\Api\VendorController;
+use App\Http\Controllers\CommonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +80,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('notification-recepients', [NotificationRecepientController::class, 'index']);
 
         Route::get('activity-logs', [ActivityLogController::class, 'index']);
+
+        Route::get('commons/read/date-periods', [CommonController::class, 'getDatePeriods']);
+        Route::get('commons/read/aggregate-functions', [CommonController::class, 'getAggregateFunctions']);
     });
 });
 
