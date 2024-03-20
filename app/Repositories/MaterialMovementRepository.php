@@ -4,6 +4,9 @@ namespace App\Repositories;
 
 use App\Interfaces\MaterialMovementRepositoryInterface;
 use App\Models\MaterialMovement;
+use App\Models\Station;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MaterialMovementRepository implements MaterialMovementRepositoryInterface
 {
@@ -41,6 +44,281 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
             ->find($id);
 
         return $materialMovement;
+    }
+
+    // 1
+    public function getStatisticTruckPerDayByStation($statisticType = null, $dateType = null, $stationCategory = null)
+    {
+        $rawQuery = '';
+        if ($statisticType == 'min') {
+            $rawQuery = 'MIN(material_movements.truck_id) as value';
+        } elseif ($statisticType == 'max') {
+            $rawQuery = 'MAX(material_movements.truck_id) as value';
+        } elseif ($statisticType == 'avg') {
+            $rawQuery = 'AVG(material_movements.truck_id) as value';
+        } elseif ($statisticType == 'sum') {
+            $rawQuery = 'SUM(material_movements.truck_id) as value';
+        } elseif ($statisticType == 'count') {
+            $rawQuery = 'COUNT(material_movements.truck_id) as value';
+        }
+
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        if ($dateType == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($dateType == 'week') {
+            $startDate = Carbon::now()->startOfWeek();
+            $endDate = Carbon::now()->endOfWeek();
+        } elseif ($dateType == 'month') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($dateType == 'year') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($dateType == 'from_start') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now();
+        }
+
+        $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
+            ->leftJoin('stations', 'stations.id', '=', 'material_movements.station_id')
+            ->whereBetween(DB::raw('DATE(material_movements.date)'), [$startDate, $endDate])
+            ->where('stations.category', $stationCategory)
+            ->groupBy('material_movements.station_id', 'material_movements.truck_id')
+            ->orderBy('stations.name', 'ASC')
+            ->get();
+
+        $result = $result->map(function ($item) {
+            $item['station'] = Station::find($item['station'])->name;
+
+            return $item;
+        });
+
+        $result = response()->json($result);
+
+        return $result;
+    }
+
+    // 2
+    public function getStatisticRitagePerDayByStation($statisticType = null, $dateType = null, $stationCategory = null)
+    {
+        $rawQuery = '';
+        if ($statisticType == 'min') {
+            $rawQuery = 'MIN(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'max') {
+            $rawQuery = 'MAX(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'avg') {
+            $rawQuery = 'AVG(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'sum') {
+            $rawQuery = 'SUM(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'count') {
+            $rawQuery = 'COUNT(material_movements.observation_ratio_number) as value';
+        }
+
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        if ($dateType == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($dateType == 'week') {
+            $startDate = Carbon::now()->startOfWeek();
+            $endDate = Carbon::now()->endOfWeek();
+        } elseif ($dateType == 'month') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($dateType == 'year') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($dateType == 'from_start') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now();
+        }
+
+        $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
+            ->leftJoin('stations', 'stations.id', '=', 'material_movements.station_id')
+            ->whereBetween(DB::raw('DATE(material_movements.date)'), [$startDate, $endDate])
+            ->where('stations.category', $stationCategory)
+            ->groupBy('material_movements.station_id')
+            ->orderBy('stations.name', 'ASC')
+            ->get();
+
+        $result = $result->map(function ($item) {
+            $item['station'] = Station::find($item['station'])->name;
+
+            return $item;
+        });
+
+        $result = response()->json($result);
+
+        return $result;
+    }
+
+    // 3
+    public function getStatisticMeasurementVolumeByStation($statisticType = null, $dateType = null, $stationCategory = null)
+    {
+        $rawQuery = '';
+        if ($statisticType == 'min') {
+            $rawQuery = 'MIN(material_movements.solid_volume_estimate) as value';
+        } elseif ($statisticType == 'max') {
+            $rawQuery = 'MAX(material_movements.solid_volume_estimate) as value';
+        } elseif ($statisticType == 'avg') {
+            $rawQuery = 'AVG(material_movements.solid_volume_estimate) as value';
+        } elseif ($statisticType == 'sum') {
+            $rawQuery = 'SUM(material_movements.solid_volume_estimate) as value';
+        } elseif ($statisticType == 'count') {
+            $rawQuery = 'COUNT(material_movements.solid_volume_estimate) as value';
+        }
+
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        if ($dateType == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($dateType == 'week') {
+            $startDate = Carbon::now()->startOfWeek();
+            $endDate = Carbon::now()->endOfWeek();
+        } elseif ($dateType == 'month') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($dateType == 'year') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($dateType == 'from_start') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now();
+        }
+
+        $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
+            ->leftJoin('stations', 'stations.id', '=', 'material_movements.station_id')
+            ->whereBetween(DB::raw('DATE(material_movements.date)'), [$startDate, $endDate])
+            ->where('stations.category', $stationCategory)
+            ->groupBy('material_movements.station_id')
+            ->orderBy('stations.name', 'ASC')
+            ->get();
+
+        $result = $result->map(function ($item) {
+            $item['station'] = Station::find($item['station'])->name;
+
+            return $item;
+        });
+
+        $result = response()->json($result);
+
+        return $result;
+    }
+
+    // 4
+    public function getStatisticRitageVolumeByStation($statisticType = null, $dateType = null, $stationCategory = null)
+    {
+        $rawQuery = '';
+        if ($statisticType == 'min') {
+            $rawQuery = 'MIN(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'max') {
+            $rawQuery = 'MAX(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'avg') {
+            $rawQuery = 'AVG(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'sum') {
+            $rawQuery = 'SUM(material_movements.observation_ratio_number) as value';
+        } elseif ($statisticType == 'count') {
+            $rawQuery = 'COUNT(material_movements.observation_ratio_number) as value';
+        }
+
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        if ($dateType == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($dateType == 'week') {
+            $startDate = Carbon::now()->startOfWeek();
+            $endDate = Carbon::now()->endOfWeek();
+        } elseif ($dateType == 'month') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($dateType == 'year') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($dateType == 'from_start') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now();
+        }
+
+        $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
+            ->leftJoin('stations', 'stations.id', '=', 'material_movements.station_id')
+            ->whereBetween(DB::raw('DATE(material_movements.date)'), [$startDate, $endDate])
+            ->where('stations.category', $stationCategory)
+            ->groupBy('material_movements.station_id')
+            ->orderBy('stations.name', 'ASC')
+            ->get();
+
+        $result = $result->map(function ($item) {
+            $item['station'] = Station::find($item['station'])->name;
+
+            return $item;
+        });
+
+        $result = response()->json($result);
+
+        return $result;
+    }
+
+    // 5
+    public function getRatioMeasurementByRitage($statisticType = null, $dateType = null, $stationCategory = null)
+    {
+        $rawQuery = '';
+        if ($statisticType == 'min') {
+            $rawQuery = 'MIN(material_movements.solid_ratio) as value';
+        } elseif ($statisticType == 'max') {
+            $rawQuery = 'MAX(material_movements.solid_ratio) as value';
+        } elseif ($statisticType == 'avg') {
+            $rawQuery = 'AVG(material_movements.solid_ratio) as value';
+        } elseif ($statisticType == 'sum') {
+            $rawQuery = 'SUM(material_movements.solid_ratio) as value';
+        } elseif ($statisticType == 'count') {
+            $rawQuery = 'COUNT(material_movements.solid_ratio) as value';
+        }
+
+        $startDate = Carbon::now()->startOfDay();
+        $endDate = Carbon::now()->endOfDay();
+
+        if ($dateType == 'today') {
+            $startDate = Carbon::now()->startOfDay();
+            $endDate = Carbon::now()->endOfDay();
+        } elseif ($dateType == 'week') {
+            $startDate = Carbon::now()->startOfWeek();
+            $endDate = Carbon::now()->endOfWeek();
+        } elseif ($dateType == 'month') {
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+        } elseif ($dateType == 'year') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+        } elseif ($dateType == 'from_start') {
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now();
+        }
+
+        $result = MaterialMovement::select('material_movements.station_id as station', DB::raw($rawQuery))
+            ->leftJoin('stations', 'stations.id', '=', 'material_movements.station_id')
+            ->whereBetween(DB::raw('DATE(material_movements.date)'), [$startDate, $endDate])
+            ->where('stations.category', $stationCategory)
+            ->groupBy('material_movements.station_id')
+            ->orderBy('stations.name', 'ASC')
+            ->get();
+
+        $result = $result->map(function ($item) {
+            $item['station'] = Station::find($item['station'])->name;
+
+            return $item;
+        });
+
+        $result = response()->json($result);
+
+        return $result;
     }
 
     public function update(array $data, $id)

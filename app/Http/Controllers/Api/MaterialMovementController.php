@@ -98,6 +98,61 @@ class MaterialMovementController extends Controller
         }
     }
 
+    public function getStatisticTruckPerDayByStation(Request $request)
+    {
+        try {
+            $result = $this->MaterialMovementRepository->getStatisticTruckPerDayByStation($request->statistic_type, $request->date_type, $request->station_category);
+
+            return ResponseHelper::jsonResponse(true, 'Success', $result, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
+    public function getStatisticRitagePerDayByStation(Request $request)
+    {
+        try {
+            $result = $this->MaterialMovementRepository->getStatisticRitagePerDayByStation($request->statistic_type, $request->date_type, $request->station_category);
+
+            return ResponseHelper::jsonResponse(true, 'Success', $result, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
+    public function getStatisticMeasurementVolumeByStation(Request $request)
+    {
+        try {
+            $result = $this->MaterialMovementRepository->getStatisticMeasurementVolumeByStation($request->statistic_type, $request->date_type, $request->station_category);
+
+            return ResponseHelper::jsonResponse(true, 'Success', $result, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
+    public function getStatisticRitageVolumeByStation(Request $request)
+    {
+        try {
+            $result = $this->MaterialMovementRepository->getStatisticRitageVolumeByStation($request->statistic_type, $request->date_type, $request->station_category);
+
+            return ResponseHelper::jsonResponse(true, 'Success', $result, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
+    public function getRatioMeasurementByRitage(Request $request)
+    {
+        try {
+            $result = $this->MaterialMovementRepository->getRatioMeasurementByRitage($request->statistic_type, $request->date_type, $request->station_category);
+
+            return ResponseHelper::jsonResponse(true, 'Success', $result, 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function update(UpdateMaterialMovementRequest $request, $id)
     {
         $request = $request->validated();

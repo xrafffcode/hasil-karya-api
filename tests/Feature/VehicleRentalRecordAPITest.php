@@ -48,6 +48,20 @@ class VehicleRentalRecordAPITest extends TestCase
         }
     }
 
+    public function test_vehicle_rental_record_api_call_get_due_vehicle_rental_records()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $response = $this->json('GET', '/api/v1/vehicle-rental-records/read/due');
+
+        $response->assertSuccessful();
+
+    }
+
     public function test_vehicle_rental_record_api_call_create_with_auto_code_expect_success()
     {
         $user = User::factory()

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enum\StationCategoryEnum;
 use App\Enum\UserRoleEnum;
 use App\Models\Checker;
 use App\Models\Driver;
@@ -224,6 +225,128 @@ class MaterialMovementAPITest extends TestCase
         $response = $this->json('GET', '/api/v1/material-movement/'.$materialMovement->id);
 
         $response->assertSuccessful();
+    }
+
+    public function test_material_movement_api_call_get_statistic_truck_per_day_by_station()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
+
+        foreach ($statisticTypes as $statisticType) {
+            foreach ($stationCategories as $stationCategory) {
+                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-truck-per-day-by-station', [
+                    'statistic_type' => $statisticType,
+                    'date_type' => 'from_start',
+                    'station_category' => $stationCategory,
+                ]);
+
+                $response->assertSuccessful();
+            }
+        }
+    }
+
+    public function test_material_movement_api_call_get_statistic_ritage_per_day_by_station()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
+
+        foreach ($statisticTypes as $statisticType) {
+            foreach ($stationCategories as $stationCategory) {
+                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-ritage-per-day-by-station', [
+                    'statistic_type' => $statisticType,
+                    'date_type' => 'from_start',
+                    'station_category' => $stationCategory,
+                ]);
+
+                $response->assertSuccessful();
+            }
+        }
+
+    }
+
+    public function test_material_movement_api_call_get_statistic_measurement_volume_by_station()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
+
+        foreach ($statisticTypes as $statisticType) {
+            foreach ($stationCategories as $stationCategory) {
+                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-measurement-volume-by-station', [
+                    'statistic_type' => $statisticType,
+                    'date_type' => 'from_start',
+                    'station_category' => $stationCategory,
+                ]);
+
+                $response->assertSuccessful();
+            }
+        }
+    }
+
+    public function test_material_movement_api_call_get_statistic_ritage_volume_by_station()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
+
+        foreach ($statisticTypes as $statisticType) {
+            foreach ($stationCategories as $stationCategory) {
+                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-ritage-volume-by-station', [
+                    'statistic_type' => $statisticType,
+                    'date_type' => 'from_start',
+                    'station_category' => $stationCategory,
+                ]);
+
+                $response->assertSuccessful();
+            }
+        }
+
+    }
+
+    public function test_material_movement_api_call_get_ratio_measurement_by_ritage()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
+
+        foreach ($statisticTypes as $statisticType) {
+            foreach ($stationCategories as $stationCategory) {
+                $response = $this->json('GET', '/api/v1/material-movements/read/ratio-measurement-by-ritage', [
+                    'statistic_type' => $statisticType,
+                    'date_type' => 'from_start',
+                    'station_category' => $stationCategory,
+                ]);
+
+                $response->assertSuccessful();
+            }
+        }
     }
 
     public function test_material_movement_api_call_update_with_auto_code_expect_success()
