@@ -26,9 +26,15 @@ class DatabaseSeeder extends Seeder
             HeavyVehicleSeeder::class,
             DriverSeeder::class,
 
+            VehicleRentalRecordSeeder::class,
+
             TechnicalAdminSeeder::class,
             GasOperatorSeeder::class,
             CheckerSeeder::class,
+
+            MaterialMovementSeeder::class,
+
+            NotificationRecepientSeeder::class,
         ]);
     }
 }

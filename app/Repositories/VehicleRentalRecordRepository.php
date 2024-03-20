@@ -17,6 +17,24 @@ class VehicleRentalRecordRepository implements VehicleRentalRecordRepositoryInte
         return $vehicleRentalRecords;
     }
 
+    public function getDueVehicleRentalRecords()
+    {
+        // Get all vehicle rental records that are not paid and due for payment is start date + rental_duration
+        $vehicleRentalRecords = VehicleRentalRecord::with('truck', 'heavyVehicle')
+            ->where('is_paid', false)
+            ->whereRaw('DATE_ADD(start_date, INTERVAL rental_duration DAY) <= CURDATE()')
+            ->orderBy('start_date', 'desc')
+            ->get();
+
+        // $vehicleRentalRecords = VehicleRentalRecord::with('truck', 'heavyVehicle')
+        // ->where('start_date', '<=', now()->subDays(1))
+        // ->where('is_paid', false)
+        // ->get();
+
+        return $vehicleRentalRecords;
+
+    }
+
     public function create(array $data)
     {
         $vehicleRentalRecord = new VehicleRentalRecord();

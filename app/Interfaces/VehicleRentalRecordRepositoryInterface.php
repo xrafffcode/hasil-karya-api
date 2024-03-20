@@ -6,6 +6,8 @@ interface VehicleRentalRecordRepositoryInterface
 {
     public function getAllVehicleRentalRecords();
 
+    public function getDueVehicleRentalRecords();
+
     public function create(array $data);
 
     public function getVehicleRentalRecordById(string $id);

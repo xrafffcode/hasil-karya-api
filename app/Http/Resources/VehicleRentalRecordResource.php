@@ -19,6 +19,14 @@ class VehicleRentalRecordResource extends JsonResource
         $endDate->modify('+'.$this->rental_duration.' days');
         $endDate = $endDate->format('Y-m-d H:i:s');
 
+        $dueDate = new \DateTime($endDate);
+        $now = new \DateTime();
+        $isPastDue = $dueDate < $now;
+        $dueStatus = $isPastDue ? 'Jatuh Tempo' : '';
+        if ($this->is_paid) {
+            $dueStatus = '';
+        }
+
         return [
             'id' => $this->id,
             'code' => $this->code,
@@ -29,6 +37,7 @@ class VehicleRentalRecordResource extends JsonResource
             'rental_duration' => $this->rental_duration,
             'end_date' => $endDate,
             'rental_cost' => $this->rental_cost,
+            'due_status' => $dueStatus,
             'is_paid' => $this->is_paid,
             'remarks' => $this->remarks,
             'payment_proof_image' => $this->payment_proof_image,

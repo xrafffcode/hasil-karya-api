@@ -28,6 +28,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\HeavyVehicleRepositoryInterface::class, \App\Repositories\HeavyVehicleRepository::class);
         $this->app->bind(\App\Interfaces\GasOperatorRepositoryInterface::class, \App\Repositories\GasOperatorRepository::class);
         $this->app->bind(\App\Interfaces\FuelLogRepositoryInterface::class, \App\Repositories\FuelLogRepository::class);
+        $this->app->bind(\App\Interfaces\MaterialMovementErrorLogRepositoryInterface::class, \App\Repositories\MaterialMovementErrorLogRepository::class);
+        $this->app->bind(\App\Interfaces\NotificationRecepientRepositoryInterface::class, \App\Repositories\NotificationRecepientRepository::class);
     }
 
     /**

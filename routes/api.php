@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\GasOperatorController;
 use App\Http\Controllers\Api\HeavyVehicleController;
 use App\Http\Controllers\Api\MaterialController;
 use App\Http\Controllers\Api\MaterialMovementController;
+use App\Http\Controllers\Api\MaterialMovementErrorLogController;
+use App\Http\Controllers\Api\NotificationRecepientController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\StationController;
 use App\Http\Controllers\Api\TechnicalAdminController;
@@ -48,24 +50,35 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('truck/check-availability/{id}', [TruckController::class, 'checkAvailability']);
 
         Route::get('heavy-vehicles', [HeavyVehicleController::class, 'index']);
+
         Route::get('vehicle-rental-records', [VehicleRentalRecordController::class, 'index']);
+        Route::get('vehicle-rental-records/read/due', [VehicleRentalRecordController::class, 'getDueVehicleRentalRecords']);
+
         Route::get('materials', [MaterialController::class, 'index']);
 
         Route::get('stations', [StationController::class, 'index']);
         Route::get('station/check-availability/{id}', [StationController::class, 'checkAvailability']);
 
         Route::get('technical-admins', [TechnicalAdminController::class, 'index']);
-        Route::get('gas-operators', [GasOperatorController::class, 'index']);
-        Route::get('checkers', [CheckerController::class, 'index']);
-        Route::get('fuel-logs', [FuelLogController::class, 'index']);
-        Route::get('material-movements', [MaterialMovementController::class, 'index']);
-        Route::get('technical-admins', [TechnicalAdminController::class, 'index']); // Done
-        Route::get('gas-operators', [GasOperatorController::class, 'index']); // Done
-        Route::get('checkers', [CheckerController::class, 'index']); // Done
-        Route::get('fuel-logs', [FuelLogController::class, 'index']); // Done
-        Route::get('material-movements', [MaterialMovementController::class, 'index']); // Done
 
-        Route::get('activity-logs', [ActivityLogController::class, 'index']); // Done
+        Route::get('gas-operators', [GasOperatorController::class, 'index']);
+
+        Route::get('checkers', [CheckerController::class, 'index']);
+
+        Route::get('fuel-logs', [FuelLogController::class, 'index']);
+
+        Route::get('material-movements', [MaterialMovementController::class, 'index']);
+        Route::get('material-movements/read/statistic-truck-per-day-by-station', [MaterialMovementController::class, 'getStatisticTruckPerDayByStation']);
+        Route::get('material-movements/read/statistic-ritage-per-day-by-station', [MaterialMovementController::class, 'getStatisticRitagePerDayByStation']);
+        Route::get('material-movements/read/statistic-measurement-volume-by-station', [MaterialMovementController::class, 'getStatisticMeasurementVolumeByStation']);
+        Route::get('material-movements/read/statistic-ritage-volume-by-station', [MaterialMovementController::class, 'getStatisticRitageVolumeByStation']);
+        Route::get('material-movements/read/ratio-measurement-by-ritage', [MaterialMovementController::class, 'getRatioMeasurementByRitage']);
+
+        Route::get('material-movement-error-logs', [MaterialMovementErrorLogController::class, 'index']);
+
+        Route::get('notification-recepients', [NotificationRecepientController::class, 'index']);
+
+        Route::get('activity-logs', [ActivityLogController::class, 'index']);
     });
 });
 
@@ -158,10 +171,20 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('material-movement/{id}', [MaterialMovementController::class, 'show']);
     Route::post('material-movement/{id}', [MaterialMovementController::class, 'update']);
     Route::delete('material-movement/{id}', [MaterialMovementController::class, 'destroy']);
+
+    Route::post('notification-recepient', [NotificationRecepientController::class, 'store']);
+    Route::get('notification-recepient/{id}', [NotificationRecepientController::class, 'show']);
+    Route::post('notification-recepient/{id}', [NotificationRecepientController::class, 'update']);
+    Route::delete('notification-recepient/{id}', [NotificationRecepientController::class, 'destroy']);
+
+    Route::post('material-movement-error-log', [MaterialMovementErrorLogController::class, 'store']);
+    Route::get('material-movement-error-log/{id}', [MaterialMovementErrorLogController::class, 'show']);
 });
 
 Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
     Route::post('checker/material-movement/store', [MaterialMovementController::class, 'store']);
+
+    Route::post('checker/material-movement-error-log/store', [MaterialMovementErrorLogController::class, 'store']);
 });
 
 Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {

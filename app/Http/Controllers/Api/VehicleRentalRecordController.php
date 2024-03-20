@@ -30,6 +30,17 @@ class VehicleRentalRecordController extends Controller
         }
     }
 
+    public function getDueVehicleRentalRecords()
+    {
+        try {
+            $vehicleRentalRecords = $this->VehicleRentalRecordRepository->getDueVehicleRentalRecords();
+
+            return ResponseHelper::jsonResponse(true, 'Success', VehicleRentalRecordResource::collection($vehicleRentalRecords), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function store(StoreVehicleRentalRecordRequest $request)
     {
         $request = $request->validated();
