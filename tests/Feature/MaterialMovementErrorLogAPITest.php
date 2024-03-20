@@ -48,6 +48,22 @@ class MaterialMovementErrorLogAPITest extends TestCase
         $response->assertSuccessful();
     }
 
+    public function test_material_movement_error_log_api_call_create_without_code_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $materialMovementErrorLog = MaterialMovementErrorLog::factory()->make()->toArray();
+        unset($materialMovementErrorLog['code']);
+
+        $response = $this->json('POST', '/api/v1/material-movement-error-log', $materialMovementErrorLog);
+
+        $response->assertSuccessful();
+    }
+
     public function test_material_movement_error_log_api_call_create_by_checker_user_expect_success()
     {
         $user = User::factory()
