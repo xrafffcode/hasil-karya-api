@@ -94,6 +94,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
 
         $result = $result->map(function ($item) {
             $item['station'] = Station::find($item['station'])->name;
+            $item['value'] = $item['value'] * 1;
 
             return $item;
         });
