@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone_number');
             $table->string('job_title');
+            $table->boolean('is_active');
 
             $table->softDeletes();
             $table->timestamps();

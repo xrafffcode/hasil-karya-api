@@ -17,12 +17,17 @@ class NotificationRecepient extends Model
         'name',
         'phone_number',
         'job_title',
+        'is_active'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean'
     ];
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logOnly(['name', 'phone_number', 'job_title'])
+            ->logOnly(['name', 'phone_number', 'job_title', 'is_active'])
             ->setDescriptionForEvent(fn (string $eventName) => "This model has been {$eventName}")
             ->useLogName('NotificationRecepient');
     }

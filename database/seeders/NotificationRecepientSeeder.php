@@ -17,11 +17,13 @@ class NotificationRecepientSeeder extends Seeder
                 'name' => 'Rafli',
                 'phone_number' => '6285325483259',
                 'job_title' => 'Software Engineer',
+                'is_active' => true,
             ],
             [
                 'name' => 'Hugo',
                 'phone_number' => '6282227637711',
                 'job_title' => 'Software Engineer',
+                'is_active' => true,
             ],
         ];
 
@@ -30,6 +32,7 @@ class NotificationRecepientSeeder extends Seeder
             $notificationRecepient->name = $people['name'];
             $notificationRecepient->phone_number = $people['phone_number'];
             $notificationRecepient->job_title = $people['job_title'];
+            $notificationRecepient->is_active = $people['is_active'];
             $notificationRecepient->save();
         }
     }
