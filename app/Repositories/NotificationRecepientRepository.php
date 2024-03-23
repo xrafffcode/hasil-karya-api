@@ -20,6 +20,7 @@ class NotificationRecepientRepository implements NotificationRecepientRepository
         $notificationRecepient->name = $data['name'];
         $notificationRecepient->phone_number = $data['phone_number'];
         $notificationRecepient->job_title = $data['job_title'];
+        $notificationRecepient->is_active = $data['is_active'];
         $notificationRecepient->save();
 
         return $notificationRecepient;
@@ -38,6 +39,7 @@ class NotificationRecepientRepository implements NotificationRecepientRepository
         $notificationRecepient->name = $data['name'];
         $notificationRecepient->phone_number = $data['phone_number'];
         $notificationRecepient->job_title = $data['job_title'];
+        $notificationRecepient->is_active = $data['is_active'];
         $notificationRecepient->save();
 
         return $notificationRecepient;
