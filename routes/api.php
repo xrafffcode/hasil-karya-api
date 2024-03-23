@@ -94,38 +94,50 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('client', ClientController::class);
+    Route::post('client/{id}', [ClientController::class, 'update']);
 
     Route::apiResource('project', ProjectController::class);
+    Route::post('project/{id}', [ProjectController::class, 'update']);
     Route::get('project/read/status', [ProjectController::class, 'getProjectStatus']);
 
     Route::apiResource('driver', DriverController::class);
+    Route::post('driver/{id}', [DriverController::class, 'update']);
     Route::post('driver/active/{id}', [DriverController::class, 'updateActiveStatus']);
 
     Route::apiResource('vendor', VendorController::class);
+    Route::post('vendor/{id}', [VendorController::class, 'update']);
     Route::post('vendor/active/{id}', [VendorController::class, 'updateActiveStatus']);
 
     Route::apiResource('truck', TruckController::class);
+    Route::post('truck/{id}', [TruckController::class, 'update']);
     Route::post('truck/active/{id}', [TruckController::class, 'updateActiveStatus']);
 
     Route::apiResource('heavy-vehicle', HeavyVehicleController::class);
+    Route::post('heavy-vehicle/{id}', [HeavyVehicleController::class, 'update']);
     Route::post('heavy-vehicle/active/{id}', [HeavyVehicleController::class, 'updateActiveStatus']);
 
     Route::apiResource('vehicle-rental-record', VehicleRentalRecordController::class);
+    Route::post('vehicle-rental-record/{id}', [VehicleRentalRecordController::class, 'update']);
     Route::get('vehicle-rental-record/read/status', [VehicleRentalRecordController::class, 'getVehicleRentalRecordStatus']);
 
     Route::apiResource('material', MaterialController::class);
+    Route::post('material/{id}', [MaterialController::class, 'update']);
 
     Route::apiResource('station', StationController::class);
+    Route::post('station/{id}', [StationController::class, 'update']);
     Route::get('station/read/categories', [StationController::class, 'getStationCategory']);
     Route::post('station/active/{id}', [StationController::class, 'updateActiveStatus']);
 
     Route::apiResource('technical-admin', TechnicalAdminController::class);
+    Route::post('technical-admin/{id}', [TechnicalAdminController::class, 'update']);
     Route::post('technical-admin/active/{id}', [TechnicalAdminController::class, 'updateActiveStatus']);
 
     Route::apiResource('gas-operator', GasOperatorController::class);
+    Route::post('gas-operator/{id}', [GasOperatorController::class, 'update']);
     Route::post('gas-operator/active/{id}', [GasOperatorController::class, 'updateActiveStatus']);
 
     Route::apiResource('checker', CheckerController::class);
+    Route::post('checker/{id}', [CheckerController::class, 'update']);
     Route::post('checker/active/{id}', [CheckerController::class, 'updateActiveStatus']);
 
     Route::post('fuel-log/truck', [FuelLogController::class, 'storeTruck']);
@@ -135,10 +147,13 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('fuel-log/heavy-vehicle/{id}', [FuelLogController::class, 'updateHeavyVehicle']);
 
     Route::apiResource('fuel-log', FuelLogController::class)->except(['store', 'update']);
+    Route::post('fuel-log/{id}', [FuelLogController::class, 'update']);
 
     Route::apiResource('material-movement', MaterialMovementController::class);
+    Route::post('material-movement/{id}', [MaterialMovementController::class, 'update']);
 
     Route::apiResource('notification-recepient', NotificationRecepientController::class);
+    Route::post('notification-recepient/{id}', [NotificationRecepientController::class, 'update']);
     Route::post('notification-recepient/active/{id}', [NotificationRecepientController::class, 'updateActiveStatus']);
 
     Route::post('fuel-log-error-log/truck', [FuelLogErrorLogController::class, 'storeTruck']);
@@ -161,7 +176,6 @@ Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {
 
     Route::post('gas-operator/fuel-log-error-log/truck/store', [FuelLogErrorLogController::class, 'storeTruck']);
     Route::post('gas-operator/fuel-log-error-log/heavy-vehicle/store', [FuelLogErrorLogController::class, 'storeHeavyVehicle']);
-
 });
 
 Route::middleware(['auth:sanctum', 'role:technical-admin'])->group(function () {
