@@ -30,63 +30,63 @@ class StoreMaterialMovementErrorLogRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        if (!$this->has('code')) {
+        if (! $this->has('code')) {
             $this->merge([
-                'code' => null
+                'code' => null,
             ]);
         }
 
-        if (!$this->has('driver_id')) {
+        if (! $this->has('driver_id')) {
             $this->merge([
-                'driver_id' => null
+                'driver_id' => null,
             ]);
         }
 
-        if (!$this->has('truck_id')) {
+        if (! $this->has('truck_id')) {
             $this->merge([
-                'truck_id' => null
+                'truck_id' => null,
             ]);
         }
 
-        if (!$this->has('station_id')) {
+        if (! $this->has('station_id')) {
             $this->merge([
-                'station_id' => null
+                'station_id' => null,
             ]);
         }
 
-        if (!$this->has('checker_id')) {
+        if (! $this->has('checker_id')) {
             $this->merge([
-                'checker_id' => null
+                'checker_id' => null,
             ]);
         }
 
-        if (!$this->has('date')) {
+        if (! $this->has('date')) {
             $this->merge([
-                'date' => null
+                'date' => null,
             ]);
         }
 
-        if (!$this->has('truck_capacity')) {
+        if (! $this->has('truck_capacity')) {
             $this->merge([
-                'truck_capacity' => null
+                'truck_capacity' => null,
             ]);
         }
 
-        if (!$this->has('observation_ratio_percentage')) {
+        if (! $this->has('observation_ratio_percentage')) {
             $this->merge([
-                'observation_ratio_percentage' => null
+                'observation_ratio_percentage' => null,
             ]);
         }
 
-        if (!$this->has('solid_ratio')) {
+        if (! $this->has('solid_ratio')) {
             $this->merge([
-                'solid_ratio' => null
+                'solid_ratio' => null,
             ]);
         }
 
-        if (!$this->has('remarks')) {
+        if (! $this->has('remarks')) {
             $this->merge([
-                'remarks' => null
+                'remarks' => null,
             ]);
         }
     }
