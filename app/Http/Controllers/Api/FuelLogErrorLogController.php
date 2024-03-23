@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreFuelLogHeavyVehicleRequest;
-use App\Http\Requests\StoreFuelLogTruckRequest;
+use App\Http\Requests\StoreFuelLogHeavyVehicleErrorLogRequest;
+use App\Http\Requests\StoreFuelLogTruckErrorLogRequest;
 use App\Http\Resources\FuelLogErrorLogResource;
 use App\Interfaces\FuelLogErrorLogRepositoryInterface;
 use Illuminate\Http\Request;
@@ -30,7 +30,7 @@ class FuelLogErrorLogController extends Controller
         }
     }
 
-    public function storeTruck(StoreFuelLogTruckRequest $request)
+    public function storeTruck(StoreFuelLogTruckErrorLogRequest $request)
     {
         $request = $request->validated();
 
@@ -43,7 +43,7 @@ class FuelLogErrorLogController extends Controller
         }
     }
 
-    public function storeHeavyVehicle(StoreFuelLogHeavyVehicleRequest $request)
+    public function storeHeavyVehicle(StoreFuelLogHeavyVehicleErrorLogRequest $request)
     {
         $request = $request->validated();
 

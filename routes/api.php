@@ -74,6 +74,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         Route::get('fuel-logs', [FuelLogController::class, 'index']);
 
+        Route::get('fuel-log-error-logs', [FuelLogErrorLogController::class, 'index']);
+
         Route::get('material-movements', [MaterialMovementController::class, 'index']);
         Route::get('material-movements/read/statistic-truck-per-day-by-station', [MaterialMovementController::class, 'getStatisticTruckPerDayByStation']);
         Route::get('material-movements/read/statistic-ritage-per-day-by-station', [MaterialMovementController::class, 'getStatisticRitagePerDayByStation']);
@@ -119,6 +121,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('vehicle-rental-record', VehicleRentalRecordController::class);
     Route::post('vehicle-rental-record/{id}', [VehicleRentalRecordController::class, 'update']);
     Route::get('vehicle-rental-record/read/status', [VehicleRentalRecordController::class, 'getVehicleRentalRecordStatus']);
+    Route::post('vehicle-rental-record/payment/{id}', [VehicleRentalRecordController::class, 'updateRentalPaymentStatus']);
 
     Route::apiResource('material', MaterialController::class);
     Route::post('material/{id}', [MaterialController::class, 'update']);

@@ -17,15 +17,17 @@ class FuelLogErrorLogFactory extends Factory
         return [
             'code' => Str::random(10),
             'date' => strval($this->faker->dateTimeThisYear()->format('Y-m-d H:i:s')),
-            'driver_id' => strval($this->faker->uuid),
             'truck_id' => strval($this->faker->uuid),
+            'heavy_vehicle_id' => strval($this->faker->uuid),
+            'driver_id' => strval($this->faker->uuid),
             'station_id' => strval($this->faker->uuid),
-            'checker_id' => strval($this->faker->uuid),
-            'truck_capacity' => strval($this->faker->numberBetween(5, 30)),
-            'observation_ratio_percentage' => strval($this->faker->numberBetween(5, 30)),
-            'solid_ratio' => strval($this->faker->randomFloat(2, 0.5, 1.2)),
-            'remarks' => strval($this->faker->text),
-            'error_log' => strval($this->faker->text),
+            'gas_operator_id' => strval($this->faker->uuid),
+            'fuel_type' => strval($this->faker->randomElement(['diesel', 'pertamax', 'pertalite', 'pertamax turbo'])),
+            'volume' => strval($this->faker->randomFloat(2, 1, 1000)),
+            'odometer' => strval($this->faker->randomFloat(2, 1, 1000)),
+            'hourmeter' => strval($this->faker->randomFloat(2, 1, 1000)),
+            'remarks' => $this->faker->text(),
+            'error_log' => $this->faker->text(),
         ];
     }
 }

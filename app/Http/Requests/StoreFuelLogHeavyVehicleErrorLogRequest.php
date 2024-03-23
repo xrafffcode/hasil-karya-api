@@ -14,17 +14,17 @@ class StoreFuelLogHeavyVehicleErrorLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'nullable|string',
-            'date' => 'nullable|string',
-            'heavy_vehicle_id' => 'nullable|string',
-            'driver_id' => 'nullable|string',
-            'station_id' => 'nullable|string',
-            'gas_operator_id' => 'nullable|string',
-            'fuel_type' => 'nullable|string',
-            'volume' => 'nullable|string',
-            'odometer' => 'nullable|string',
-            'remarks' => 'nullable|string',
-            'error_log' => 'nullable|string',
+            'code' => 'nullable',
+            'date' => 'nullable',
+            'heavy_vehicle_id' => 'nullable',
+            'driver_id' => 'nullable',
+            'station_id' => 'nullable',
+            'gas_operator_id' => 'nullable',
+            'fuel_type' => 'nullable',
+            'volume' => 'nullable',
+            'odometer' => 'nullable',
+            'remarks' => 'nullable',
+            'error_log' => 'nullable',
         ];
     }
 
