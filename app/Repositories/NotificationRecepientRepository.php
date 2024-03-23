@@ -54,7 +54,7 @@ class NotificationRecepientRepository implements NotificationRecepientRepository
         return $notificationRecepient;
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $notificationRecepient = NotificationRecepient::find($id);
         $notificationRecepient->delete();

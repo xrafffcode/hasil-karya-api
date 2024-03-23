@@ -31,6 +31,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Interfaces\MaterialMovementErrorLogRepositoryInterface::class, \App\Repositories\MaterialMovementErrorLogRepository::class);
         $this->app->bind(\App\Interfaces\NotificationRecepientRepositoryInterface::class, \App\Repositories\NotificationRecepientRepository::class);
         $this->app->bind(\App\Interfaces\CommonRepositoryInterface::class, \App\Repositories\CommonRepository::class);
+        $this->app->bind(\App\Interfaces\FuelLogErrorLogRepositoryInterface::class, \App\Repositories\FuelLogErrorLogRepository::class);
     }
 
     /**

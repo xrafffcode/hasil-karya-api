@@ -85,7 +85,7 @@ class NotificationRecepientController extends Controller
     public function destroy($id)
     {
         try {
-            $notificationRecepient = $this->NotificationRecepientRepository->destroy($id);
+            $notificationRecepient = $this->NotificationRecepientRepository->delete($id);
 
             return ResponseHelper::jsonResponse(true, 'Data notification recepient berhasil dihapus.', new NotificationRecepientResource($notificationRecepient), 200);
         } catch (\Exception $e) {
