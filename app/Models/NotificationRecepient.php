@@ -17,11 +17,11 @@ class NotificationRecepient extends Model
         'name',
         'phone_number',
         'job_title',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     public function getActivitylogOptions(): LogOptions

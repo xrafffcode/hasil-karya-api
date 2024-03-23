@@ -17,6 +17,7 @@ class UpdateNotificationRecepientRequest extends FormRequest
             'name' => 'string|unique:notification_recepients,name,'.$this->route('id'), ',id',
             'phone_number' => 'string',
             'job_title' => 'string',
+            'is_active' => 'boolean',
         ];
     }
 }

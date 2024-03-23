@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMaterialMovementErrorLogRequest extends FormRequest
+class StoreFuelLogErrorLogRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,16 +15,16 @@ class StoreMaterialMovementErrorLogRequest extends FormRequest
     {
         return [
             'code' => 'nullable|string',
-            'driver_id' => 'nullable|string',
-            'truck_id' => 'nullable|string',
-            'station_id' => 'nullable|string',
-            'checker_id' => 'nullable|string',
             'date' => 'nullable|string',
-            'truck_capacity' => 'nullable|string',
-            'observation_ratio_percentage' => 'nullable|string',
-            'solid_ratio' => 'nullable|string',
+            'truck_id' => 'nullable|string',
+            'driver_id' => 'nullable|string',
+            'station_id' => 'nullable|string',
+            'gas_operator_id' => 'nullable|string',
+            'fuel_type' => 'nullable|string',
+            'volume' => 'nullable|string',
+            'odometer' => 'nullable|string',
             'remarks' => 'nullable|string',
-            'error_log' => 'required|string',
+            'error_log' => 'nullable|string',
         ];
     }
 
@@ -36,9 +36,9 @@ class StoreMaterialMovementErrorLogRequest extends FormRequest
             ]);
         }
 
-        if (! $this->has('driver_id')) {
+        if (! $this->has('date')) {
             $this->merge([
-                'driver_id' => null,
+                'date' => null,
             ]);
         }
 
@@ -48,45 +48,51 @@ class StoreMaterialMovementErrorLogRequest extends FormRequest
             ]);
         }
 
+        if (! $this->has('driver_id')) {
+            $this->merge([
+                'driver_id' => null,
+            ]);
+        }
+
         if (! $this->has('station_id')) {
             $this->merge([
                 'station_id' => null,
             ]);
         }
 
-        if (! $this->has('checker_id')) {
+        if (! $this->has('gas_operator_id')) {
             $this->merge([
-                'checker_id' => null,
+                'gas_operator_id' => null,
             ]);
         }
 
-        if (! $this->has('date')) {
+        if (! $this->has('fuel_type')) {
             $this->merge([
-                'date' => null,
+                'fuel_type' => null,
             ]);
         }
 
-        if (! $this->has('truck_capacity')) {
+        if (! $this->has('volume')) {
             $this->merge([
-                'truck_capacity' => null,
+                'volume' => null,
             ]);
         }
 
-        if (! $this->has('observation_ratio_percentage')) {
+        if (! $this->has('odometer')) {
             $this->merge([
-                'observation_ratio_percentage' => null,
-            ]);
-        }
-
-        if (! $this->has('solid_ratio')) {
-            $this->merge([
-                'solid_ratio' => null,
+                'odometer' => null,
             ]);
         }
 
         if (! $this->has('remarks')) {
             $this->merge([
                 'remarks' => null,
+            ]);
+        }
+
+        if (! $this->has('error_log')) {
+            $this->merge([
+                'error_log' => null,
             ]);
         }
     }

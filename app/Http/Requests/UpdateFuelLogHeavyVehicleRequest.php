@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\FuelTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateFuelLogHeavyVehicleRequest extends FormRequest
@@ -35,6 +36,10 @@ class UpdateFuelLogHeavyVehicleRequest extends FormRequest
 
         if (! $this->has('date')) {
             $this->merge(['date' => now()]);
+        }
+
+        if (! $this->has('fuel_type')) {
+            $this->merge(['fuel_type' => FuelTypeEnum::DIESEL->value]);
         }
 
         if (! $this->has('remarks')) {

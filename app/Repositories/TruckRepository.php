@@ -76,7 +76,7 @@ class TruckRepository implements TruckRepositoryInterface
     public function generateCode(int $tryCount): string
     {
         $count = Truck::count() + 1 + $tryCount;
-        $code = 'TRK'.str_pad($count, 4, '0', STR_PAD_LEFT);
+        $code = 'TRK'.str_pad($count, 3, '0', STR_PAD_LEFT);
 
         return $code;
     }

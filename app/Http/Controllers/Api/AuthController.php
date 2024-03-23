@@ -19,7 +19,7 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response([
                 'success' => false,
                 'message' => 'Email atau password salah',
@@ -30,7 +30,6 @@ class AuthController extends Controller
 
         $user_data = $user->toArray();
         $user_data['roles'] = $user->roles->pluck('name');
-
 
         if ($user->isActive() === false) {
             return response([

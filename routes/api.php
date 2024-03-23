@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CheckerController;
 use App\Http\Controllers\Api\ClientController;
 use App\Http\Controllers\Api\DriverController;
 use App\Http\Controllers\Api\FuelLogController;
+use App\Http\Controllers\Api\FuelLogErrorLogController;
 use App\Http\Controllers\Api\GasOperatorController;
 use App\Http\Controllers\Api\HeavyVehicleController;
 use App\Http\Controllers\Api\MaterialController;
@@ -140,6 +141,10 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('notification-recepient', NotificationRecepientController::class);
     Route::post('notification-recepient/active/{id}', [NotificationRecepientController::class, 'updateActiveStatus']);
 
+    Route::post('fuel-log-error-log/truck', [FuelLogErrorLogController::class, 'storeTruck']);
+    Route::post('fuel-log-error-log/heavy-vehicle', [FuelLogErrorLogController::class, 'storeHeavyVehicle']);
+    Route::get('fuel-log-error-log/{id}', [FuelLogErrorLogController::class, 'show']);
+
     Route::post('material-movement-error-log', [MaterialMovementErrorLogController::class, 'store']);
     Route::get('material-movement-error-log/{id}', [MaterialMovementErrorLogController::class, 'show']);
 });
@@ -153,6 +158,10 @@ Route::middleware(['auth:sanctum', 'role:checker'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:gas-operator'])->group(function () {
     Route::post('gas-operator/fuel-log/truck/store', [FuelLogController::class, 'storeTruck']);
     Route::post('gas-operator/fuel-log/heavy-vehicle/store', [FuelLogController::class, 'storeHeavyVehicle']);
+
+    Route::post('gas-operator/fuel-log-error-log/truck/store', [FuelLogErrorLogController::class, 'storeTruck']);
+    Route::post('gas-operator/fuel-log-error-log/heavy-vehicle/store', [FuelLogErrorLogController::class, 'storeHeavyVehicle']);
+
 });
 
 Route::middleware(['auth:sanctum', 'role:technical-admin'])->group(function () {

@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Enum\AggregateFunctionEnum;
+use App\Enum\DatePeriodEnum;
 use App\Enum\StationCategoryEnum;
 use App\Enum\UserRoleEnum;
 use App\Models\Checker;
@@ -235,18 +237,21 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $statisticTypes = AggregateFunctionEnum::toArrayValue();
+        $datePeriods = DatePeriodEnum::toArrayValue();
         $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
 
         foreach ($statisticTypes as $statisticType) {
-            foreach ($stationCategories as $stationCategory) {
-                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-truck-per-day-by-station', [
-                    'statistic_type' => $statisticType,
-                    'date_type' => 'from_start',
-                    'station_category' => $stationCategory,
-                ]);
+            foreach ($datePeriods as $datePeriod) {
+                foreach ($stationCategories as $stationCategory) {
+                    $response = $this->json('GET', '/api/v1/material-movements/read/statistic-truck-per-day-by-station', [
+                        'statistic_type' => $statisticType,
+                        'date_type' => $datePeriod,
+                        'station_category' => $stationCategory,
+                    ]);
 
-                $response->assertSuccessful();
+                    $response->assertSuccessful();
+                }
             }
         }
     }
@@ -259,18 +264,21 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $statisticTypes = AggregateFunctionEnum::toArrayValue();
+        $datePeriods = DatePeriodEnum::toArrayValue();
         $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
 
         foreach ($statisticTypes as $statisticType) {
-            foreach ($stationCategories as $stationCategory) {
-                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-ritage-per-day-by-station', [
-                    'statistic_type' => $statisticType,
-                    'date_type' => 'from_start',
-                    'station_category' => $stationCategory,
-                ]);
+            foreach ($datePeriods as $datePeriod) {
+                foreach ($stationCategories as $stationCategory) {
+                    $response = $this->json('GET', '/api/v1/material-movements/read/statistic-ritage-per-day-by-station', [
+                        'statistic_type' => $statisticType,
+                        'date_type' => $datePeriod,
+                        'station_category' => $stationCategory,
+                    ]);
 
-                $response->assertSuccessful();
+                    $response->assertSuccessful();
+                }
             }
         }
 
@@ -284,18 +292,21 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $statisticTypes = AggregateFunctionEnum::toArrayValue();
+        $datePeriods = DatePeriodEnum::toArrayValue();
         $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
 
         foreach ($statisticTypes as $statisticType) {
-            foreach ($stationCategories as $stationCategory) {
-                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-measurement-volume-by-station', [
-                    'statistic_type' => $statisticType,
-                    'date_type' => 'from_start',
-                    'station_category' => $stationCategory,
-                ]);
+            foreach ($datePeriods as $datePeriod) {
+                foreach ($stationCategories as $stationCategory) {
+                    $response = $this->json('GET', '/api/v1/material-movements/read/statistic-measurement-volume-by-station', [
+                        'statistic_type' => $statisticType,
+                        'date_type' => $datePeriod,
+                        'station_category' => $stationCategory,
+                    ]);
 
-                $response->assertSuccessful();
+                    $response->assertSuccessful();
+                }
             }
         }
     }
@@ -308,18 +319,21 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $statisticTypes = AggregateFunctionEnum::toArrayValue();
+        $datePeriods = DatePeriodEnum::toArrayValue();
         $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
 
         foreach ($statisticTypes as $statisticType) {
-            foreach ($stationCategories as $stationCategory) {
-                $response = $this->json('GET', '/api/v1/material-movements/read/statistic-ritage-volume-by-station', [
-                    'statistic_type' => $statisticType,
-                    'date_type' => 'from_start',
-                    'station_category' => $stationCategory,
-                ]);
+            foreach ($datePeriods as $datePeriod) {
+                foreach ($stationCategories as $stationCategory) {
+                    $response = $this->json('GET', '/api/v1/material-movements/read/statistic-ritage-volume-by-station', [
+                        'statistic_type' => $statisticType,
+                        'date_type' => $datePeriod,
+                        'station_category' => $stationCategory,
+                    ]);
 
-                $response->assertSuccessful();
+                    $response->assertSuccessful();
+                }
             }
         }
 
@@ -333,18 +347,21 @@ class MaterialMovementAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $statisticTypes = ['min', 'max', 'avg', 'sum', 'count'];
+        $statisticTypes = AggregateFunctionEnum::toArrayValue();
+        $datePeriods = DatePeriodEnum::toArrayValue();
         $stationCategories = [StationCategoryEnum::QUARY->value, StationCategoryEnum::DISPOSAL->value];
 
         foreach ($statisticTypes as $statisticType) {
-            foreach ($stationCategories as $stationCategory) {
-                $response = $this->json('GET', '/api/v1/material-movements/read/ratio-measurement-by-ritage', [
-                    'statistic_type' => $statisticType,
-                    'date_type' => 'from_start',
-                    'station_category' => $stationCategory,
-                ]);
+            foreach ($datePeriods as $datePeriod) {
+                foreach ($stationCategories as $stationCategory) {
+                    $response = $this->json('GET', '/api/v1/material-movements/read/ratio-measurement-by-ritage', [
+                        'statistic_type' => $statisticType,
+                        'date_type' => $datePeriod,
+                        'station_category' => $stationCategory,
+                    ]);
 
-                $response->assertSuccessful();
+                    $response->assertSuccessful();
+                }
             }
         }
     }

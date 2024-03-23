@@ -17,6 +17,7 @@ class StoreNotificationRecepientRequest extends FormRequest
             'name' => 'required|string|unique:notification_recepients',
             'phone_number' => 'required|string',
             'job_title' => 'required|string',
+            'is_active' => 'required|boolean',
         ];
     }
 }
