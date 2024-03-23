@@ -43,6 +43,15 @@ class NotificationRecepientRepository implements NotificationRecepientRepository
         return $notificationRecepient;
     }
 
+    public function updateActiveStatus(string $id, bool $status)
+    {
+        $notificationRecepient = NotificationRecepient::find($id);
+        $notificationRecepient->is_active = $status;
+        $notificationRecepient->save();
+
+        return $notificationRecepient;
+    }
+
     public function destroy($id)
     {
         $notificationRecepient = NotificationRecepient::find($id);

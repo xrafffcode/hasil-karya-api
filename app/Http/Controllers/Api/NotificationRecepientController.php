@@ -67,6 +67,21 @@ class NotificationRecepientController extends Controller
         }
     }
 
+    public function updateActiveStatus(Request $request, $id)
+    {
+        $status = $request->input('is_active');
+
+        try {
+            $notificationRecepient = $this->NotificationRecepientRepository->updateActiveStatus($id, $status);
+
+            $message = $status ? 'Penerima notifikasi berhasil diaktifkan.' : 'Penerima notifikasi berhasil dinonaktifkan.';
+
+            return ResponseHelper::jsonResponse(true, $message, new NotificationRecepientResource($notificationRecepient), 200);
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
+
     public function destroy($id)
     {
         try {

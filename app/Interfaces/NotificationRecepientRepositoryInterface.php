@@ -12,5 +12,7 @@ interface NotificationRecepientRepositoryInterface
 
     public function update(array $data, $id);
 
-    public function destroy($id);
+    public function updateActiveStatus(string $id, bool $status);
+
+    public function destroy(string $id);
 }

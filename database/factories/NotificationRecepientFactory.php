@@ -17,6 +17,7 @@ class NotificationRecepientFactory extends Factory
             'name' => $this->faker->name,
             'phone_number' => $this->faker->phoneNumber,
             'job_title' => $this->faker->jobTitle,
+            'is_active' => $this->faker->boolean,
         ];
     }
 }

@@ -19,6 +19,7 @@ class NotificationRecepientResource extends JsonResource
             'name' => $this->name,
             'phone_number' => $this->phone_number,
             'job_title' => $this->job_title,
+            'is_active' => $this->is_active,
         ];
     }
 }
