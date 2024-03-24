@@ -27,6 +27,7 @@ class FuelLogErrorLogResource extends JsonResource
             'solid_ratio' => $this->solid_ratio,
             'remarks' => $this->remarks,
             'error_log' => $this->error_log,
+            'created_at' => $this->created_at,
         ];
     }
 }
