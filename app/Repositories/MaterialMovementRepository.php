@@ -34,6 +34,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->observation_ratio_number = $data['observation_ratio_percentage'] * $data['truck_capacity'];
         $materialMovement->solid_ratio = $data['solid_ratio'];
         $materialMovement->solid_volume_estimate = $materialMovement->observation_ratio_number * $data['solid_ratio'];
+        $materialMovement->ratio_measurement_ritage = $materialMovement->solid_volume_estimate / $materialMovement->observation_ratio_number;
         $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
 
@@ -277,15 +278,15 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
     {
         $rawQuery = '';
         if ($statisticType == AggregateFunctionEnum::MIN->value) {
-            $rawQuery = 'MIN(material_movements.solid_ratio) as value';
+            $rawQuery = 'MIN(material_movements.ratio_measurement_ritage) as value';
         } elseif ($statisticType == AggregateFunctionEnum::MAX->value) {
-            $rawQuery = 'MAX(material_movements.solid_ratio) as value';
+            $rawQuery = 'MAX(material_movements.ratio_measurement_ritage) as value';
         } elseif ($statisticType == AggregateFunctionEnum::AVG->value) {
-            $rawQuery = 'AVG(material_movements.solid_ratio) as value';
+            $rawQuery = 'AVG(material_movements.ratio_measurement_ritage) as value';
         } elseif ($statisticType == AggregateFunctionEnum::SUM->value) {
-            $rawQuery = 'SUM(material_movements.solid_ratio) as value';
+            $rawQuery = 'SUM(material_movements.ratio_measurement_ritage) as value';
         } elseif ($statisticType == AggregateFunctionEnum::COUNT->value) {
-            $rawQuery = 'COUNT(material_movements.solid_ratio) as value';
+            $rawQuery = 'COUNT(material_movements.ratio_measurement_ritage) as value';
         }
 
         $startDate = Carbon::now()->startOfDay();
@@ -341,6 +342,7 @@ class MaterialMovementRepository implements MaterialMovementRepositoryInterface
         $materialMovement->observation_ratio_number = $data['observation_ratio_percentage'] * $data['truck_capacity'];
         $materialMovement->solid_ratio = $data['solid_ratio'];
         $materialMovement->solid_volume_estimate = $materialMovement->observation_ratio_number * $data['solid_ratio'];
+        $materialMovement->ratio_measurement_ritage = $materialMovement->solid_volume_estimate / $materialMovement->observation_ratio_number;
         $materialMovement->remarks = $data['remarks'];
         $materialMovement->save();
 

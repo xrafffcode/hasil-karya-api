@@ -26,6 +26,7 @@ class MaterialMovement extends Model
         'observation_ratio_number',
         'solid_ratio',
         'solid_volume_estimate',
+        'ratio_measurement_ritage',
         'remarks',
     ];
 

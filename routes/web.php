@@ -1,7 +1,5 @@
 <?php
 
-use App\Console\Commands\RentalPaymentNoticeCron;
-use App\Repositories\MaterialMovementRepository;
 use Illuminate\Support\Facades\Route;
 
 /*

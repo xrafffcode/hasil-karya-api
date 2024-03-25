@@ -28,6 +28,7 @@ class MaterialMovementResource extends JsonResource
             'observation_ratio_number' => $this->observation_ratio_number,
             'solid_ratio' => $this->solid_ratio,
             'solid_volume_estimate' => $this->solid_volume_estimate,
+            'ratio_measurement_ritage' => $this->ratio_measurement_ritage,
             'remarks' => $this->remarks,
         ];
     }

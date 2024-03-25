@@ -7,7 +7,6 @@ use App\Models\Vendor;
 use App\Repositories\VehicleRentalRecordRepository;
 use App\Services\Api\WhatsappService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class RentalPaymentNoticeCron extends Command
 {
