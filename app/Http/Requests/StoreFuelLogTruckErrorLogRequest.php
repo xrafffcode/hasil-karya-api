@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFuelLogErrorLogRequest extends FormRequest
+class StoreFuelLogTruckErrorLogRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,17 +14,17 @@ class StoreFuelLogErrorLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'nullable|string',
-            'date' => 'nullable|string',
-            'truck_id' => 'nullable|string',
-            'driver_id' => 'nullable|string',
-            'station_id' => 'nullable|string',
-            'gas_operator_id' => 'nullable|string',
-            'fuel_type' => 'nullable|string',
-            'volume' => 'nullable|string',
-            'odometer' => 'nullable|string',
-            'remarks' => 'nullable|string',
-            'error_log' => 'nullable|string',
+            'code' => 'nullable',
+            'date' => 'nullable',
+            'truck_id' => 'nullable',
+            'driver_id' => 'nullable',
+            'station_id' => 'nullable',
+            'gas_operator_id' => 'nullable',
+            'fuel_type' => 'nullable',
+            'volume' => 'nullable',
+            'odometer' => 'nullable',
+            'remarks' => 'nullable',
+            'error_log' => 'nullable',
         ];
     }
 

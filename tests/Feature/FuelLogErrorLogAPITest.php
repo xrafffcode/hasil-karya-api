@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Enum\UserRoleEnum;
 use App\Models\FuelLog;
+use App\Models\FuelLogErrorLog;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
@@ -26,7 +27,7 @@ class FuelLogErrorLogAPITest extends TestCase
 
         $this->actingAs($user);
 
-        FuelLog::factory()->create();
+        FuelLogErrorLog::factory()->create();
 
         $response = $this->json('GET', '/api/v1/fuel-log-error-logs');
 
@@ -41,9 +42,9 @@ class FuelLogErrorLogAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $fuelLogErrorLog = FuelLog::factory()->make();
+        $fuelLogErrorLog = FuelLog::factory()->make()->toArray();
 
-        $response = $this->json('POST', '/api/v1/fuel-log-error-log/truck', $fuelLogErrorLog->toArray());
+        $response = $this->json('POST', '/api/v1/fuel-log-error-log/truck', $fuelLogErrorLog);
 
         $response->assertSuccessful();
     }
@@ -74,7 +75,7 @@ class FuelLogErrorLogAPITest extends TestCase
 
         $fuelLogErrorLog = FuelLog::factory()->make();
 
-        $response = $this->json('POST', '/api/v1/fuel-log-error-log/truck', $fuelLogErrorLog->toArray());
+        $response = $this->json('POST', '/api/v1/gas-operator/fuel-log-error-log/truck/store', $fuelLogErrorLog->toArray());
 
         $response->assertSuccessful();
     }
@@ -120,7 +121,7 @@ class FuelLogErrorLogAPITest extends TestCase
 
         $fuelLogErrorLog = FuelLog::factory()->make();
 
-        $response = $this->json('POST', '/api/v1/fuel-log-error-log/heavy-vehicle', $fuelLogErrorLog->toArray());
+        $response = $this->json('POST', '/api/v1/gas-operator/fuel-log-error-log/heavy-vehicle/store', $fuelLogErrorLog->toArray());
 
         $response->assertSuccessful();
     }
@@ -133,7 +134,7 @@ class FuelLogErrorLogAPITest extends TestCase
 
         $this->actingAs($user);
 
-        $fuelLogErrorLog = FuelLog::factory()->create();
+        $fuelLogErrorLog = FuelLogErrorLog::factory()->create();
 
         $response = $this->json('GET', '/api/v1/fuel-log-error-log/'.$fuelLogErrorLog->id);
 
