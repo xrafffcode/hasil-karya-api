@@ -31,14 +31,18 @@ class AuthController extends Controller
         $user['user_name'] = null;
         $user['user_id'] = null;
 
-        if ($user->checker()->exists()) {
-            $user['user_id'] = $user->checker->id;
-            $user['user_name'] = $user->checker->name;
+        $checker = $user->checker()->first();
+
+        if ($checker) {
+            $user['user_id'] = $checker->id;
+            $user['user_name'] = $checker->name;
         }
 
-        if ($user->gasOperator()->exists()) {
-            $user['user_id'] = $user->gasOperator->id;
-            $user['user_name'] = $user->gasOperator->name;
+        $gasOperator = $user->gasOperator()->first();
+
+        if ($gasOperator) {
+            $user['user_id'] = $gasOperator->id;
+            $user['user_name'] = $gasOperator->name;
         }
 
         $user_data = $user;
