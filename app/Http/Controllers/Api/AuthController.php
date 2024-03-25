@@ -31,18 +31,14 @@ class AuthController extends Controller
         $user['user_name'] = null;
         $user['user_id'] = null;
 
-        $checker = $user->checker()->first();
-
-        if ($checker) {
-            $user['user_id'] = $checker->id;
-            $user['user_name'] = $checker->name;
+        if ($user->hasRole('checker')) {
+            $user['user_id'] = $user->checker->id;
+            $user['user_name'] = $user->checker->name;
         }
 
-        $gasOperator = $user->gasOperator()->first();
-
-        if ($gasOperator) {
-            $user['user_id'] = $gasOperator->id;
-            $user['user_name'] = $gasOperator->name;
+        if ($user->hasRole('gas_operator')) {
+            $user['user_id'] = $user->gasOperator->id;
+            $user['user_name'] = $user->gasOperator->name;
         }
 
         $user_data = $user;
