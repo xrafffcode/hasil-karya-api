@@ -31,12 +31,12 @@ class AuthController extends Controller
         $user['user_name'] = null;
         $user['user_id'] = null;
 
-        if ($user->hasRole('checker')) {
+        if ($user->checker()->exists()) {
             $user['user_id'] = $user->checker->id;
             $user['user_name'] = $user->checker->name;
         }
 
-        if ($user->hasRole('gas_operator')) {
+        if ($user->gasOperator()->exists()) {
             $user['user_id'] = $user->gasOperator->id;
             $user['user_name'] = $user->gasOperator->name;
         }
