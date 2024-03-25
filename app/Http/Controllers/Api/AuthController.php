@@ -27,14 +27,14 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        $user->roles;
+        $user['roles'] = $user->roles()->get()->pluck('name');
 
         if ($user->checker()->exists()) {
-            $user->checker;
+            $user->checker->id;
         }
 
         if ($user->gasOperator()->exists()) {
-            $user->gasOperator;
+            $user->gasOperator->id;
         }
 
         $user_data = $user;
