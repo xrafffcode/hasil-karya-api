@@ -7,6 +7,7 @@ use App\Models\Vendor;
 use App\Repositories\VehicleRentalRecordRepository;
 use App\Services\Api\WhatsappService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class RentalPaymentNoticeCron extends Command
 {
@@ -65,10 +66,10 @@ class RentalPaymentNoticeCron extends Command
                 $msgData =
                     <<< EOT
                     Kode Sewa Kendaraan : $record->code
-                    Vendor : $vendorName $vendorPhoneNumber     
+                    Vendor : $vendorName $vendorPhoneNumber
                     Jenis Kendaraan : $vehicleType
                     Kendaraan : $vehicleName
-                    Tanggal Mulai : $startDate 
+                    Tanggal Mulai : $startDate
                     Durasi Sewa : $record->rental_duration hari
                     Tanggal Selesai : $endDate
                     Biaya Sewa : *RP. $rentalCost,-*
@@ -82,12 +83,16 @@ class RentalPaymentNoticeCron extends Command
         }
 
         $whatsapp = new WhatsappService();
-        $numbers = NotificationRecepient::pluck('phone_number')->toArray();
+
+        $numbers = NotificationRecepient::where('is_active', true)->pluck('phone_number')->toArray();
+
         $message = $msgHeader.$msgBody.$msgFooter;
+
         if ($dueVehicleRentalRecords->count() > 0) {
             foreach ($numbers as $number) {
                 $whatsapp->sendMessage($number, $message);
             }
         }
+
     }
 }

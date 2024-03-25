@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class WhatsappService
 {
-    private $apiHost = 'http://whatsapp.hasilkarya.co.id/api/';
+    private $apiHost = 'https://whatsapp.hasilkarya.co.id/api/';
 
     public function sendMessage($number, $message)
     {
