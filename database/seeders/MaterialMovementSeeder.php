@@ -38,8 +38,9 @@ class MaterialMovementSeeder extends Seeder
             $truckCapacity = $truck->capacity;
             $observationRatioPercentage = rand(3, 10) / 10;
             $observationRatioNumber = $truckCapacity * $observationRatioPercentage;
-            $solidRatio = 0;
-            $solidVolumeEstimate = 0;
+            $solidRatio = rand(3, 10) / 10;
+            $solidVolumeEstimate = $observationRatioNumber * $solidRatio;
+            $ratio_measurement_ritage = $solidVolumeEstimate / $observationRatioNumber;
 
             MaterialMovement::factory()->create([
                 'driver_id' => $driver->id,
@@ -52,6 +53,7 @@ class MaterialMovementSeeder extends Seeder
                 'observation_ratio_number' => $observationRatioNumber,
                 'solid_ratio' => $solidRatio,
                 'solid_volume_estimate' => $solidVolumeEstimate,
+                'ratio_measurement_ritage' => $ratio_measurement_ritage,
                 'remarks' => '',
             ]);
         }
