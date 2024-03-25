@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             GasOperatorSeeder::class,
             CheckerSeeder::class,
 
-            // MaterialMovementSeeder::class,
+            MaterialMovementSeeder::class,
 
             NotificationRecepientSeeder::class,
         ]);
