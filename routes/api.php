@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('truck/check-availability/{id}', [TruckController::class, 'checkAvailability']);
 
         Route::get('heavy-vehicles', [HeavyVehicleController::class, 'index']);
+        Route::get('heavy-vehicle/check-availability/{id}', [HeavyVehicleController::class, 'checkAvailability']);
 
         Route::get('vehicle-rental-records', [VehicleRentalRecordController::class, 'index']);
         Route::get('vehicle-rental-records/read/due', [VehicleRentalRecordController::class, 'getDueVehicleRentalRecords']);
