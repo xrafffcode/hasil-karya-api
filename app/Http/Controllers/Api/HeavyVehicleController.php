@@ -112,4 +112,20 @@ class HeavyVehicleController extends Controller
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
     }
+
+    public function checkAvailability($id)
+    {
+        try {
+            $isAvailable = $this->HeavyVehicleRepository->isAvailable($id);
+
+            if ($isAvailable) {
+                return ResponseHelper::jsonResponse(true, 'Alat berat tersedia.', null, 200);
+            } else {
+                return ResponseHelper::jsonResponse(false, 'Alat berat tidak tersedia.', null, 200);
+            }
+
+        } catch (\Exception $e) {
+            return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
+        }
+    }
 }

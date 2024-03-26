@@ -19,4 +19,6 @@ interface HeavyVehicleRepositoryInterface
     public function generateCode(int $tryCount): string;
 
     public function isUniqueCode(string $code, $exceptId = null): bool;
+
+    public function isAvailable(string $id): bool;
 }

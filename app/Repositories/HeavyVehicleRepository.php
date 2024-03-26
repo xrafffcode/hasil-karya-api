@@ -87,4 +87,11 @@ class HeavyVehicleRepository implements HeavyVehicleRepositoryInterface
 
         return $query->doesntExist();
     }
+
+    public function isAvailable($id): bool
+    {
+        $heavyVehicle = HeavyVehicle::find($id);
+
+        return $heavyVehicle->is_active;
+    }
 }

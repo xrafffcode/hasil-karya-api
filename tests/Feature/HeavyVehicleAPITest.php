@@ -199,4 +199,21 @@ class HeavyVehicleAPITest extends TestCase
 
         $this->assertSoftDeleted('heavy_vehicles', $heavyVehicle);
     }
+
+    public function test_heavy_vehicle_api_call_check_availability_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $heavyVehicle = HeavyVehicle::factory()
+            ->for(Vendor::factory())
+            ->create();
+
+        $response = $this->json('GET', '/api/v1/heavy-vehicle/check-availability/'.$heavyVehicle->id);
+
+        $response->assertSuccessful();
+    }
 }

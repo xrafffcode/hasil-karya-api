@@ -198,4 +198,21 @@ class TruckAPITest extends TestCase
 
         $this->assertSoftDeleted('trucks', $truck);
     }
+
+    public function test_truck_api_call_check_availability_expect_success()
+    {
+        $user = User::factory()
+            ->hasAttached(Role::where('name', '=', UserRoleEnum::ADMIN)->first())
+            ->create();
+
+        $this->actingAs($user);
+
+        $truck = Truck::factory()
+            ->for(Vendor::factory())
+            ->create();
+
+        $response = $this->json('GET', '/api/v1/truck/check-availability/'.$truck->id);
+
+        $response->assertSuccessful();
+    }
 }
