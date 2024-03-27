@@ -2,14 +2,36 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\MaterialMovementErrorLogRepositoryInterface;
+use App\Models\User;
+use Spatie\Activitylog\Models\Activity;
 use App\Models\MaterialMovementErrorLog;
+use App\Interfaces\MaterialMovementErrorLogRepositoryInterface;
 
 class MaterialMovementErrorLogRepository implements MaterialMovementErrorLogRepositoryInterface
 {
     public function getAllMaterialMovementErrorLogs()
     {
         $materialMovementErrorLogs = MaterialMovementErrorLog::orderBy('created_at', 'desc')->get();
+
+        foreach ($materialMovementErrorLogs as $idx => $materialMovementErrorLog) {
+            $created_by = Activity::where('subject_id', $materialMovementErrorLog->id)
+                ->where('subject_type', MaterialMovementErrorLog::class)->first()->causer_id;            
+            $causer = User::find($created_by); 
+            
+            if ($causer->hasChecker()) {
+                $materialMovementErrorLogs[$idx]['creator_type'] = 'Pemeriksa Perpindahan Material';
+                $materialMovementErrorLogs[$idx]['created_by'] = $causer->checker->name;
+            } elseif ($causer->hasgasOperator()) {
+                $materialMovementErrorLogs[$idx]['creator_type'] = 'Solar Man';
+                $materialMovementErrorLogs[$idx]['created_by'] = $causer->gasOperator->name;
+            } elseif ($causer->hasTechnicalAdmin()) {
+                $materialMovementErrorLogs[$idx]['creator_type'] = 'Admin Teknik';
+                $materialMovementErrorLogs[$idx]['created_by'] = $causer->technicalAdmin->name;
+            } else {
+                $materialMovementErrorLogs[$idx]['creator_type'] = 'Pengguna Lain';
+                $materialMovementErrorLogs[$idx]['created_by'] = $causer->email;
+            }            
+        }
 
         return $materialMovementErrorLogs;
     }
